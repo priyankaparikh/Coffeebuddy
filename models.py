@@ -56,6 +56,24 @@ class Interests(db.Model):
         a=self.user_id, b=self.movie, c=self.music_genre, d=self.food_habit, e=self.fav_cuisine, f=self.hobby, 
         g=self.political_view) + "religion={h}, fav_spirit={i}, fav_book={j}>".format(h=self.religion, i=self.fav_spirit, j=self.fav_book)
 
+class User_match(db.Model):
+    """holds matches made through the history of the app"""
+
+    __tablename__ = "User_matches"
+
+    match_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    user_id_1 = db.Column(db.Integer, nullable=False)
+    user_id_2 = db.Column(db.Integer, nullable=False)
+    match_date = db.Column(db.date_time, nullable=False)
+    latitude = db.Column(db.Float(Precision=64) nullable=False)
+    longitude = db.Column(db.Float(Precision=64) nullable=False)
+
+    def __repr__(self):
+        """return interest choices of the user"""
+
+        return"< match_id={a}, user_id_1={b}, user_id_2={c}, match_date={d}>".format(a=self.match_id, 
+        b=self.user_id_1, c=self.user_id_2, d=self.match_date)
+        
 
 class Movie(db.Model):
     """Holds the Movie names and their corresponding ids"""
@@ -213,7 +231,7 @@ def connect_to_db(app):
     """Connect the database to our Flask app."""
 
     # Configure to use our PstgreSQL database
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///ratings'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///coffeebuddy'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.app = app
     db.init_app(app)
