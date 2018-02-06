@@ -1,0 +1,27 @@
+Science fiction|
+Satire|
+Drama|
+Action|
+Romance|
+Mystery|
+Horror|
+Health|
+Travel|
+Religion|
+Spirituality
+Science|
+History|
+Math|
+Anthology|
+Poetry|
+Encyclopedias|
+Dictionaries|
+Comics|
+Art|
+Cookbooks|
+Journals|
+Biographies|
+Autobiographies|
+Fantasy|
+I will read anything|
+Don't read at all|

@@ -1,37 +1,42 @@
 """Utility file to seed ratings database from MovieLens data in seed_data/"""
 
 from sqlalchemy import func
-from model import User
-# from model import Rating
-# from model import Movie
-
-from model import connect_to_db, db
+from models import connect_to_db, db
 from server import app
-
+from models import User
+from faker import Faker
 
 def load_users():
-    """Load users from u.user into database."""
+    """Load users from static/user_data.txt into database."""
 
     print "Users"
-
-    # Delete all rows in table, so if we need to run this a second time,
-    # we won't be trying to add duplicate users
     User.query.delete()
 
     # Read u.user file and insert data
-    for row in open("seed_data/u.user"):
+    for row in open("seed_data/user_data.txt")
         row = row.rstrip()
-        user_id, age, gender, occupation, zipcode = row.split("|")
+        #is this pythonic ?
+        fname, lname, email, user_name, password, date_of_birth, zipcode, phone ,one_word = row.split("|")
 
-        user = User(user_id=user_id,
-                    age=age,
-                    zipcode=zipcode)
+        user = User(fname=fname,
+                    lname=lname,
+                    email=email,
+                    user_name=user_name,
+                    password=password,
+                    date_of_birth=date_of_birth,
+                    zipcode=zipcode,
+                    phone=phone,
+                    one_word=one_word)
 
         # We need to add to the session or it won't ever be stored
         db.session.add(user)
 
     # Once we're done, we should commit our work
     db.session.commit()
+
+
+def load_user_interests():
+
 
 
 def load_movies():
