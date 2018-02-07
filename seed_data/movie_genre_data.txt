@@ -1,27 +1,23 @@
-Action| 
-Biographical|   
-Animated|
-Adventure|
-Comedy|    
-Crime| 
-Detective|  
-Classic|
-Drama|
-Disaster|
-Epic|
-Historical|
-Fantasy| 
-Documentary|
-Horror|
-Musical|
-Erotica|
-Science Fiction|   
-Silent Films|
-Romance|
-Sports|
-Superhero|
-Supernatural|
-Thriller|
-Mystery|
-Will watch anything|
-Not that into movies|
+1|Will watch anything
+2|Animated
+3|Comedy 
+4|Romance
+5|Musical 
+6|Classic
+7|Drama
+8|Epic
+9|Fantasy 
+10|Horror
+11|Supernatural
+12|Erotica 
+13|Silent Films
+14|Adventure
+15|Crime 
+16|Detective 
+17|Thriller
+18|Sports
+19|Action
+20|Superhero
+21|Historical
+22|Documentary
+23|Not that into movies

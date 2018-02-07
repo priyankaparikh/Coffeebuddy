@@ -1,27 +1,28 @@
-Science fiction|
-Satire|
-Drama|
-Action|
-Romance|
-Mystery|
-Horror|
-Health|
-Travel|
-Religion|
-Spirituality
-Science|
-History|
-Math|
-Anthology|
-Poetry|
-Encyclopedias|
-Dictionaries|
-Comics|
-Art|
-Cookbooks|
-Journals|
-Biographies|
-Autobiographies|
-Fantasy|
-I will read anything|
-Don't read at all|
+1|I will read anything
+2|Spirituality
+3|Romance
+4|Drama
+5|Poetry
+6|Fantasy
+7|Satire
+8|Comics
+9|Action
+10|Mystery
+11|Horror
+12|Health
+13|Travel
+14|Fiction
+15|Science fiction
+16|Anthology
+17|Art
+18|Travel
+19|Cookbooks
+20|Poetry
+21|Math
+22|History
+23|Science
+24|Encyclopedias
+25|Journals
+26|Biographies
+27|Autobiographies
+28|Don't read at all

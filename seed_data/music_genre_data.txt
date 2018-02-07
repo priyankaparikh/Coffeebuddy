@@ -1,27 +1,23 @@
-Alternative|
-Classical|
-Blues|
-Country|
-Dance|
-Disco|
-Edm|
-Hip-Hop|
-Holiday|
-House|
-Deep_House|
-Chill|
-Techno| 
-Trance|
-Electronic|
-Indie|
-Holiday|
-Latin|
-K Pop|
-Jazz|
-Pop|
-Reggea|
-Rock|
-Metal|
-Rnb|
-Will listen to anything|
-No Music|
+1|Will listen to anything
+2|Classical
+3|Alternative
+4|Jazz
+5|Blues
+6|Country
+7|Rnb
+8|Hip-Hop
+9|Chill
+10|Reggea
+11|K Pop
+12|Pop
+13|House
+14|Deep_House
+15|Dance
+16|Disco
+17|Edm
+18|Techno 
+19|Trance
+20|Electronic
+21|Rock
+22|Metal
+23|No Music

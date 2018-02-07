@@ -1,0 +1,13 @@
+1|I love them all 
+2|Indian
+3|French
+4|Italian
+5|Spanish
+6|Korean
+7|Japanese
+8|Chinese
+9|Ethiopian 
+10|American
+11|Thai
+12|Breakfast
+13|Turkish
