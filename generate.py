@@ -1,7 +1,8 @@
 from faker import Faker
 import random
 fake = Faker()
-text_file = open("seed_data/user_data.txt", "w")
+text_file1 = open("seed_data/user_data.txt", "w")
+text_file2 = open("seed_data/user_interest_data.txt", "w")
 
 def generate_users(n):
     """generates a bunch of users and user info for data files"""
@@ -22,14 +23,16 @@ def generate_users(n):
         data1 = str(i) + "|" + fname + "|" + lname + "|" + email + "|" + user_name + "|" + password 
         data2 = "|" + str(date_of_birth) + "|" + zipcode + "|" + phone + "|" + one_word
         data = data1 + data2 + "\n"
-        text_file.write(data)
+        text_file1.write(data)
         print data 
 
-    text_file.close()
+    text_file1.close()
 
 
 def generate_interests():
     """ generates data for the user_interest table """
+
+    BOOK_GENRE_ID   MOVIE_GENRE_ID  MUSIC_GENRE_ID  FOOD_HABIT_ID   FAV_ CUISINE_ID HOBBY_ID    POLITICAL_VIEW_ID   RELIGION_ID OUTDOORS
 
     
 

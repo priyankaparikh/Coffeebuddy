@@ -7,6 +7,10 @@ from models import User
 from models import Book_genre
 from models import Movie_genre
 from models import Music_genre
+from models import Food_habit
+from models import Fav_cuisine
+from models import Hobby
+from models import Political_view
 # from models import Food_habit
 # from models import Fav_cuisine
 from faker import Faker
@@ -131,20 +135,74 @@ def load_cuisines():
     db.session.commit()
 
 
-def load_cuisines():
-    """Load  from book_genre_data into database."""
+def load_hobbies():
+    """Load  from hobby_data_data into database."""
 
-    print "Fav_cuisine"
+    print "Hobby"
     User.query.delete()
 
-    for row in open("seed_data/fav_cuisine_data.txt"):
+    for row in open("seed_data/hobby_data.txt"):
         row = row.rstrip()
-        fav_cuisine_id, fav_cuisine_name = row.split("|")
+        hobby_id, hobby_name = row.split("|")
 
-        cuisine = Fav_cuisine(fav_cuisine_id=fav_cuisine_id,
-                          fav_cuisine_name=fav_cuisine_name)
+        hobby = Hobby(hobby_id=hobby_id,
+                          hobby_name=hobby_name)
 
-        db.session.add(cuisine)
+        db.session.add(hobby)
+
+    db.session.commit()
+
+
+def load_political_views():
+    """Load  from book_genre_data into database."""
+
+    print "Political_views"
+    User.query.delete()
+
+    for row in open("seed_data/political_view_data.txt"):
+        row = row.rstrip()
+        political_view_id, political_view_name = row.split("|")
+
+        view = Political_view(political_view_id=political_view_id,
+                              political_view_name=political_view_name)
+
+        db.session.add(view)
+
+    db.session.commit()
+
+
+def load_religions():
+    """Load  from book_genre_data into database."""
+
+    print "Religions"
+    User.query.delete()
+
+    for row in open("seed_data/religion_data.txt"):
+        row = row.rstrip()
+        religion_id, religion_name = row.split("|")
+
+        religion = Religion(religion_id=religion_id,
+                            religion_name=religion_name)
+
+        db.session.add(religion)
+
+    db.session.commit()
+
+
+def outdoor_activities():
+    """Load  from book_genre_data into database."""
+
+    print "Outdoors"
+    User.query.delete()
+
+    for row in open("seed_data/outdoor_data.txt"):
+        row = row.rstrip()
+        outdoor_id, outdoor_activity = row.split("|")
+
+        outdoor = Political_view(outdoor_id=outdoor_id,
+                              outdoor_activity=outdoor_activity)
+
+        db.session.add(outdoor)
 
     db.session.commit()
 # def load_ratings():
@@ -175,5 +233,10 @@ if __name__ == "__main__":
     load_books()
     load_movies()
     load_music()
-    # load_food_habits()
+    load_food_habits()
+    load_cuisines()
+    load_hobbies()
+    load_political_views()
+    load_religions()
+
     # set_val_user_id()

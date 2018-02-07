@@ -1,0 +1,5 @@
+1|Conservative
+2|Democratic conservative
+3|Upbeat
+4|Bystander
+5|Liberal

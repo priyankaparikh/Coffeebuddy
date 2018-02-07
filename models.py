@@ -140,7 +140,7 @@ class Music_genre(db.Model):
         return"<music_genre_id={}, music_genre_name={}>".format(self.music_genre_id, self.music_genre_name)
 
 
-class Food_Habit(db.Model):
+class Food_habit(db.Model):
     """Holds the types of food_habits and their corresponding ids """
 
     __tablename__ = "food_habits"
