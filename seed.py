@@ -1,19 +1,9 @@
-"""Utility file to seed ratings database from MovieLens data in seed_data/"""
-
+"""Utility file to seed the coffeebuddy database from generated data in seed_data"""
 from sqlalchemy import func
 from models import connect_to_db, db
-from server import app
-from models import User
-from models import Book_genre
-from models import Movie_genre
-from models import Music_genre
-from models import Food_habit
-from models import Fav_cuisine
-from models import Hobby
-from models import Political_view
-# from models import Food_habit
-# from models import Fav_cuisine
-from faker import Faker
+from models import *
+from random import choice
+#import pdb; pdb.set_trace()
 
 def load_users():
     """Load users from static/user_data.txt into database."""
@@ -21,12 +11,23 @@ def load_users():
     print "User"
     User.query.delete()
 
-    # Read u.user file and insert data
-    for row in open("seed_data/user_data.txt"):
+    file = open("seed_data/user_data.txt")
+    for row in file:
         row = row.rstrip()
-        #is this pythonic ?
-        user_id, fname, lname, email, user_name, password, date_of_birth, zipcode, phone, one_word = row.split("|")
+        row = row.split("|")
+        
+        user_id = row[0]
+        fname = row[1]
+        lname = row[2]
+        email = row[3]
+        user_name = row[4]
+        password = row[5]
+        date_of_birth = row[6]
+        zipcode = row[7]
+        phone = row[8]
+        one_word = row[9]
 
+        #insert user
         user = User(user_id=user_id,
                     fname=fname,
                     lname=lname,
@@ -38,24 +39,22 @@ def load_users():
                     phone=phone,
                     one_word=one_word)
 
-        # We need to add to the session or it won't ever be stored
         db.session.add(user)
 
-    # Once we're done, we should commit our work
     db.session.commit()
 
 
 def load_books():
     """Load books from book_genre_data into database."""
 
-    print "Book_genre"
-    User.query.delete()
+    print "BookGenre"
 
+    #read book_genre_data
     for row in open("seed_data/book_genre_data.txt"):
         row = row.rstrip()
         book_genre_id, book_genre_name = row.split("|")
-
-        book = Book_genre(book_genre_id=book_genre_id,
+        # insert book genre
+        book = BookGenre(book_genre_id=book_genre_id,
                           book_genre_name=book_genre_name)
 
         db.session.add(book)
@@ -66,14 +65,13 @@ def load_books():
 def load_movies():
     """Load movies from movie_genre_data into database."""
 
-    print "Movie_genre"
-    User.query.delete()
+    print "MovieGenre"
 
     for row in open("seed_data/movie_genre_data.txt"):
         row = row.rstrip()
         movie_genre_id, movie_genre_name = row.split("|")
-
-        movie = Movie_genre(movie_genre_id=movie_genre_id,
+        #insert movie
+        movie = MovieGenre(movie_genre_id=movie_genre_id,
                           movie_genre_name=movie_genre_name)
 
         db.session.add(movie)
@@ -84,14 +82,13 @@ def load_movies():
 def load_music():
     """Load music from music_genre_data into database."""
 
-    print "music_genre"
-    User.query.delete()
+    print "MusicGenre"
 
     for row in open("seed_data/music_genre_data.txt"):
         row = row.rstrip()
         music_genre_id, music_genre_name = row.split("|")
-
-        music = Music_genre(music_genre_id=music_genre_id,
+        #insert music
+        music = MusicGenre(music_genre_id=music_genre_id,
                           music_genre_name=music_genre_name)
 
         db.session.add(music)
@@ -102,14 +99,13 @@ def load_music():
 def load_food_habits():
     """Load food_habits from food_habit_data into database."""
 
-    print "Food_habit"
-    User.query.delete()
+    print "FoodHabit"
 
     for row in open("seed_data/food_habit_data.txt"):
         row = row.rstrip()
         food_habit_id, food_habit_name = row.split("|")
-
-        habit = Food_habit(food_habit_id=food_habit_id,
+        #insert habit
+        habit = FoodHabit(food_habit_id=food_habit_id,
                           food_habit_name=food_habit_name)
 
         db.session.add(habit)
@@ -120,14 +116,13 @@ def load_food_habits():
 def load_cuisines():
     """Load  from fav_cuisine_data into database."""
 
-    print "Fav_cuisine"
-    User.query.delete()
-
+    print "FavCuisine"
+  
     for row in open("seed_data/fav_cuisine_data.txt"):
         row = row.rstrip()
         fav_cuisine_id, fav_cuisine_name = row.split("|")
-
-        cuisine = Fav_cuisine(fav_cuisine_id=fav_cuisine_id,
+        #insert cuisine
+        cuisine = FavCuisine(fav_cuisine_id=fav_cuisine_id,
                           fav_cuisine_name=fav_cuisine_name)
 
         db.session.add(cuisine)
@@ -139,12 +134,11 @@ def load_hobbies():
     """Load  from hobby_data_data into database."""
 
     print "Hobby"
-    User.query.delete()
 
     for row in open("seed_data/hobby_data.txt"):
         row = row.rstrip()
         hobby_id, hobby_name = row.split("|")
-
+        #insert hobby
         hobby = Hobby(hobby_id=hobby_id,
                           hobby_name=hobby_name)
 
@@ -156,14 +150,14 @@ def load_hobbies():
 def load_political_views():
     """Load  from book_genre_data into database."""
 
-    print "Political_views"
-    User.query.delete()
+    print "PoliticalViews"
+
 
     for row in open("seed_data/political_view_data.txt"):
         row = row.rstrip()
         political_view_id, political_view_name = row.split("|")
-
-        view = Political_view(political_view_id=political_view_id,
+        #insert political view
+        view = PoliticalView(political_view_id=political_view_id,
                               political_view_name=political_view_name)
 
         db.session.add(view)
@@ -175,12 +169,11 @@ def load_religions():
     """Load  from book_genre_data into database."""
 
     print "Religions"
-    User.query.delete()
 
     for row in open("seed_data/religion_data.txt"):
         row = row.rstrip()
         religion_id, religion_name = row.split("|")
-
+        #insert religion
         religion = Religion(religion_id=religion_id,
                             religion_name=religion_name)
 
@@ -189,40 +182,73 @@ def load_religions():
     db.session.commit()
 
 
-def outdoor_activities():
+
+def load_outdoor_activities():
     """Load  from book_genre_data into database."""
 
     print "Outdoors"
-    User.query.delete()
 
     for row in open("seed_data/outdoor_data.txt"):
         row = row.rstrip()
         outdoor_id, outdoor_activity = row.split("|")
-
-        outdoor = Political_view(outdoor_id=outdoor_id,
+        #insert outdoor
+        outdoor = Outdoor(outdoor_id=outdoor_id,
                               outdoor_activity=outdoor_activity)
 
         db.session.add(outdoor)
 
     db.session.commit()
-# def load_ratings():
-#     """Load ratings from u.data into database."""
 
 
-# def set_val_user_id():
-#     """Set value for the next user_id after seeding database"""
+def seed_interests():
+    """ add data for each user in the interest table"""
 
-#     # Get the Max user_id in the database
-#     result = db.session.query(func.max(User.user_id)).one()
-#     max_id = int(result[0])
+    books = BookGenre.query.all()
+    movies = MovieGenre.query.all()
+    music = MusicGenre.query.all() 
+    food_habits = FoodHabit.query.all()
+    cuisines = FavCuisine.query.all()
+    hobbies = Hobby.query.all()
+    political_views = PoliticalView.query.all()
+    religions = Religion.query.all()
+    outdoors = Outdoor.query.all()
+    users = User.query.all()
 
-#     # Set the value for the next user_id to be max_id + 1
-#     query = "SELECT setval('users_user_id_seq', :new_id)"
-#     db.session.execute(query, {'new_id': max_id + 1})
-#     db.session.commit()
+    for user in users:
+        new_interest_row = Interest(user_id=user.user_id,
+                                    book_genre_id=choice(books).book_genre_id,
+                                    movie_genre_id=choice(movies).movie_genre_id,
+                                    music_genre_id=choice(music).music_genre_id,
+                                    food_habit_id=choice(food_habits).food_habit_id,
+                                    fav_cuisine_id=choice(cuisines).fav_cuisine_id,
+                                    hobby_id=choice(hobbies).hobby_id,
+                                    political_view_id=choice(political_views).political_view_id,
+                                    religion_id=choice(religions).religion_id,
+                                    outdoor_id=choice(outdoors).outdoor_id
+                                    )
 
+        db.session.add(new_interest_row)
+
+    db.session.commit()
+
+
+def set_val_user_id():
+    """Set value for the next user_id after seeding database"""
+
+    result = db.session.query(func.max(User.user_id)).one()
+    max_id = int(result[0])
+
+    # Set the value for the next user_id to be max_id + 1
+    query = "SELECT setval('users_user_id_seq', :new_id)"
+    db.session.execute(query, {'new_id': max_id + 1})
+    db.session.commit()
+
+
+########################################################################################################
 
 if __name__ == "__main__":
+    from flask import Flask 
+    from server import app
     connect_to_db(app)
 
     # In case tables haven't been created, create them
@@ -238,5 +264,6 @@ if __name__ == "__main__":
     load_hobbies()
     load_political_views()
     load_religions()
-
-    # set_val_user_id()
+    load_outdoor_activities()
+    seed_interests()
+    set_val_user_id()

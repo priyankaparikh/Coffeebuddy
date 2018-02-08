@@ -1,0 +1,11 @@
+1|Hiking
+2|Swimming
+3|Rock climbing
+4|Biking
+5|Sun bathing
+6|Walking
+7|Running
+8|Camping
+9|Mountaineering
+10|Skiing
+11|Tennis

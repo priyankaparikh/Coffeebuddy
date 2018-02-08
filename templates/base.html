@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+<head>
+    <title>CoffeeBuddy</title>
+</head>
+<body>
+  <a href='/'>Go back to homepage</a><br>
+    {% for message in get_flashed_messages() %}
+        {{ message }}
+    {% endfor %}
+  <br>
+  <hr>
+    {% block content %} 
+
+        put your content here 
+
+    {% endblock %}
+</body>
+</html>

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+    {% block content %}
+    <h1>Trip Form</h1>
+        <form action='plan_trip' method='POST'>
+            <p> What time would you like to get coffee? </p>
+                <select name='time'>
+                    {% for time in time_frame %}
+                        <option value='<time>'>Time</option>
+                    {% endfor %}
+                </select>
+            <p>Please enter your pincode</p>
+                <input type = 'text', name = 'pincode'><br>
+                <input type = 'submit' value='submit'>
+            </form>
+    {% endblock %}

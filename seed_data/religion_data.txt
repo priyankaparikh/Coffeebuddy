@@ -1,0 +1,8 @@
+1|Atheist
+2|Agnostic
+3|Hindu
+4|Catholic
+5|Christian
+6|Islamic
+7|Judaism
+8|Buddhist
