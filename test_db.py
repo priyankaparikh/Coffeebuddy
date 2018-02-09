@@ -8,10 +8,17 @@ from sqlalchemy import inspect
 
 def check_db():
     """check if there is even a db"""
+    result = User.query.all()
+
+    if result is not None :
+        return 'Models loaded'
 
 
 def check_user():
     """check if User table has any users"""
+    user1 = User.query.filter_by(user_id=1).first()
+
+    return 
 
 
 def check_interest():

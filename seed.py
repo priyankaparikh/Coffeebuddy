@@ -224,8 +224,7 @@ def seed_interests():
                                     hobby_id=choice(hobbies).hobby_id,
                                     political_view_id=choice(political_views).political_view_id,
                                     religion_id=choice(religions).religion_id,
-                                    outdoor_id=choice(outdoors).outdoor_id
-                                    )
+                                    outdoor_id=choice(outdoors).outdoor_id)
 
         db.session.add(new_interest_row)
 

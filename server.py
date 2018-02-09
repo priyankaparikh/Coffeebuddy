@@ -4,6 +4,7 @@ from jinja2 import StrictUndefined
 from flask import (Flask, render_template, redirect, request, flash, session)
 from flask_debugtoolbar import DebugToolbarExtension
 from models import *
+from queries import * 
 app = Flask(__name__)
 
 # Flask sessions and the debug toolbar
@@ -20,44 +21,45 @@ def index():
     """Homepage."""
     return render_template('homepage.html')
 
-@app.route('/login', methods=['GET'])
+@app.route('/login', methods=["GET"])
 def login_input():
     """For user to login with email"""
 
     return render_template('login.html')
 
 
-@app.route('/login', methods=['POST'])
+@app.route('/login', methods=["POST"])
 def check_login():
     """Check user login info"""
     
     email = request.form.get('email')
     password = request.form.get('password')
 
-    check_db = db.session.query(User).filter(User.email == email, User.password == password)
-
+    check_db = db.session.query(User).filter(User.email == email)
+    #User.password == password
     user = check_db.first()
 
     if not user:
         flash('Please register your account')
         return redirect('/register')
-
-    else:
+    elif email == User.email and password == User.password:
         session['user_id'] = user.user_id
         flash('You successfully logged in')
         return redirect('/users/' + str(user.user_id))
+    else:
+        return redirect('/forgot_password')
 
 
-@app.route('/register', methods=['GET'])
+@app.route('/register', methods=["GET"])
 def register_form():
     """For user to register with email"""
 
     return render_template('register.html')
 
 
-@app.route('/register', methods=['POST'])
+@app.route('/register', methods=["POST"])
 def register_process():
-    """Get user registration and redirect to hp"""
+    """Get user registration and redirect to user_interests"""
 
     fname = request.form.get('fname')
     lname = request.form.get('lname')
@@ -90,23 +92,100 @@ def register_process():
         db.session.commit()
 
     session['user_id'] = user.user_id
-    flash('You are successfully registerd and logged in')
+    return redirect('/register_user_interests')
+
+# @app.route('/register_user_interests', methods=["GET"])
+# def register_form():
+#     """Show form for a user to register interests"""
+
+#     user_id = 
+#     book_genres = 
+#     movie_genres =
+#     music_genres =
+#     food_habits =
+#     fav_cuisines =
+#     hobbies =
+#     political_views =
+#     religions =
+#     outdoors =
+
+#     return render_template('register_user_interests.html',book_genres=book_genres)
 
 
-# @app.route('/plan_trip', methods='GET')
-# def plan_trip():
-#     """Show a map with coffeeshops"""
+# @app.route('/register_user_interests', methods=["POST"])
+# def register_process():
+#     """Get user interest registration and redirect to hp"""
 
-#     return render_template("/plan_trip")
+#     user_id = request.form.get('')
+#     book_genre_id = request.form.get('')
+#     movie_genre_id = request.form.get('')
+#     music_genre_id = request.form.get('')
+#     food_habit_id = request.form.get('')
+#     fav_cuisine_id = request.form.get('')
+#     hobby_id = request.form.get('')
+#     political_view_id = request.form.get('')
+#     religion_id = request.form.get('')
+#     outdoor_id = request.form.get('')
 
 
-# @app.route('/plan_trip', methods='POST')
-# def plan_trip():
-#     """get user query"""
+#     user = db.session.query(User).filter(User.email == email).first()
 
-#     return render_template("/plan_trip")
+#     if user:
+#         # if the user does not exist then we instantiate a user and the info
+#         #to the db
+#         interest = Interest(user_id=user_id,
+#                     book_genre_id=book_genre_id,
+#                     movie_genre_id=movie_genre_id, 
+#                     music_genre_id=music_genre_id,
+#                     food_habit_id=food_habit_id,
+#                     fav_cuisine_id=fav_cuisine_id,
+#                     hobby_id=hobby_id,
+#                     political_view_id=political_view_id,
+#                     religion_id=religion_id,
+#                     outdoor_id=outdoor_id
+#                     )
+
+#         db.session.add()
+#         db.session.commit()
+
+#     session['user_id'] = user.user_id
+#     flash('You are successfully registerd and logged in')
+#     return redirect('/plan_trip')
+
+@app.route('/user_info', methods=["GET"])
+def show_profile():
+    """show the user thier own profile"""
+
+    user_info = get_user_info("20")
+
+    return render_template('/user_info.html',user_info=user_info)
 
 
+@app.route('/plan_trip', methods=["GET"])
+def show_map():
+    """Show a map with coffeeshops"""
+
+    return render_template("/plan_trip.html")
+
+
+@app.route('/plan_trip', methods=["POST"])
+def plan_trip():
+    """get trip time, pincode"""
+
+    time = request.form.get('time')
+    pincode = request.form.get('pincode')
+
+    #at this point we will pass the information the yelper
+    #yelper will end information to google and google will render
+    # a map with relevant information
+    
+
+@app.route('/show_map', methods=["GET"])
+def choose_coffee_shop():
+    """get user query"""
+    
+
+    return render_template('map.html')
 
 # @app.route('/users/<user_id>')
 # def display_user_details(user_id):
