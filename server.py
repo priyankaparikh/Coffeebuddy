@@ -4,7 +4,8 @@ from jinja2 import StrictUndefined
 from flask import (Flask, render_template, redirect, request, flash, session)
 from flask_debugtoolbar import DebugToolbarExtension
 from models import *
-from queries import * 
+from queries import *
+
 app = Flask(__name__)
 
 # Flask sessions and the debug toolbar
@@ -54,7 +55,14 @@ def check_login():
 def register_form():
     """For user to register with email"""
 
-    return render_template('register.html')
+    all_interests = [all_book_genres(), all_movie_genres(),
+                     all_music_genres(), all_food_habits(),
+                     all_fav_cuisines(), all_hobbies(),
+                     all_political_views(), all_religions(),
+                     all_outdoors()]
+
+    return render_template('register.html',
+                                all_interests=all_interests)
 
 
 @app.route('/register', methods=["POST"])
@@ -70,6 +78,16 @@ def register_process():
     zipcode = request.form.get('zipcode')
     phone = request.form.get('phone')
     one_word = request.form.get('one_word')
+    book_genre_id = request.form.get('Preferred book')
+    movie_genre_id = request.form.get('Preferred movie genre')
+    music_genre_id = request.form.get('Preferred music genre')
+    food_habit_id = request.form.get('Food habits')
+    fav_cuisine_id = request.form.get('Preferred cuisine type')
+    hobby_id = request.form.get('Favorite hobby')
+    political_view_id = request.form.get('Political ideology')
+    religion_id = request.form.get('Religious ideology')
+    outdoor_id = request.form.get('Favorite Outdoor activity')
+
 
 
     user = db.session.query(User).filter(User.email == email).first()
@@ -88,69 +106,28 @@ def register_process():
                     one_word=one_word
                     )
 
+
         db.session.add(user)
         db.session.commit()
 
+        interest = Interest(user_id=user.user_id,
+                    book_genre_id=book_genre_id,
+                    movie_genre_id=movie_genre_id, 
+                    music_genre_id=music_genre_id,
+                    food_habit_id=food_habit_id,
+                    fav_cuisine_id=fav_cuisine_id,
+                    hobby_id=hobby_id,
+                    political_view_id=political_view_id,
+                    religion_id=religion_id,
+                    outdoor_id=outdoor_id
+                    )
+
+        db.session.add(interest)
+        db.session.commit()
+
     session['user_id'] = user.user_id
-    return redirect('/register_user_interests')
-
-# @app.route('/register_user_interests', methods=["GET"])
-# def register_form():
-#     """Show form for a user to register interests"""
-
-#     user_id = 
-#     book_genres = 
-#     movie_genres =
-#     music_genres =
-#     food_habits =
-#     fav_cuisines =
-#     hobbies =
-#     political_views =
-#     religions =
-#     outdoors =
-
-#     return render_template('register_user_interests.html',book_genres=book_genres)
-
-
-# @app.route('/register_user_interests', methods=["POST"])
-# def register_process():
-#     """Get user interest registration and redirect to hp"""
-
-#     user_id = request.form.get('')
-#     book_genre_id = request.form.get('')
-#     movie_genre_id = request.form.get('')
-#     music_genre_id = request.form.get('')
-#     food_habit_id = request.form.get('')
-#     fav_cuisine_id = request.form.get('')
-#     hobby_id = request.form.get('')
-#     political_view_id = request.form.get('')
-#     religion_id = request.form.get('')
-#     outdoor_id = request.form.get('')
-
-
-#     user = db.session.query(User).filter(User.email == email).first()
-
-#     if user:
-#         # if the user does not exist then we instantiate a user and the info
-#         #to the db
-#         interest = Interest(user_id=user_id,
-#                     book_genre_id=book_genre_id,
-#                     movie_genre_id=movie_genre_id, 
-#                     music_genre_id=music_genre_id,
-#                     food_habit_id=food_habit_id,
-#                     fav_cuisine_id=fav_cuisine_id,
-#                     hobby_id=hobby_id,
-#                     political_view_id=political_view_id,
-#                     religion_id=religion_id,
-#                     outdoor_id=outdoor_id
-#                     )
-
-#         db.session.add()
-#         db.session.commit()
-
-#     session['user_id'] = user.user_id
-#     flash('You are successfully registerd and logged in')
-#     return redirect('/plan_trip')
+    flash('You are successfully registerd and logged in')
+    
 
 @app.route('/user_info', methods=["GET"])
 def show_profile():
@@ -179,6 +156,7 @@ def plan_trip():
     #yelper will end information to google and google will render
     # a map with relevant information
     
+    return render_template('map.html', time=time, pincode=pincode)
 
 @app.route('/show_map', methods=["GET"])
 def choose_coffee_shop():
