@@ -110,7 +110,7 @@ def register_process():
         db.session.add(user)
         db.session.commit()
 
-        interest = Interest(user_id=user.user_id,
+        interest = Interest(
                     book_genre_id=book_genre_id,
                     movie_genre_id=movie_genre_id, 
                     music_genre_id=music_genre_id,
@@ -165,79 +165,6 @@ def choose_coffee_shop():
 
     return render_template('map.html')
 
-# @app.route('/users/<user_id>')
-# def display_user_details(user_id):
-#     """ Show user details"""
-
-#     user = User.query.get(user_id)
-#     return render_template("user_details.html", user=user)
-
-
-
-
-
-# @app.route("/movies/<int:movie_id>", methods=['GET'])
-# def movie_detail(movie_id):
-#     """Show info about movie.
-#     If a user is logged in, let them add/edit a rating.
-#     """
-
-#     movie = Movie.query.get(movie_id)
-
-#     user_id = session.get("user_id")
-
-#     if user_id:
-#         user_rating = Rating.query.filter_by(
-#             movie_id=movie_id, user_id=user_id).first()
-
-#     else:
-#         user_rating = None
-
-#     # Get average rating of movie
-
-#     rating_scores = [r.score for r in movie.ratings]
-#     avg_rating = float(sum(rating_scores)) / len(rating_scores)
-
-#     prediction = None
-
-#     # Prediction code: only predict if the user hasn't rated it.
-
-#     if (not user_rating) and user_id:
-#         user = User.query.get(user_id)
-#         if user:
-#             prediction = user.predict_rating(movie)
-#             # above line - predict rating is a method with the user obj
-
-#     return render_template(
-#         "movie_details.html",
-#         movie=movie,
-#         user_rating=user_rating,
-#         average=avg_rating,
-#         prediction=prediction
-#         )
-
-
-# @app.route('/new_rating', methods=['POST'])
-# def update_rating():
-#     """Update a rating """
-
-#     movie_id = int(request.form.get("movie_id"))
-#     score = int(request.form.get('score'))
-#     user_id = session['user_id']
-
-#     rating = db.session.query(Rating).filter(Rating.user_id == user_id, Rating.movie_id == movie_id).first()
-
-#     if not rating:
-#         rating = Rating(movie_id=movie_id, user_id=user_id, score=score)
-#         db.session.add(rating)
-#         db.session.commit()
-#     else:
-#         rating.score = score
-#         db.session.commit()
-
-#     flash('You\'ve successfully rated for the movie!')
-
-#     return redirect("/movies/" + str(movie_id))
 
 
 ###################################################################################################################
