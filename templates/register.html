@@ -21,11 +21,11 @@
                 <p>One word to describe yourself</p>
                     <input type="text" name="one_word"><br>
         <h1>CoffeeBuddy new user registeration part 2</h1>
-                {% for interest in all_interests %}
-                    <h2>{{ interest[0] }}</h2>
-                    {% for i in interest[1] %}
-                        <input type="radio" name="{{interest[0]}}" id="{{i[1]}}" value="{{i[0]}}">
-                        <lable for="{{i[1]}}">{{ i[1] }}
+                {% for sub_interest in all_interests %}
+                    <h2>{{ sub_interest[0] }}</h2>
+                    {% for interest in sub_interest[1] %}
+                        <input type="radio" name="{{sub_interest[0]}}" id="{{interest[1]}}" value="{{interest[0]}}">
+                        <lable for="{{interest[1]}}">{{ interest[1] }}
                     {% endfor %}
                 {% endfor %}
                 <input type = "submit" value="submit">

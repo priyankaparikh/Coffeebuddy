@@ -78,7 +78,7 @@ def register_process():
     zipcode = request.form.get('zipcode')
     phone = request.form.get('phone')
     one_word = request.form.get('one_word')
-    book_genre_id = request.form.get('Preferred book')
+    book_genre_id = request.form.get('Preferred book genre')
     movie_genre_id = request.form.get('Preferred movie genre')
     music_genre_id = request.form.get('Preferred music genre')
     food_habit_id = request.form.get('Food habits')
@@ -109,8 +109,10 @@ def register_process():
 
         db.session.add(user)
         db.session.commit()
+        userid = user.user_id
 
         interest = Interest(
+                    user_id=userid,
                     book_genre_id=book_genre_id,
                     movie_genre_id=movie_genre_id, 
                     music_genre_id=music_genre_id,

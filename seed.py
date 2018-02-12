@@ -246,11 +246,11 @@ def set_val_user_id():
 def set_val_interest_id():
     """Set value for the next user_id after seeding database"""
 
-    result = db.session.query(func.max(User.interest_id)).one()
+    result = db.session.query(func.max(Interest.interest_id)).one()
     max_id = int(result[0])
 
     # Set the value for the next user_id to be max_id + 1
-    query = "SELECT setval('users_interest_id_seq', :new_id)"
+    query = "SELECT setval('interests_interest_id_seq', :new_id)"
     db.session.execute(query, {'new_id': max_id + 1})
     db.session.commit()
 
@@ -277,3 +277,4 @@ if __name__ == "__main__":
     load_outdoor_activities()
     seed_interests()
     set_val_user_id()
+    set_val_interest_id()
