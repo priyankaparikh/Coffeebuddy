@@ -111,6 +111,7 @@ def register_process():
         db.session.commit()
         userid = user.user_id
 
+        #update user interests for the specific user
         interest = Interest(
                     user_id=userid,
                     book_genre_id=book_genre_id,
@@ -133,7 +134,7 @@ def register_process():
 
 @app.route('/user_info', methods=["GET"])
 def show_profile():
-    """show the user thier own profile"""
+    """show the user their own profile"""
 
     user_info = get_user_info("20")
 

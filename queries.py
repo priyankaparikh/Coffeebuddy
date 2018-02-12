@@ -47,7 +47,7 @@ def get_user_info(input_id):
 def validate_password(input_email, input_password):
     """check if an email and password are valid
 
-    >>> validate_password('priyanka.parikh6@gmail.com','dog')
+    >>> validate_password('CarolMason@aol.com ','6LUZzfiN(Z')
     True
 
     >>> validate_password('CynthiaGibson@gmail.com','T^^+5BQvS3')
@@ -62,23 +62,9 @@ def validate_password(input_email, input_password):
     return password == input_password and email == input_email
 
 
-# def collect_generic_names(cAPI, cID, cName):
-#     curr_genres = cAPI.query.all()
-#     curr_ret = []
-
-#     for curr in curr_genres:
-#         curr_ret.append((cID, cName))
-#     return curr_ret
-#collect_generic_names(BookGenre, BookGenre.book_genre_id)
-
-# def all_book_genres():
-#     """returns a list of tuples with book genre ids and book genres"""
-#     books = collect_generic_names(BookGenre, BookGenre.book_genre_id, BookGenre.book_genre_name)
-#     return books
-
-
 def all_book_genres():
-    """returns a list of tuples with book genre ids and book genres"""
+    """returns a list of tuples with book genre ids and book genres
+    """
 
     book_genres = BookGenre.query.all()
     books = []

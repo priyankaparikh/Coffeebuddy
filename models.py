@@ -82,6 +82,18 @@ class UserMatch(db.Model):
         return'< match_id={a}, user_id_1={b}, user_id_2={c}, match_date={d}>'.format(a=self.match_id, 
         b=self.user_id_1, c=self.user_id_2, d=self.match_date)
 
+class PendingMatch(db.Model):
+    """holds a list of all pending matches for user queries"""
+
+    __tablename__ = "pending_matches"
+
+    user_query_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('User.user_id'), nullable=False)
+    query_pin_code = db.Column(db.Integer, nullable=False)
+    query_time = db.Column(db.String(10), nullable=False)
+    pending = db.Column(db.Boolean, nullable=False)
+    expired = db.Column(db.Boolean, nullable=False)
+
 
 class BookGenre(db.Model):
     """Holds the Music_genres and their corresponding ids"""
