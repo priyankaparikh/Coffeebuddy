@@ -1,12 +1,12 @@
 from faker import Faker
 import random
 fake = Faker()
-text_file = open('seed_data/user_data.txt', 'w')
 
 def generate_users(n):
     """generates a bunch of users and user info for data files"""
 
     email_providers = ['gmail','yahoo','aol','hotmail','fastmail']
+    text_file = open('seed_data/user_data.txt', 'w')
 
     for i in range(1, n):
         user_id = i
@@ -26,5 +26,23 @@ def generate_users(n):
         print data 
 
     text_file.close()
+
+def generate_user_queries(n):
+    """ generates a bunch of user_queries for the user_data queries file"""
+
+    pincodes = ['95134', '95111', '98145', '98164', '97639']
+    text_file = open('seed_data/pending_match_data.txt', 'w')
+
+    for i in range(1, n):
+        user_id = random.randrange(1, 498)
+        query_pin_code = random.choice(pincodes)
+        pending = 'True'
+
+        data = str(user_id) + '|' + query_pin_code + '|'+ pending +'\n'
+    
+        text_file.write(data)
+
+    text_file.close()
+
 
 

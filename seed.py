@@ -3,6 +3,7 @@ from sqlalchemy import func
 from models import connect_to_db, db
 from models import *
 from random import choice
+import datetime
 #import pdb; pdb.set_trace()
 
 def load_users():
@@ -231,6 +232,30 @@ def seed_interests():
     db.session.commit()
 
 
+def load_user_queries():
+    """ Load all the queries from pending_match_data.txt to the PendingMatch table"""
+
+    print "User Queries"
+
+    for row in open("seed_data/pending_match_data.txt"):
+        row = row.rstrip()
+        row = row.split("|")
+        user_id = row[0]
+        query_pin_code = row[1]
+        query_time = datetime.datetime.now()
+        pending = bool(row[2])
+
+        #insert pending matches
+        pending_match = PendingMatch(user_id=user_id,
+                                    query_pin_code=query_pin_code,
+                                    query_time=query_time,
+                                    pending=pending)
+
+        db.session.add(pending_match)
+
+    db.session.commit()
+
+
 def set_val_user_id():
     """Set value for the next user_id after seeding database"""
 
@@ -239,6 +264,18 @@ def set_val_user_id():
 
     # Set the value for the next user_id to be max_id + 1
     query = "SELECT setval('users_user_id_seq', :new_id)"
+    db.session.execute(query, {'new_id': max_id + 1})
+    db.session.commit()
+
+
+def set_val_query_id():
+    """Set value for yhe next query_id after seeding database"""
+
+    result = db.session.query(func.max(PendingMatch.user_query_id)).one()
+    max_id = int(result[0])
+
+    #set the valuefor the next user_id to be the max_id + 1
+    query = "SELECT setval('PendingMatch_user_query_id', :new_id)"
     db.session.execute(query, {'new_id': max_id + 1})
     db.session.commit()
 
@@ -275,6 +312,8 @@ if __name__ == "__main__":
     load_political_views()
     load_religions()
     load_outdoor_activities()
+    load_user_queries()
     seed_interests()
     set_val_user_id()
     set_val_interest_id()
+    set_val_query_id()

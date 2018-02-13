@@ -88,12 +88,19 @@ class PendingMatch(db.Model):
     __tablename__ = "pending_matches"
 
     user_query_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('User.user_id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
     query_pin_code = db.Column(db.Integer, nullable=False)
-    query_time = db.Column(db.String(10), nullable=False)
+    query_time = db.Column(db.DateTime, nullable=False)
     pending = db.Column(db.Boolean, nullable=False)
-    expired = db.Column(db.Boolean, nullable=False)
 
+    def __repr__ (self):
+        """return information about a user query"""
+
+        d1 = "<user_query_id={a}, user_id={b},".format(self.user_query_id, self.user_id)
+        d2 = " query_pin_code={c}, query_time={d},".format(self.query_pin_code, self.query_time)
+        d3 = " pending={e}>".format(self.pending)
+
+        return d1 + d2 + d3
 
 class BookGenre(db.Model):
     """Holds the Music_genres and their corresponding ids"""
