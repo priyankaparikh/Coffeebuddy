@@ -196,23 +196,12 @@ def query_pending_match():
     return potential_matches
 
 
-def get_user_interests(user_ids):
-    """accepts a list of user_ids
-    returns a list of tuples with the first element as the user_id 
-    and the second element a list of the user_interest"""
+def get_user_interests(user_id):
+    """returns a user object for futher analysis"""
 
-    user_interest = []
+    user = Interest.query.filter(Interest.user_id == user_id).first()
 
-    if len(user_ids) <= 1:
-        return None
-
-    else:
-
-        for user_id in user_ids:
-            q = Interest.query.filter(Interest.user_id == user_id).all()
-            user_interest.append((user_id, q))
-
-    return user_interest
+    return user
 
 def update_user_info(info):
     """dynamically updates user_information by checking the data type of the input"""
