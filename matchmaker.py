@@ -20,7 +20,7 @@
     (271, [< interest_id=271, book_genre_id=19, movie_genre_id=23, music_genre_id=7, food_habit_id=4, 
     fav_cuisine_id=2, hobby_id=9, politicial_view_id=3, religion_id=5, outdoor_id=5>])]
 
-     book_genre = 8pts
+        book_genre = 8pts
         movie_genre = 6pts
         music_genre = 9pts
         food_habit = 13pts
@@ -50,11 +50,13 @@ def extract_vals(user):
 
     return [interest_id, book_genre_id, movie_genre_id, music_genre_id, food_habit_id, fav_cuisine_id, hobby_id, political_view,religion_id, outdoor_id]
 
+
 def make_match(users):
     """return a percentage of the user matches
     """
 
     for user in users:
+
 
 
 

@@ -1,16 +1,20 @@
 1|Board/tabletop games
-2|Coloring
-3|Computer programming
-4|Cooking
-5|Creative writing
-6|Dance
-7|Do it yourself
-8|Fantasy sports
-9|Gaming
-10|Listening to music
-11|Painting
-12|Pet
+2|Computer programming
+3|Gaming
+4|Fantasy sports
+5|Skateboarding
+6|Listening to music
+7|Playing musical instruments
+8|Dance
+9|Cooking
+10|Knitting
+11|sewing
+12|Design
 13|Photography
-14|Playing musical instruments
-15|Sketching
-16|Writing
+14|Sketching
+15|Painting
+16|Scrapbooking
+17|Do it yourself
+18|Woodworking
+19|poetry
+20|Writing

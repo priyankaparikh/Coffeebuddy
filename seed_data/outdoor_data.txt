@@ -1,11 +1,14 @@
-1|Hiking
-2|Swimming
+1|I am pretty adventurous
+2|Mountaineering
 3|Rock climbing
-4|Biking
-5|Sun bathing
-6|Walking
-7|Running
-8|Camping
-9|Mountaineering
-10|Skiing
-11|Tennis
+4|Hiking
+5|Camping
+6|Skiing
+7|Biking
+8|Swimming
+9|Running
+10|Tennis
+11|Cricket
+12|Walking
+13|Sun bathing
+14|I hate outdoors
