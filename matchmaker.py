@@ -85,8 +85,7 @@ def make_match(user_id_1, user_id_2):
         diff1 = abs(user_1_book_genre_id - user_2_book_genre_id)
         book_match = calculate_coeffecient(diff1, max_book_id, 6)
         match_total += book_match
-        print book_match
-        print match_total
+        
 
         max_movie_genre_id = db.session.query(func.max(MovieGenre.movie_genre_id)).one()
         max_movie_id = int(max_movie_genre_id[0])
@@ -95,15 +94,13 @@ def make_match(user_id_1, user_id_2):
         diff2 = abs(user_1_movie_genre_id - user_2_movie_genre_id)
         movie_match = calculate_coeffecient(diff2, max_movie_id, 8)
         match_total += movie_match
-        print movie_match
-        print match_total
 
         max_music_genre_id = db.session.query(func.max(MusicGenre.music_genre_id)).one()
-        max_music_id = max_music_genre_id[0]
+        max_music_id = int(max_music_genre_id[0])
         user_1_music_genre_id = vals1[3]
         user_2_music_genre_id = vals2[3]
         diff3 = abs(user_1_music_genre_id - user_2_music_genre_id)
-        music_match = calculate_coeffecient(diff3, max_music_genre_id, 5)
+        music_match = calculate_coeffecient(diff3, max_music_id, 5)
         match_total += music_match
 
         max_food_habit_id = db.session.query(func.max(FoodHabit.food_habit_id)).one()
@@ -130,7 +127,7 @@ def make_match(user_id_1, user_id_2):
         hobby_match = calculate_coeffecient(diff6, max_hobby, 5)
         match_total += hobby_match
 
-        max_political_view_id = db.session.query(func.max(PolticalView.political_view_id)).one()
+        max_political_view_id = db.session.query(func.max(PoliticalView.political_view_id)).one()
         max_political_view = int(max_political_view_id[0])
         user_1_political_view_id = vals1[7]
         user_2_political_view_id = vals2[7]
@@ -142,7 +139,7 @@ def make_match(user_id_1, user_id_2):
         max_religion = int(max_religion_id[0])
         user_1_religion_id = vals1[8]
         user_2_religion_id = vals2[8]
-        diff8 = abs(user_1_reliogion_id - user_2_religion_id)
+        diff8 = abs(user_1_religion_id - user_2_religion_id)
         religion_match = calculate_coeffecient(diff8, max_religion, 17)
         match_total += religion_match
 
@@ -151,7 +148,7 @@ def make_match(user_id_1, user_id_2):
         user_1_outdoor_id = vals1[9]
         user_2_outdoor_id = vals2[9]
         diff9 = abs(user_1_outdoor_id - user_2_outdoor_id)
-        outdoor_match = calculate_coeffecient(diff9, outdoor, 15)
+        outdoor_match = calculate_coeffecient(diff9, max_outdoor, 15)
         match_total += outdoor_match
 
        
