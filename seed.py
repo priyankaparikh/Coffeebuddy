@@ -275,7 +275,7 @@ def set_val_query_id():
     max_id = int(result[0])
 
     #set the valuefor the next user_id to be the max_id + 1
-    query = "SELECT setval('PendingMatch_user_query_id', :new_id)"
+    query = "SELECT setval('pending_matches_user_query_id_seq', :new_id)"
     db.session.execute(query, {'new_id': max_id + 1})
     db.session.commit()
 

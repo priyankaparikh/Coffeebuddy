@@ -96,9 +96,9 @@ class PendingMatch(db.Model):
     def __repr__ (self):
         """return information about a user query"""
 
-        d1 = "<user_query_id={a}, user_id={b},".format(self.user_query_id, self.user_id)
-        d2 = " query_pin_code={c}, query_time={d},".format(self.query_pin_code, self.query_time)
-        d3 = " pending={e}>".format(self.pending)
+        d1 = "<user_query_id={a}, user_id={b},".format(a=self.user_query_id,b=self.user_id)
+        d2 = " query_pin_code={c}, query_time={d},".format(c=self.query_pin_code,d=self.query_time)
+        d3 = " pending={e}>".format(e=self.pending)
 
         return d1 + d2 + d3
 

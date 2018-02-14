@@ -179,8 +179,40 @@ def all_outdoors():
     return ["Favorite Outdoor activity", activities]
 
 
-def query_matched(user_id):
-    """return all the made matches in the history of the user"""
+def query_pending_match():
+    """a list of user_id that need to be matched"""
+    potential_matches = []
+
+    user = PendingMatch.query.filter(PendingMatch.pending == True).first()
+    query_pincode = user.query_pin_code
+
+    #pending to inser time constraints
+    pmatch = PendingMatch.query.filter(PendingMatch.query_pin_code == query_pincode).all()
+    
+    for i in pmatch:
+        user_id = i.user_id
+        potential_matches.append(user_id)
+
+    return potential_matches
+
+
+def get_user_interests(user_ids):
+    """accepts a list of user_ids
+    returns a list of tuples with the first element as the user_id 
+    and the second element a list of the user_interest"""
+
+    user_interest = []
+
+    if len(user_ids) <= 1:
+        return None
+
+    else:
+
+        for user_id in user_ids:
+            q = Interest.query.filter(Interest.user_id == user_id).all()
+            user_interest.append((user_id, q))
+
+    return user_interest
 
 def update_user_info(info):
     """dynamically updates user_information by checking the data type of the input"""
