@@ -1,7 +1,7 @@
 """Coffee_buddy"""
 
 from jinja2 import StrictUndefined
-from flask import (Flask, render_template, redirect, request, flash, session)
+from flask import Flask, render_template, redirect, request, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
 from models import *
 from queries import *
@@ -69,8 +69,8 @@ def register_form():
 def register_process():
     """Get user registration and redirect to user_interests"""
 
-    fname = request.form.get('fname')
-    lname = request.form.get('lname')
+    fname = request.form.get('fname').capitalize()
+    lname = request.form.get('lname').capitalize()
     email = request.form.get('email')
     user_name = request.form.get('user_name')
     password = request.form.get('password')
@@ -130,6 +130,7 @@ def register_process():
 
     session['user_id'] = user.user_id
     flash('You are successfully registerd and logged in')
+    return redirect(plan_trip.html)
     
 
 @app.route('/user_info', methods=["GET"])
@@ -152,14 +153,41 @@ def show_map():
 def plan_trip():
     """get trip time, pincode"""
 
-    time = request.form.get('time')
-    pincode = request.form.get('pincode')
+    query_time = request.form.get('triptime')
+    query_pin_code = request.form.get('pincode')
+    user_id = session['user_id']
+    session['query_pincode'] = query_pin_code
+
+    #add user query to the db
+
+    trip =  PendingMatch(
+                    user_id=user_id,
+                    query_pin_code=query_pin_code,
+                    query_time=query_time,
+                    pending=True
+                    )
+
+    db.session.add(trip)
+    db.session.commit()
 
     #at this point we will pass the information the yelper
     #yelper will end information to google and google will render
     # a map with relevant information
     
-    return render_template('map.html', time=time, pincode=pincode)
+    return render_template('map.html', time=query_time, pincode=query_pin_code)
+
+@app.route('/show_match',methods=['GET'])
+def show_matches():
+    """show a logged in user possible matches"""
+
+    user_id = session.get('userid')
+    pin = session.get('query_pincode')
+
+    potential_matches = query_pending_match(pin)
+    match_percents = create_matches(potential_matches, user_id)
+
+
+    return render_template('show_matches.html')
 
 @app.route('/show_map', methods=["GET"])
 def choose_coffee_shop():

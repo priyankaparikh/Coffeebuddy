@@ -86,7 +86,6 @@ def make_match(user_id_1, user_id_2):
         book_match = calculate_coeffecient(diff1, max_book_id, 6)
         match_total += book_match
         
-
         max_movie_genre_id = db.session.query(func.max(MovieGenre.movie_genre_id)).one()
         max_movie_id = int(max_movie_genre_id[0])
         user_1_movie_genre_id = vals1[2]
@@ -153,6 +152,17 @@ def make_match(user_id_1, user_id_2):
 
        
     return match_total
+
+def create_matches(potential_matches, user1):
+    """accepts a list of user_id's with similar queries and returns a list of tuples
+    """
+    matched = []
+
+    for user in potential_matches:
+        match_percent = make_match(user1, user)
+        matched.append(user1, user, match_percent)
+
+    return matched
 
 ########################################################################################################
 if __name__ == "__main__":

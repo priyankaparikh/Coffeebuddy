@@ -23,7 +23,6 @@ def get_user_id(input_email):
 
     return user_id
 
-
 def get_user_info(input_id):
     """return user_info as a list using the user_id
 
@@ -73,6 +72,7 @@ def all_book_genres():
         books.append((book.book_genre_id, book.book_genre_name))
 
     return ["Preferred book genre", books]
+
 
 def all_movie_genres():
     """returns a list of tuples with book genre ids and book genres"""
@@ -179,17 +179,15 @@ def all_outdoors():
     return ["Favorite Outdoor activity", activities]
 
 
-def query_pending_match():
+def query_pending_match(pincode):
     """a list of user_id that need to be matched"""
+
     potential_matches = []
 
-    user = PendingMatch.query.filter(PendingMatch.pending == True).first()
-    query_pincode = user.query_pin_code
-
-    #pending to inser time constraints
-    pmatch = PendingMatch.query.filter(PendingMatch.query_pin_code == query_pincode).all()
+    users = PendingMatch.query.filter(PendingMatch.pending == True, 
+                                    PendingMatch.query_pin_code == pincode).all()
     
-    for i in pmatch:
+    for i in users:
         user_id = i.user_id
         potential_matches.append(user_id)
 

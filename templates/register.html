@@ -3,31 +3,35 @@
         <h1>CoffeeBuddy new user registeration part 1</h1>
             <form action="register" method="POST">
                 <p>First name</p>
-                    <input type = "text", name = "fname">
+                    <input type = "text", name = "fname" required>
                 <p>Last name</p>
-                    <input type = "text", name = "lname">
+                    <input type = "text", name = "lname" required>
                 <p>E-mail</p>
-                    <input type = "email", name = "email">
+                    <input type = "email", name = "email" required>
                 <p>User name</p>
-                    <input type = "text", name = "user_name">
+                    <input type = "text", name = "user_name" required>
                 <p>Password</p>
-                    <input type = "password", name = "password">
+                    <input type = "password", name = "password" required>
                 <p>Birth date</p>
-                    <input type = "text", name = "date_of_birth">
+                    <input type = "date", name = "date_of_birth" required>
                 <p>Zipcode</p>
-                    <input type = "text", name = "zipcode">
+                    <input type = "text", name = "zipcode" required>
                 <p>Phone Number</p>
-                    <input type = "text", name = "phone">  
+                    <input type = "text", name = "phone" required>  
                 <p>One word to describe yourself</p>
-                    <input type="text" name="one_word"><br>
+                    <input type="text" name="one_word" required><br>
         <h1>CoffeeBuddy new user registeration part 2</h1>
                 {% for sub_interest in all_interests %}
                     <h2>{{ sub_interest[0] }}</h2>
                     {% for interest in sub_interest[1] %}
-                        <input type="radio" name="{{sub_interest[0]}}" id="{{interest[1]}}" value="{{interest[0]}}">
+                        <input type="radio" name="{{sub_interest[0]}}" id="{{interest[1]}}" value="{{interest[0]}}" required>
                         <lable for="{{interest[1]}}">{{ interest[1] }}
                     {% endfor %}
                 {% endfor %}
                 <input type = "submit" value="submit">
             </form>
+    {# if session['user'] #}
+        <!-- <script type="text/javascript"></script> -->
+    {# endif #}
+
     {% endblock %}
