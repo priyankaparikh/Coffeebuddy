@@ -20,6 +20,7 @@ class User(db.Model):
     zipcode = db.Column(db.String(100), nullable=False)
     phone = db.Column(db.String(100), nullable=False)
     one_word = db.Column(db.String(100), nullable=False)
+    photo_path = db.Column(db.String(250), nullable=False)
 
     interest = db.relationship('Interest',
                             backref=db.backref('User'))

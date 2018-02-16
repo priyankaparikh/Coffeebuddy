@@ -1,10 +1,11 @@
 """Coffee_buddy"""
-
+import os
 from jinja2 import StrictUndefined
 from flask import Flask, render_template, redirect, request, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
 from models import *
 from queries import *
+from matchmaker import *
 
 app = Flask(__name__)
 
@@ -36,19 +37,15 @@ def check_login():
     email = request.form.get('email')
     password = request.form.get('password')
 
-    check_db = db.session.query(User).filter(User.email == email)
-    #User.password == password
-    user = check_db.first()
+    user = User.query.filter(User.email == email).first()
 
     if not user:
         flash('Please register your account')
         return redirect('/register')
-    elif email == User.email and password == User.password:
+    elif email == user.email and password == user.password:
         session['user_id'] = user.user_id
         flash('You successfully logged in')
-        return redirect('/users/' + str(user.user_id))
-    else:
-        return redirect('/forgot_password')
+        return redirect('/plan_trip')
 
 
 @app.route('/register', methods=["GET"])
@@ -130,21 +127,26 @@ def register_process():
 
     session['user_id'] = user.user_id
     flash('You are successfully registerd and logged in')
-    return redirect(plan_trip.html)
+    return redirect('/plan_trip')
     
 
 @app.route('/user_info', methods=["GET"])
 def show_profile():
     """show the user their own profile"""
 
-    user_info = get_user_info("20")
+    userid = session.get("user_id")
+
+    user_info = get_user_info(userid)
 
     return render_template('/user_info.html',user_info=user_info)
 
 
 @app.route('/plan_trip', methods=["GET"])
 def show_map():
-    """Show a map with coffeeshops"""
+    """Show a map with coffeeshops
+    Putting in time constraints for the user input via 
+    HTML so that every input is a valid input """
+
 
     return render_template("/plan_trip.html")
 
@@ -174,20 +176,44 @@ def plan_trip():
     #yelper will end information to google and google will render
     # a map with relevant information
     
-    return render_template('map.html', time=query_time, pincode=query_pin_code)
+    return redirect("/show_matches")
 
-@app.route('/show_match',methods=['GET'])
-def show_matches():
+@app.route('/show_matches',methods=['GET'])
+def show_potenital_matches():
     """show a logged in user possible matches"""
 
-    user_id = session.get('userid')
+    userid = session.get('user_id')
     pin = session.get('query_pincode')
 
+
     potential_matches = query_pending_match(pin)
-    match_percents = create_matches(potential_matches, user_id)
+    #this is a list of user_ids
+    #[189, 181, 345, 282, 353, 271, 9, 9, 501, 9]
+    match_percents = create_matches(potential_matches, userid)
+    #this is a list of tuples 
+    """create_matches([30,40,50],60)
+    => [(60, 30, 57.90407177363699), (60, 40, 54.887163561076605)
+    ,(60, 50, 71.24706694271913)]
+    """
+    user_info = get_user_info(userid)
+    # this is the logged in user's info
+    user_name = get_user_name(userid)
+    # this is the logged in user's username
 
+    match_info = []
 
-    return render_template('show_matches.html')
+    for user in match_percents:
+        username = get_user_name(user[1])
+        matched_username = username[0] + " " + username[1]
+        match_percent = round(user[2])
+
+        match_info.append((matched_username, match_percent))
+
+    #match info is a list of tuples [(username, match_percent)]
+    return render_template('show_matches.html',
+                                user_name=user_name, 
+                                user_info=user_info,
+                                match_info=match_info)
 
 @app.route('/show_map', methods=["GET"])
 def choose_coffee_shop():

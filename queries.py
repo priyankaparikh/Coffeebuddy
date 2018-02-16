@@ -23,6 +23,16 @@ def get_user_id(input_email):
 
     return user_id
 
+
+def get_user_name(input_id):
+    """accepts a user_id as a parameter and returns a tuple of the fname 
+    and lname of the user"""
+
+    user = User.query.filter(User.user_id == '{}'.format(input_id)).first()
+
+    return ('{}'.format(user.fname), '{}'.format(user.lname))
+ 
+    
 def get_user_info(input_id):
     """return user_info as a list using the user_id
 

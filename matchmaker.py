@@ -1,6 +1,6 @@
 from sqlalchemy import func
 from models import * 
-from queries import get_user_interests
+from queries import get_user_interests, query_pending_match
 
 """this module returns a match percentage for two specific users when their user_interests
     are passed through the function
@@ -159,8 +159,9 @@ def create_matches(potential_matches, user1):
     matched = []
 
     for user in potential_matches:
-        match_percent = make_match(user1, user)
-        matched.append(user1, user, match_percent)
+        if user1 != user :
+            match_percent = make_match(user1, user)
+            matched.append((user1, user, match_percent))
 
     return matched
 
