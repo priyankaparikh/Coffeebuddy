@@ -1,14 +1,15 @@
 """Coffee_buddy"""
 import os
 from jinja2 import StrictUndefined
-from flask import Flask, render_template, redirect, request, flash, session
+from flask import Flask, render_template, redirect, request, flash, session, url_for
 from flask_debugtoolbar import DebugToolbarExtension
+from werkzeug.utils import secure_filename
 from models import *
 from queries import *
 from matchmaker import *
 
 app = Flask(__name__)
-
+app.config['UPLOAD_FOLDER'] = '/static/user_profile_pictures'
 # Flask sessions and the debug toolbar
 app.secret_key = "ABC"
 
@@ -83,6 +84,11 @@ def register_process():
     hobby_id = request.form.get('Favorite hobby')
     political_view_id = request.form.get('Political ideology')
     religion_id = request.form.get('Religious ideology')
+    # f = request.files['profile_picture']
+    # f.save(secure_filename(f.filename))
+    file = request.files.get('file', None)
+    filename = secure_filename(file.filename)
+    file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
     outdoor_id = request.form.get('Favorite Outdoor activity')
 
 

@@ -20,7 +20,7 @@ class User(db.Model):
     zipcode = db.Column(db.String(100), nullable=False)
     phone = db.Column(db.String(100), nullable=False)
     one_word = db.Column(db.String(100), nullable=False)
-    photo_path = db.Column(db.String(250), nullable=False)
+    #profile_picture = db.Column(db.String(250), nullable=True)
 
     interest = db.relationship('Interest',
                             backref=db.backref('User'))
@@ -274,6 +274,26 @@ def connect_to_db(app):
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.app = app
     db.init_app(app)
+
+def example_data():
+    """Create example data for the test database."""
+
+    user1 = User(fname="Felix", lname="Alvarez", email="fez@hotmail.com",
+                user_name="FezAl", password="Friend", date_of_birth="2-20-1989",
+                zipcode="95134", phone="657897149", one_word="hello")
+    user2 = User(fname="Donna", lname="Pinciotti", email="donnap@hotmail.com",
+                user_name="donpin", password="seventies", date_of_birth="7-18-1989",
+                zipcode="95111", phone="5098799711", one_word="honey")
+    user3 = User(fname="Eric", lname="Forman", email="eforman@gmail.com",
+                user_name="Efor", password="Whimsical", date_of_birth="4-16-1989",
+                zipcode="95122", phone="6509908999", one_word="healthy")
+    user4 = User(fname="Kelso", lname="Harry", email="kels@hotmail.com",
+                user_name="kel", password="Dudes", date_of_birth="9-9-1989",
+                zipcode="95114", phone="789891849", one_word="pretty")
+       
+
+    db.session.add_all([user1, user2, user3, user4])
+    db.session.commit()
     
 
 ###################################################################################################################

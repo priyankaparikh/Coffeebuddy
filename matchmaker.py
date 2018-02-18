@@ -152,6 +152,7 @@ def make_match(user_id_1, user_id_2):
 
        
     return match_total
+    
 
 def create_matches(potential_matches, user1):
     """accepts a list of user_id's with similar queries and returns a list of tuples
@@ -164,6 +165,7 @@ def create_matches(potential_matches, user1):
             matched.append((user1, user, match_percent))
 
     return matched
+
 
 ########################################################################################################
 if __name__ == "__main__":
