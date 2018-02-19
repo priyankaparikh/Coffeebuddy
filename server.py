@@ -9,7 +9,7 @@ from queries import *
 from matchmaker import *
 
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = '/static/user_profile_pictures'
+app.config['UPLOAD_FOLDER'] = 'static/user_profile_pictures'
 # Flask sessions and the debug toolbar
 app.secret_key = "ABC"
 
@@ -84,11 +84,10 @@ def register_process():
     hobby_id = request.form.get('Favorite hobby')
     political_view_id = request.form.get('Political ideology')
     religion_id = request.form.get('Religious ideology')
-    # f = request.files['profile_picture']
-    # f.save(secure_filename(f.filename))
-    file = request.files.get('file', None)
+    file = request.files.get('profile_picture', None)
     filename = secure_filename(file.filename)
     file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    profile_picture = 'static/user_profile_pictures/' + str(filename)
     outdoor_id = request.form.get('Favorite Outdoor activity')
 
 
@@ -106,8 +105,8 @@ def register_process():
                     date_of_birth=date_of_birth,
                     zipcode=zipcode,
                     phone=phone,
-                    one_word=one_word
-                    )
+                    one_word=one_word,
+                    profile_picture=profile_picture)
 
 
         db.session.add(user)

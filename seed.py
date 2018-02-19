@@ -27,6 +27,7 @@ def load_users():
         zipcode = row[7]
         phone = row[8]
         one_word = row[9]
+        profile_picture = row[10]
 
         #insert user
         user = User(user_id=user_id,
@@ -38,7 +39,8 @@ def load_users():
                     date_of_birth=date_of_birth,
                     zipcode=zipcode,
                     phone=phone,
-                    one_word=one_word)
+                    one_word=one_word,
+                    profile_picture=profile_picture)
 
         db.session.add(user)
 

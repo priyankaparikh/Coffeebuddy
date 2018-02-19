@@ -1,7 +1,13 @@
 {% extends 'base.html' %}
+
     {% block content %}
+
         <h1> User Profile</h1>
-            {% for info in user_info %}
+
+            <img src='{{user_info[-1]}}'>
+
+            {% for info in user_info[1:-1] %}
                 <p> {{info}} </p>
             {% endfor %}
+
     {% endblock %}

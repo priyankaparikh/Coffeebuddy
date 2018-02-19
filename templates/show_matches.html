@@ -1,10 +1,16 @@
 {% extends 'base.html' %}
+
     {% block content %}
+
     <h1> Welcome {{ user_name[0] + user_name[1] }}</h1>
             <p> Here is a list of your potential Matches</p>
+
                 {% for match in match_info %}
+
                     <p> {{ match[0] }} </p>
                     <p> percent match = {{ match[1]}} </p>
                     <button type="button">Match me!</button>
+                    
                 {% endfor %}
+
     {% endblock %}

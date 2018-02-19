@@ -41,7 +41,7 @@ def get_user_info(input_id):
     
     """
 
-    user = User.query.filter(User.user_id == '{}'.format(input_id)).all()
+    user = User.query.filter(User.user_id == input_id).all()
 
     user_id = user[0].user_id
     email = user[0].email
@@ -49,8 +49,14 @@ def get_user_info(input_id):
     date_of_birth = user[0].date_of_birth
     zipcode = user[0].zipcode
     phone = user[0].phone
+    fname = user[0].fname
+    lname = user[0].lname
+    profile_picture = user[0].profile_picture
 
-    return [user_id, email, user_name, date_of_birth, zipcode, phone]
+
+    return [user_id, email, user_name, 
+            date_of_birth, zipcode, phone, 
+            fname, lname, profile_picture]
 
 
 def validate_password(input_email, input_password):

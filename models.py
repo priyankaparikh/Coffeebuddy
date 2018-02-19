@@ -20,7 +20,7 @@ class User(db.Model):
     zipcode = db.Column(db.String(100), nullable=False)
     phone = db.Column(db.String(100), nullable=False)
     one_word = db.Column(db.String(100), nullable=False)
-    #profile_picture = db.Column(db.String(250), nullable=True)
+    profile_picture = db.Column(db.String(250), nullable=True)
 
     interest = db.relationship('Interest',
                             backref=db.backref('User'))
@@ -275,6 +275,7 @@ def connect_to_db(app):
     db.app = app
     db.init_app(app)
 
+
 def example_data():
     """Create example data for the test database."""
 
@@ -290,9 +291,52 @@ def example_data():
     user4 = User(fname="Kelso", lname="Harry", email="kels@hotmail.com",
                 user_name="kel", password="Dudes", date_of_birth="9-9-1989",
                 zipcode="95114", phone="789891849", one_word="pretty")
-       
+    user_interest1 = Interest(user_id=1, book_genre_id=2, movie_genre_id=1, 
+                            music_genre_id=1, food_habit_id=2,fav_cuisine_id=2,
+                            hobby_id=2, political_view_id=1, religion_id=1,
+                            outdoor_id=1)
+    user_interest2 = Interest(user_id=2, book_genre_id=1, movie_genre_id=1, 
+                            music_genre_id=1, food_habit_id=1,fav_cuisine_id=2,
+                            hobby_id=2, political_view_id=2, religion_id=2,
+                            outdoor_id=1)
+    user_interest3 = Interest(user_id=3, book_genre_id=2, movie_genre_id=1, 
+                            music_genre_id=1, food_habit_id=2,fav_cuisine_id=2,
+                            hobby_id=1, political_view_id=1, religion_id=1,
+                            outdoor_id=2)
+    user_interest4 = Interest(user_id=4, book_genre_id=1, movie_genre_id=1, 
+                            music_genre_id=1, food_habit_id=1,fav_cuisine_id=2,
+                            hobby_id=2, political_view_id=1, religion_id=2,
+                            outdoor_id=1)
+    pending_match1 = PendingMatch(user_id=3, query_pin_code=95111, query_time='2018-02-15 22:20:21.313644', pending=True)
+    pending_match2 = PendingMatch(user_id=4, query_pin_code=95111, query_time='2018-02-15 22:20:21.313644', pending=True)
+    book_genre1 = BookGenre(book_genre_name="Horror")
+    book_genre2 = BookGenre(book_genre_name="Fiction")
+    movie_genre1 = MovieGenre(movie_genre_name="Action")
+    movie_genre2 = MovieGenre(movie_genre_name="Comedy")
+    music_genre1 = MusicGenre(music_genre_name="Metal")
+    music_genre2 = MusicGenre(music_genre_name="Jazz")
+    food_habit1 = FoodHabit(food_habit_name="Vegan")
+    food_habit2 = FoodHabit(food_habit_name="Pescetarian")
+    fav_cuisine1 = FavCuisine(fav_cuisine_name="Italian")
+    fav_cuisine2 = FavCuisine(fav_cuisine_name="Mexican")
+    hobby1 = Hobby(hobby_name="Sewing")
+    hobby2 = Hobby(hobby_name="Knitting")
+    political_view1 = PoliticalView(political_view_name="Democrat")
+    political_view2 = PoliticalView(political_view_name="Republic")
+    religion1 = Religion(religion_name="Hindu")
+    religion2 = Religion(religion_name="Christian")
+    outdoor1 = Outdoor(outdoor_activity="hiking")
+    outdoor2 = Outdoor(outdoor_activity="swimming")
 
-    db.session.add_all([user1, user2, user3, user4])
+    db.session.add_all([user1, user2, user3, user4,
+                        user_interest1, user_interest2, user_interest3, user_interest4,
+                        pending_match1, pending_match2,
+                        book_genre1, book_genre2, movie_genre1, movie_genre2,
+                        music_genre1, music_genre2, food_habit1, food_habit2,
+                        fav_cuisine1, fav_cuisine2, hobby1, hobby2,
+                        political_view1, political_view2,religion1, religion2,
+                        outdoor1, outdoor_id])
+
     db.session.commit()
     
 
