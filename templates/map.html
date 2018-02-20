@@ -1,33 +1,101 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8">
+    <title>reccomended coffee shops</title>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAFPPyCmVFLC4JC_66sLpi2RxFB01soZ3o&callback=initMap">
+    </script>
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="/static/map.js">
+    </script>
+
     <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
       #map {
-        height: 400px;
-        width: 100%;
-       }
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 80%;
+        margin: 2%;
+        padding: 4%;
+      }
     </style>
   </head>
   <body>
-    <h1>Some coffee Places near you</h1>
     <div id="map"></div>
-    <div id= user_pin data-time="{{ time }}" data-pin="{{ pincode }}">
     <script>
-      function initM() {
-        var time = $('#user_pin').data(time)
-        var sanfrancisco = {lat: 37.7749, lng: -122.4194};
+
+      // The following example creates a marker in Stockholm, Sweden using a DROP
+      // animation. Clicking on the marker will toggle the animation between a BOUNCE
+      // animation and no animation.
+
+      // var reccomendations = {# reccomendations #}
+
+      function initMap() {
+        // for (var i = 0; i < 1; i++) {
+        //     center = {lat: reccomendations[i]['latitude'], lng: reccomendations[0]['longitutde']}
+        //   }
+
+        // DO THE AJAX CALL HERE
+
+
+        var coffeeShop = {lat:37.8272, lng:-122.2913}
         var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 15,
-          center: sanfrancisco
-        });
+          zoom: 13,
+          center : coffeeShop
+        })
+      }
+
+      //this function only creates markers. Takes val(an object) as param
+      function createMarkers(val) {
+        var myLatLng = val
         var marker = new google.maps.Marker({
-          position: sanfrancisco,
-          map: map
+          map: map,
+          draggable: true,
+          animation: google.maps.Animation.DROP,
+          position: myLatLng
         });
+        marker.addListener('click', toggleBounce);
+      }
+
+      // this function calls the createMarker function
+      function postMarkers(result) {
+        var data = result
+
+          $.each(data, function(idx, val) {
+              createMarkers(val)
+          });
+      }
+
+      function updateMarkers() {
+          $.get("/coffee-info.json",postMarkers);
+          console.log("Finished sending AJAX Request");
+      }
+
+      $('#map').on('click', updateMarkers)
+      </script>
+
+        <!-- //LOOK AT JQUERY.EACH
+        var marker = new google.maps.Marker({
+          map: map,
+          draggable: true,
+          animation: google.maps.Animation.DROP,
+          position: uluru
+        });
+        marker.addListener('click', toggleBounce);
+      }
+
+      function toggleBounce() {
+        if (marker.getAnimation() !== null) {
+          marker.setAnimation(null);
+        } else {
+          marker.setAnimation(google.maps.Animation.BOUNCE);
+        }
       }
     </script>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpITs2tjdaTkZA1eg4Lbwku535hegHS-o&callback=initMap">
-    </script>
+     -->
   </body>
 </html>

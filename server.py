@@ -2,11 +2,13 @@
 import os
 from jinja2 import StrictUndefined
 from flask import Flask, render_template, redirect, request, flash, session, url_for
+from flask import jsonify
 from flask_debugtoolbar import DebugToolbarExtension
 from werkzeug.utils import secure_filename
 from models import *
 from queries import *
 from matchmaker import *
+from yelper import filter_response
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'static/user_profile_pictures'
@@ -34,7 +36,7 @@ def login_input():
 @app.route('/login', methods=["POST"])
 def check_login():
     """Check user login info"""
-    
+
     email = request.form.get('email')
     password = request.form.get('password')
 
@@ -67,8 +69,10 @@ def register_form():
 def register_process():
     """Get user registration and redirect to user_interests"""
 
-    fname = request.form.get('fname').capitalize()
-    lname = request.form.get('lname').capitalize()
+    fname = request.form.get('fname')
+    fname = fname.capitalize()
+    lname = request.form.get('lname')
+    lname = lname.capitalize()
     email = request.form.get('email')
     user_name = request.form.get('user_name')
     password = request.form.get('password')
@@ -99,7 +103,7 @@ def register_process():
         #to the db
         user = User(fname=fname,
                     lname=lname,
-                    email=email, 
+                    email=email,
                     user_name=user_name,
                     password=password,
                     date_of_birth=date_of_birth,
@@ -117,7 +121,7 @@ def register_process():
         interest = Interest(
                     user_id=userid,
                     book_genre_id=book_genre_id,
-                    movie_genre_id=movie_genre_id, 
+                    movie_genre_id=movie_genre_id,
                     music_genre_id=music_genre_id,
                     food_habit_id=food_habit_id,
                     fav_cuisine_id=fav_cuisine_id,
@@ -133,7 +137,7 @@ def register_process():
     session['user_id'] = user.user_id
     flash('You are successfully registerd and logged in')
     return redirect('/plan_trip')
-    
+
 
 @app.route('/user_info', methods=["GET"])
 def show_profile():
@@ -149,7 +153,7 @@ def show_profile():
 @app.route('/plan_trip', methods=["GET"])
 def show_map():
     """Show a map with coffeeshops
-    Putting in time constraints for the user input via 
+    Putting in time constraints for the user input via
     HTML so that every input is a valid input """
 
 
@@ -180,8 +184,9 @@ def plan_trip():
     #at this point we will pass the information the yelper
     #yelper will end information to google and google will render
     # a map with relevant information
-    
+
     return redirect("/show_matches")
+
 
 @app.route('/show_matches',methods=['GET'])
 def show_potenital_matches():
@@ -195,7 +200,7 @@ def show_potenital_matches():
     #this is a list of user_ids
     #[189, 181, 345, 282, 353, 271, 9, 9, 501, 9]
     match_percents = create_matches(potential_matches, userid)
-    #this is a list of tuples 
+    #this is a list of tuples
     """create_matches([30,40,50],60)
     => [(60, 30, 57.90407177363699), (60, 40, 54.887163561076605)
     ,(60, 50, 71.24706694271913)]
@@ -216,17 +221,24 @@ def show_potenital_matches():
 
     #match info is a list of tuples [(username, match_percent)]
     return render_template('show_matches.html',
-                                user_name=user_name, 
+                                user_name=user_name,
                                 user_info=user_info,
                                 match_info=match_info)
 
 @app.route('/show_map', methods=["GET"])
 def choose_coffee_shop():
-    """get user query"""
-    
-
+    """display a map with reccomended coffee shops and other information
+    """
     return render_template('map.html')
 
+@app.route("/coffee-info.json")
+def melon_info():
+    """Return info about a melon as JSON."""
+
+    pin = session.get('query_pincode')
+    reccomendations = filter_response(pin)
+
+    return jsonify(reccomendations)
 
 
 ###################################################################################################################

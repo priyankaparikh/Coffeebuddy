@@ -29,14 +29,14 @@ class User(db.Model):
         """return personal information about the user"""
 
         d1 = '<user_id={a}, email={b},'.format(a=self.user_id, b=self.email)
-        d2 = ' user_name={c}, password={d},'.format(c=self.user_name, d=self.password) 
+        d2 = ' user_name={c}, password={d},'.format(c=self.user_name, d=self.password)
         d3 = ' date_of_birth={e}, zipcode={f},'.format(e=self.date_of_birth, f=self.zipcode)
         d4 = ' phone={g}>'.format(g=self.phone)
         return d1 + d2 + d3 + d4
 
-    
+
 class Interest(db.Model):
-    """User interests and hobbies for matchmaking, Each Column will hold integers 
+    """User interests and hobbies for matchmaking, Each Column will hold integers
     that correspond to the information on other tables"""
 
     __tablename__ = 'interests'
@@ -80,7 +80,7 @@ class UserMatch(db.Model):
     def __repr__ (self):
         """return interest choices of the user"""
 
-        return'< match_id={a}, user_id_1={b}, user_id_2={c}, match_date={d}>'.format(a=self.match_id, 
+        return'< match_id={a}, user_id_1={b}, user_id_2={c}, match_date={d}>'.format(a=self.match_id,
         b=self.user_id_1, c=self.user_id_2, d=self.match_date)
 
 class PendingMatch(db.Model):
@@ -115,7 +115,7 @@ class BookGenre(db.Model):
                             backref=db.backref('book_genre'))
 
     def __repr__ (self):
-        """displays the ids of Book genres and book genres 
+        """displays the ids of Book genres and book genres
         Can be cross-referenced with the interests table"""
 
         return'<book_genre_id={}, book_genre_name={}>'.format(self.book_genre_id,self.book_genre_name)
@@ -133,7 +133,7 @@ class MovieGenre(db.Model):
                             backref=db.backref('movie_genre'))
 
     def __repr__(self):
-        """displays the ids of movies and movie names 
+        """displays the ids of movies and movie names
         Can be cross-referenced with the interests table"""
 
         return'<move_genre_id={}, movie_genre_name={}>'.format(self.movie_genre_id, self.movie_genre_name)
@@ -151,7 +151,7 @@ class MusicGenre(db.Model):
                             backref=db.backref('music_genre'))
 
     def __repr__ (self):
-        """displays the ids of music genres and music genres 
+        """displays the ids of music genres and music genres
         Can be cross-referenced with the interests table"""
 
         return'<music_genre_id={}, music_genre_name={}>'.format(self.music_genre_id, self.music_genre_name)
@@ -161,7 +161,7 @@ class FoodHabit(db.Model):
     """Holds the types of food_habits and their corresponding ids """
 
     __tablename__ = 'food_habits'
-    
+
     food_habit_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     food_habit_name= db.Column(db.String(40), nullable=False)
 
@@ -169,7 +169,7 @@ class FoodHabit(db.Model):
                             backref=db.backref('food_habit'))
 
     def __repr__ (self):
-        """displays the ids of food habits and habit names 
+        """displays the ids of food habits and habit names
         Can be cross-referenced with the interests table"""
 
         return'<food_habit_id={}, habit_name={}>'.format(self.food_habit_id, self.food_habit_name)
@@ -179,7 +179,7 @@ class FavCuisine(db.Model):
     """Holds the types of cuisines and thier corresponding ids"""
 
     __tablename__ = 'fav_cuisines'
-    
+
     fav_cuisine_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     fav_cuisine_name= db.Column(db.String(40), nullable=False)
 
@@ -187,7 +187,7 @@ class FavCuisine(db.Model):
                             backref=db.backref('fav_cuisine'))
 
     def __repr__ (self):
-        """displays the ids of cuisines and cuisine names 
+        """displays the ids of cuisines and cuisine names
         Can be cross-referenced with the interests table"""
 
         return'<fav_cuisine_id={}, fav_cuisine_name={}>'.format(self.fav_cuisine_id, self.fav_cuisine_name)
@@ -197,7 +197,7 @@ class Hobby(db.Model):
     """Holds the list of hobbies and thier corresponding ids"""
 
     __tablename__ = 'hobbies'
-    
+
     hobby_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     hobby_name= db.Column(db.String(40), nullable=False)
 
@@ -205,7 +205,7 @@ class Hobby(db.Model):
                             backref=db.backref('hobby'))
 
     def __repr__ (self):
-        """displays the ids of hobbies and hobby names 
+        """displays the ids of hobbies and hobby names
         Can be cross-referenced with the interests table"""
 
         return'<hobby_id={}, hobby_name={}>'.format(self.hobby_id, self.hobby_name)
@@ -215,7 +215,7 @@ class PoliticalView(db.Model):
     """Holds the political_views of the users"""
 
     __tablename__ = 'political_views'
-    
+
     political_view_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     political_view_name= db.Column(db.String(40), nullable=False)
 
@@ -223,10 +223,10 @@ class PoliticalView(db.Model):
                             backref=db.backref('political_view'))
 
     def __repr__ (self):
-        """displays the ids of political views and political view names 
+        """displays the ids of political views and political view names
         Can be cross-referenced with the interests table"""
 
-        return'<politicial_view_id={}, political_view_name={}>'.format(self.political_view_id, 
+        return'<politicial_view_id={}, political_view_name={}>'.format(self.political_view_id,
         self.political_view_name)
 
 
@@ -242,7 +242,7 @@ class Religion(db.Model):
                             backref=db.backref('religion'))
 
     def __repr__ (self):
-        """displays the ids of religion and religion names 
+        """displays the ids of religion and religion names
         Can be cross-referenced with the interests table"""
 
         return'<religion_id={}, religion_name={}>'.format(self.religion_id, self.religion_name)
@@ -260,13 +260,13 @@ class Outdoor(db.Model):
                             backref=db.backref('outdoor'))
 
     def __repr__ (self):
-        """displays the ids of oa, and oa 
+        """displays the ids of oa, and oa
         Can be cross-referenced with the interests table"""
 
         return'<outdoor_id={}, outdoor_activity={}>'.format(self.outdoor_id,self.outdoor_activity)
 
 
-def connect_to_db(app):
+def connect_to_db(app, uri='postgresql:///cb'):
     """Connect the database to our Flask app."""
 
     # Configure to use our PstgreSQL database
@@ -291,30 +291,14 @@ def example_data():
     user4 = User(fname="Kelso", lname="Harry", email="kels@hotmail.com",
                 user_name="kel", password="Dudes", date_of_birth="9-9-1989",
                 zipcode="95114", phone="789891849", one_word="pretty")
-    user_interest1 = Interest(user_id=1, book_genre_id=2, movie_genre_id=1, 
-                            music_genre_id=1, food_habit_id=2,fav_cuisine_id=2,
-                            hobby_id=2, political_view_id=1, religion_id=1,
-                            outdoor_id=1)
-    user_interest2 = Interest(user_id=2, book_genre_id=1, movie_genre_id=1, 
-                            music_genre_id=1, food_habit_id=1,fav_cuisine_id=2,
-                            hobby_id=2, political_view_id=2, religion_id=2,
-                            outdoor_id=1)
-    user_interest3 = Interest(user_id=3, book_genre_id=2, movie_genre_id=1, 
-                            music_genre_id=1, food_habit_id=2,fav_cuisine_id=2,
-                            hobby_id=1, political_view_id=1, religion_id=1,
-                            outdoor_id=2)
-    user_interest4 = Interest(user_id=4, book_genre_id=1, movie_genre_id=1, 
-                            music_genre_id=1, food_habit_id=1,fav_cuisine_id=2,
-                            hobby_id=2, political_view_id=1, religion_id=2,
-                            outdoor_id=1)
     pending_match1 = PendingMatch(user_id=3, query_pin_code=95111, query_time='2018-02-15 22:20:21.313644', pending=True)
     pending_match2 = PendingMatch(user_id=4, query_pin_code=95111, query_time='2018-02-15 22:20:21.313644', pending=True)
     book_genre1 = BookGenre(book_genre_name="Horror")
     book_genre2 = BookGenre(book_genre_name="Fiction")
     movie_genre1 = MovieGenre(movie_genre_name="Action")
     movie_genre2 = MovieGenre(movie_genre_name="Comedy")
-    music_genre1 = MusicGenre(music_genre_name="Metal")
-    music_genre2 = MusicGenre(music_genre_name="Jazz")
+    music_genre1 = MusicGenre(music_genre_id=1,music_genre_name="Metal")
+    music_genre2 = MusicGenre(music_genre_id=2,music_genre_name="Jazz")
     food_habit1 = FoodHabit(food_habit_name="Vegan")
     food_habit2 = FoodHabit(food_habit_name="Pescetarian")
     fav_cuisine1 = FavCuisine(fav_cuisine_name="Italian")
@@ -327,6 +311,22 @@ def example_data():
     religion2 = Religion(religion_name="Christian")
     outdoor1 = Outdoor(outdoor_activity="hiking")
     outdoor2 = Outdoor(outdoor_activity="swimming")
+    user_interest1 = Interest(user_id=1, book_genre_id=2, movie_genre_id=1,
+                            music_genre_id=1, food_habit_id=2,fav_cuisine_id=2,
+                            hobby_id=2, political_view_id=1, religion_id=1,
+                            outdoor_id=1)
+    user_interest2 = Interest(user_id=2, book_genre_id=1, movie_genre_id=1,
+                            music_genre_id=1, food_habit_id=1,fav_cuisine_id=2,
+                            hobby_id=2, political_view_id=2, religion_id=2,
+                            outdoor_id=1)
+    user_interest3 = Interest(user_id=3, book_genre_id=2, movie_genre_id=1,
+                            music_genre_id=1, food_habit_id=2,fav_cuisine_id=2,
+                            hobby_id=1, political_view_id=1, religion_id=1,
+                            outdoor_id=2)
+    user_interest4 = Interest(user_id=4, book_genre_id=1, movie_genre_id=1,
+                            music_genre_id=1, food_habit_id=1,fav_cuisine_id=2,
+                            hobby_id=2, political_view_id=1, religion_id=2,
+                            outdoor_id=1)
 
     db.session.add_all([user1, user2, user3, user4,
                         user_interest1, user_interest2, user_interest3, user_interest4,
@@ -335,15 +335,15 @@ def example_data():
                         music_genre1, music_genre2, food_habit1, food_habit2,
                         fav_cuisine1, fav_cuisine2, hobby1, hobby2,
                         political_view1, political_view2,religion1, religion2,
-                        outdoor1, outdoor_id])
+                        outdoor1, outdoor2])
 
     db.session.commit()
-    
+
 
 ###################################################################################################################
 
 if __name__ == "__main__":
-    
+
     from server import app
     connect_to_db(app)
     db.create_all()

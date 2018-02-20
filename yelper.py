@@ -14,7 +14,7 @@ import urllib
 from urllib2 import HTTPError
 from urllib import quote
 from urllib import urlencode
-import os 
+import os
 
 
 # Yelp Fusion no longer uses OAuth as of December 7, 2017.
@@ -52,11 +52,6 @@ def request(host, path, api_key, url_params=None):
 
     return response.json()
 
-def filter_response(response):
-    """parses through the json response from yelp"""
-
-    
-
 
 
 def search(location):
@@ -65,7 +60,7 @@ def search(location):
         term (str): The search term passed to the API.
         location (str): The search location passed to the API.
     Returns:
-        a list of dictionaries with required info only 
+        a list of dictionaries with required info only
     """
 
     API_KEY= os.environ["YELP_API_KEY"]
@@ -81,6 +76,29 @@ def search(location):
     return coffee_shop_info
 
 
+def filter_response(pincode):
+    """parses through the json response from yelp
+    we want the yelp json to return a structure that looks like this
 
+     var neighborhoods = [
+        {lat: 52.511, lng: 13.447},
+        {lat: 52.549, lng: 13.422},
+        {lat: 52.497, lng: 13.396},
+        {lat: 52.517, lng: 13.394}
+      ];
+    """
+    to_render = []
 
+    pin = str(pincode)
+    response = search(pin)
+    all_businesses = response['businesses']
 
+    for business in all_businesses:
+        lats_lngs = {}
+        lat = business['coordinates']['latitude']
+        lats_lngs['lat'] = lat
+        lng = business['coordinates']['longitude']
+        lats_lngs['lng'] = lng
+        to_render.append(lats_lngs)
+
+    return to_render
