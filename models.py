@@ -340,8 +340,10 @@ def example_data():
     user4 = User(fname="Kelso", lname="Harry", email="kels@hotmail.com",
                 user_name="kel", password="Dudes", date_of_birth="9-9-1989",
                 zipcode="95114", phone="789891849", one_word="pretty")
-    pending_match1 = PendingMatch(user_id=3, query_pin_code=95111, query_time='2018-02-15 22:20:21.313644', pending=True)
-    pending_match2 = PendingMatch(user_id=4, query_pin_code=95111, query_time='2018-02-15 22:20:21.313644', pending=True)
+    pending_match1 = PendingMatch(user_id=3, query_pin_code=95111,
+                query_time='2018-02-15 22:20:21.313644', pending=True)
+    pending_match2 = PendingMatch(user_id=4, query_pin_code=95111,
+                query_time='2018-02-15 22:20:21.313644', pending=True)
     book_genre1 = BookGenre(book_genre_name="Horror")
     book_genre2 = BookGenre(book_genre_name="Fiction")
     movie_genre1 = MovieGenre(movie_genre_name="Action")
@@ -389,7 +391,7 @@ def example_data():
     db.session.commit()
 
 
-###################################################################################################################
+######################################################################################
 
 if __name__ == "__main__":
 
