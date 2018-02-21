@@ -1,12 +1,23 @@
+""" This module tests for
+- testing the the routes
+- testing if the templates rendered correctly
+- testing the db for correct models
+- testing if the page got the correct info
+    from the db
+"""
+
 import unittest
 from server import app
 from models import db, example_data, connect_to_db
+
+#####################################################################
 
 
 class CoffeeTests(unittest.TestCase):
     """Tests for my Coffebuddy Web app site."""
 
     def setUp(self):
+        """ Do this before any test."""
         self.client = app.test_client()
         app.config['TESTING'] = True
 
@@ -20,9 +31,9 @@ class CoffeeTests(unittest.TestCase):
 
     def test_login2(self):
         result = self.client.post("/login",
-                                    data={"email": "eforman@gmail.com",
-                                        "password": "Whimsical"},
-                                        follow_redirects=True)
+                                data={"email": "eforman@gmail.com",
+                                    "password": "Whimsical"},
+                                follow_redirects=True)
         self.assertIn("<h1>Trip Form</h1>", result.data)
 
     def test_register1(self):
@@ -61,28 +72,27 @@ class CoffeebuddyTestsDatabase(unittest.TestCase):
 
         self.client = app.test_client()
         app.config['TESTING'] = True
-
         # Connect to test database
-        connect_to_db(app, uri = "postgresql:///testdb")
-
+        connect_to_db(app, uri="postgresql:///testdb")
         # Create tables and add sample data
         db.create_all()
         example_data()
 
     def tearDown(self):
         """drop the db at the end of every test."""
-
+        # close the session
         db.session.close()
+        # drop the db
         db.drop_all()
 
     def test_user(self):
-        """ Test the user profile page for user_info"""
+        """ Test the user profile page for user_info."""
 
         result = self.client.get("/user_info")
         self.assertIn("", result.data)
 
     def test_user_interests(self):
-        """ Test the user profile page for user_interests"""
+        """ Test the user profile page for user_interests."""
 
         result = self.client.get("user/info")
         self.assertIn("", result)
@@ -117,17 +127,31 @@ class CoffeebuddyTestsDatabase(unittest.TestCase):
         result = self.client.get("/register")
         self.assertIn("Italian", result.data)
 
-    def hobby1(self):
+    def test_hobby1(self):
         """ Test register page for hobbies from db"""
 
         result = self.client.get("/register")
         self.assertIn("Sewing", result.data)
 
-    def test_fav_cuisine_list(self):
-        """ Test register page for fav_cuisines from db"""
+    def test_political_view_list(self):
+        """ Test register page for political_views from db"""
 
         result = self.client.get("/register")
-        self.assertIn("Italian", result.data)
+        self.assertIn("Democrat", result.data)
+
+    def test_religion_list(self):
+        """ Test register page for religions from db"""
+
+        result = self.client.get("/register")
+        self.assertIn("Hindu", result.data)
+
+    def test_outdoor_list(self):
+        """ Test register page for outdoor activities from db"""
+
+        result = self.client.get("/register")
+        self.assertIn("hiking", result.data)
+
+####################################################################
 
 
 if __name__ == "__main__":
