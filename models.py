@@ -3,7 +3,7 @@
 from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
-####################################################################################################################
+################################################################################
 
 class User(db.Model):
     """ User of CoffeeBuddy website."""
@@ -40,13 +40,14 @@ class User(db.Model):
 
 
 class Interest(db.Model):
-    """ User interests and hobbies for matchmaking, Each Column will hold
-    integers that correspond to the information on other tables.
+    """ User interests and hobbies for matchmaking, Each Column will
+    hold integers that correspond to the information on other tables.
     """
 
     __tablename__ = 'interests'
 
-    interest_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    interest_id = db.Column(db.Integer, autoincrement=True,
+                            primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     book_genre_id = db.Column(db.Integer,
                             db.ForeignKey('book_genres.book_genre_id'),
@@ -97,7 +98,8 @@ class UserMatch(db.Model):
 
     __tablename__ = "user_matches"
 
-    match_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    match_id = db.Column(db.Integer, autoincrement=True,
+                        primary_key=True)
     user_id_1 = db.Column(db.Integer, nullable=False)
     user_id_2 = db.Column(db.Integer, nullable=False)
     match_date = db.Column(db.DateTime, nullable=False)
@@ -107,16 +109,23 @@ class UserMatch(db.Model):
     def __repr__ (self):
         """return interest choices of the user"""
 
-        return'< match_id={a}, user_id_1={b}, user_id_2={c}, match_date={d}>'.format(a=self.match_id,
-        b=self.user_id_1, c=self.user_id_2, d=self.match_date)
+        d1 = '< match_id={a}, user_id_1={b},'.fomat(a=self.match_id,
+                                                    b=self.user_id_1)
+        d2 =' user_id_2={c}, match_date={d}>'.format(c=self.user_id_2,
+                                                    d=self.match_date)
+
+        return d1 + d2
+
 
 class PendingMatch(db.Model):
     """holds a list of all pending matches for user queries"""
 
     __tablename__ = "pending_matches"
 
-    user_query_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
+    user_query_id = db.Column(db.Integer, autoincrement=True,
+                            primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'),
+                            nullable=False)
     query_pin_code = db.Column(db.Integer, nullable=False)
     query_time = db.Column(db.DateTime, nullable=False)
     pending = db.Column(db.Boolean, nullable=False)
@@ -124,8 +133,10 @@ class PendingMatch(db.Model):
     def __repr__ (self):
         """return information about a user query"""
 
-        d1 = "<user_query_id={a}, user_id={b},".format(a=self.user_query_id,b=self.user_id)
-        d2 = " query_pin_code={c}, query_time={d},".format(c=self.query_pin_code,d=self.query_time)
+        d1 = "<user_query_id={a}, user_id={b},".format(a=self.user_query_id,
+                                                        b=self.user_id)
+        d2 = " query_pin_code={c}, query_time={d},".format(c=self.query_pin_code,
+                                                        d=self.query_time)
         d3 = " pending={e}>".format(e=self.pending)
 
         return d1 + d2 + d3
@@ -145,7 +156,8 @@ class BookGenre(db.Model):
         """displays the ids of Book genres and book genres
         Can be cross-referenced with the interests table"""
 
-        return'<book_genre_id={}, book_genre_name={}>'.format(self.book_genre_id,self.book_genre_name)
+        return'<book_genre_id={}, book_genre_name={}>'.format(self.book_genre_id,
+                                                            self.book_genre_name)
 
 
 class MovieGenre(db.Model):
@@ -153,7 +165,8 @@ class MovieGenre(db.Model):
 
     __tablename__ = 'movie_genres'
 
-    movie_genre_id= db.Column(db.Integer, autoincrement=True, primary_key=True)
+    movie_genre_id= db.Column(db.Integer, autoincrement=True,
+                                            primary_key=True)
     movie_genre_name = db.Column(db.String(40), nullable=False)
 
     interest = db.relationship('Interest',
@@ -163,7 +176,8 @@ class MovieGenre(db.Model):
         """displays the ids of movies and movie names
         Can be cross-referenced with the interests table"""
 
-        return'<move_genre_id={}, movie_genre_name={}>'.format(self.movie_genre_id, self.movie_genre_name)
+        return'<move_genre_id={}, movie_genre_name={}>'.format(self.movie_genre_id,
+                                                            self.movie_genre_name)
 
 
 class MusicGenre(db.Model):
@@ -181,7 +195,8 @@ class MusicGenre(db.Model):
         """displays the ids of music genres and music genres
         Can be cross-referenced with the interests table"""
 
-        return'<music_genre_id={}, music_genre_name={}>'.format(self.music_genre_id, self.music_genre_name)
+        return'<music_genre_id={}, music_genre_name={}>'.format(self.music_genre_id,
+                                                            self.music_genre_name)
 
 
 class FoodHabit(db.Model):
@@ -199,7 +214,8 @@ class FoodHabit(db.Model):
         """displays the ids of food habits and habit names
         Can be cross-referenced with the interests table"""
 
-        return'<food_habit_id={}, habit_name={}>'.format(self.food_habit_id, self.food_habit_name)
+        return'<food_habit_id={}, habit_name={}>'.format(self.food_habit_id,
+                                                        self.food_habit_name)
 
 
 class FavCuisine(db.Model):
@@ -217,7 +233,8 @@ class FavCuisine(db.Model):
         """displays the ids of cuisines and cuisine names
         Can be cross-referenced with the interests table"""
 
-        return'<fav_cuisine_id={}, fav_cuisine_name={}>'.format(self.fav_cuisine_id, self.fav_cuisine_name)
+        return'<fav_cuisine_id={}, fav_cuisine_name={}>'.format(self.fav_cuisine_id,
+                                                                self.fav_cuisine_name)
 
 
 class Hobby(db.Model):
@@ -235,7 +252,8 @@ class Hobby(db.Model):
         """displays the ids of hobbies and hobby names
         Can be cross-referenced with the interests table"""
 
-        return'<hobby_id={}, hobby_name={}>'.format(self.hobby_id, self.hobby_name)
+        return'<hobby_id={}, hobby_name={}>'.format(self.hobby_id,
+                                                    self.hobby_name)
 
 
 class PoliticalView(db.Model):
@@ -272,7 +290,8 @@ class Religion(db.Model):
         """displays the ids of religion and religion names
         Can be cross-referenced with the interests table"""
 
-        return'<religion_id={}, religion_name={}>'.format(self.religion_id, self.religion_name)
+        return'<religion_id={}, religion_name={}>'.format(self.religion_id,
+                                                        self.religion_name)
 
 
 class Outdoor(db.Model):
@@ -290,13 +309,16 @@ class Outdoor(db.Model):
         """displays the ids of oa, and oa
         Can be cross-referenced with the interests table"""
 
-        return'<outdoor_id={}, outdoor_activity={}>'.format(self.outdoor_id,self.outdoor_activity)
+        return'<outdoor_id={}, outdoor_activity={}>'.format(self.outdoor_id,
+                                                            self.outdoor_activity)
 
 
 def connect_to_db(app, uri='postgresql:///cb'):
     """Connect the database to our Flask app."""
 
-    # Configure to use our PstgreSQL database
+    # Configure to use our uri
+    # Currently the uri is set to default cb but in tests the db
+    # may be different
     app.config['SQLALCHEMY_DATABASE_URI'] = uri
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.app = app
@@ -356,8 +378,8 @@ def example_data():
                             outdoor_id=1)
 
     db.session.add_all([user1, user2, user3, user4,
-                        user_interest1, user_interest2, user_interest3, user_interest4,
-                        pending_match1, pending_match2,
+                        user_interest1, user_interest2, user_interest3,
+                        user_interest4, pending_match1, pending_match2,
                         book_genre1, book_genre2, movie_genre1, movie_genre2,
                         music_genre1, music_genre2, food_habit1, food_habit2,
                         fav_cuisine1, fav_cuisine2, hobby1, hobby2,
