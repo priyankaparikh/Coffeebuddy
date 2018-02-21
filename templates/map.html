@@ -6,8 +6,7 @@
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAFPPyCmVFLC4JC_66sLpi2RxFB01soZ3o&callback=initMap">
     </script>
-    <script src="https://code.jquery.com/jquery.js"></script>
-    <script src="/static/map.js">
+    <script src="https://code.jquery.com/jquery.js">
     </script>
 
     <style>
@@ -25,76 +24,64 @@
     </style>
   </head>
   <body>
+    <div id="coffeshop">
+      <h1>Here is a list of suggested coffee shops in vicinity of the
+        pincode {{session['pincode']}}</h1>
+    </div>
     <div id="map"></div>
     <script>
 
-      // The following example creates a marker in Stockholm, Sweden using a DROP
-      // animation. Clicking on the marker will toggle the animation between a BOUNCE
-      // animation and no animation.
-
-      // var reccomendations = {# reccomendations #}
-
+      // this function creates the map and centers it to a location
       function initMap() {
-        // for (var i = 0; i < 1; i++) {
-        //     center = {lat: reccomendations[i]['latitude'], lng: reccomendations[0]['longitutde']}
-        //   }
-
-        // DO THE AJAX CALL HERE
-
-
-        var coffeeShop = {lat:37.8272, lng:-122.2913}
+        var allLatLongs = $.get("/coffee-info.json");
+        console.log("Finished sending AJAX Request for the center LatLng");
+        console.log(allLatLong);
+        var coffeeShop = {lat:37.8272, lng:-122.2913};
         var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 13,
+          zoom: 8,
           center : coffeeShop
         })
-      }
 
-      //this function only creates markers. Takes val(an object) as param
-      function createMarkers(val) {
-        var myLatLng = val
-        var marker = new google.maps.Marker({
-          map: map,
-          draggable: true,
-          animation: google.maps.Animation.DROP,
-          position: myLatLng
-        });
-        marker.addListener('click', toggleBounce);
-      }
-
-      // this function calls the createMarker function
-      function postMarkers(result) {
-        var data = result
-
-          $.each(data, function(idx, val) {
-              createMarkers(val)
+        updateMarkers()
+        //this function only creates markers. Takes val(an object) as param
+        function createMarkers(val) {
+          var myLatLng = new google.maps.LatLng(val['lat'], val['lng'])
+          // console.log(myLatLng)
+          var marker = new google.maps.Marker({
+            map: map,
+            draggable: true,
+            animation: google.maps.Animation.DROP,
+            position: myLatLng
           });
-      }
-
-      function updateMarkers() {
-          $.get("/coffee-info.json",postMarkers);
-          console.log("Finished sending AJAX Request");
-      }
-
-      $('#map').on('click', updateMarkers)
-      </script>
-
-        <!-- //LOOK AT JQUERY.EACH
-        var marker = new google.maps.Marker({
-          map: map,
-          draggable: true,
-          animation: google.maps.Animation.DROP,
-          position: uluru
-        });
-        marker.addListener('click', toggleBounce);
-      }
-
-      function toggleBounce() {
-        if (marker.getAnimation() !== null) {
-          marker.setAnimation(null);
-        } else {
-          marker.setAnimation(google.maps.Animation.BOUNCE);
+          marker.addListener('click', toggleBounce);
         }
-      }
+
+        // this function calls the createMarker function
+        function postMarkers(result) {
+          console.log(result)
+          var data = result;
+
+          for (var i = 0; i < data.length; i ++) {
+            createMarkers(data[i])
+          }
+        }
+
+        function updateMarkers() {
+            $.get("/coffee-info.json",postMarkers);
+            console.log("Finished sending AJAX Request");
+        }
+
+        function toggleBounce() {
+          if (marker.getAnimation() !== null) {
+            marker.setAnimation(null);
+          } else {
+            marker.setAnimation(google.maps.Animation.BOUNCE);
+          }
+        }
+    }
+
+
+
     </script>
      -->
   </body>

@@ -6,11 +6,12 @@ db = SQLAlchemy()
 ####################################################################################################################
 
 class User(db.Model):
-    """User of CoffeeBuddy website."""
+    """ User of CoffeeBuddy website."""
 
     __tablename__ = 'users'
 
-    user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    user_id = db.Column(db.Integer, autoincrement=True,
+                                    primary_key=True)
     fname = db.Column(db.String(100), nullable=False)
     lname = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), nullable=False)
@@ -28,39 +29,65 @@ class User(db.Model):
     def __repr__ (self):
         """return personal information about the user"""
 
-        d1 = '<user_id={a}, email={b},'.format(a=self.user_id, b=self.email)
-        d2 = ' user_name={c}, password={d},'.format(c=self.user_name, d=self.password)
-        d3 = ' date_of_birth={e}, zipcode={f},'.format(e=self.date_of_birth, f=self.zipcode)
+        d1 = '<user_id={a}, email={b},'.format(a=self.user_id,
+                                                b=self.email)
+        d2 = ' user_name={c}, password={d},'.format(c=self.user_name,
+                                                d=self.password)
+        d3 = ' date_of_birth={e}, zipcode={f},'.format(e=self.date_of_birth,
+                                                f=self.zipcode)
         d4 = ' phone={g}>'.format(g=self.phone)
         return d1 + d2 + d3 + d4
 
 
 class Interest(db.Model):
-    """User interests and hobbies for matchmaking, Each Column will hold integers
-    that correspond to the information on other tables"""
+    """ User interests and hobbies for matchmaking, Each Column will hold
+    integers that correspond to the information on other tables.
+    """
 
     __tablename__ = 'interests'
 
     interest_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-    book_genre_id = db.Column(db.Integer, db.ForeignKey('book_genres.book_genre_id'), nullable=False)
-    movie_genre_id = db.Column(db.Integer, db.ForeignKey('movie_genres.movie_genre_id'), nullable=False)
-    music_genre_id = db.Column(db.Integer, db.ForeignKey('music_genres.music_genre_id'), nullable=False)
-    food_habit_id = db.Column(db.Integer, db.ForeignKey('food_habits.food_habit_id'), nullable=False)
-    fav_cuisine_id = db.Column(db.Integer, db.ForeignKey('fav_cuisines.fav_cuisine_id'), nullable=False)
-    hobby_id = db.Column(db.Integer,db.ForeignKey('hobbies.hobby_id'), nullable=False)
-    political_view_id = db.Column(db.Integer, db.ForeignKey("political_views.political_view_id"), nullable=False)
-    religion_id = db.Column(db.Integer,db.ForeignKey('religions.religion_id'), nullable=False)
-    outdoor_id = db.Column(db.Integer, db.ForeignKey('outdoors.outdoor_id'), nullable=False)
+    book_genre_id = db.Column(db.Integer,
+                            db.ForeignKey('book_genres.book_genre_id'),
+                            nullable=False)
+    movie_genre_id = db.Column(db.Integer,
+                                db.ForeignKey('movie_genres.movie_genre_id'),
+                                nullable=False)
+    music_genre_id = db.Column(db.Integer,
+                                db.ForeignKey('music_genres.music_genre_id'),
+                                nullable=False)
+    food_habit_id = db.Column(db.Integer,
+                                db.ForeignKey('food_habits.food_habit_id'),
+                                nullable=False)
+    fav_cuisine_id = db.Column(db.Integer,
+                                db.ForeignKey('fav_cuisines.fav_cuisine_id'),
+                                nullable=False)
+    hobby_id = db.Column(db.Integer,
+                        db.ForeignKey('hobbies.hobby_id'), nullable=False)
+    political_view_id = db.Column(db.Integer,
+                        db.ForeignKey("political_views.political_view_id"),
+                        nullable=False)
+    religion_id = db.Column(db.Integer,
+                        db.ForeignKey('religions.religion_id'),
+                        nullable=False)
+    outdoor_id = db.Column(db.Integer,
+                        db.ForeignKey('outdoors.outdoor_id'),
+                        nullable=False)
 
     def __repr__ (self):
         """return interest choices of the user"""
 
-        d1 ='< interest_id={a}, book_genre_id={b},'.format(a=self.interest_id, b=self.book_genre_id)
-        d2 =' movie_genre_id={c}, music_genre_id={d},'.format(c=self.movie_genre_id, d=self.music_genre_id)
-        d3 =' food_habit_id={e}, fav_cuisine_id={f},'.format(e=self.food_habit_id, f=self.fav_cuisine_id)
-        d4 =' hobby_id={g}, politicial_view_id={h},'.format(g=self.hobby_id, h=self.political_view_id)
-        d5 =' religion_id={i}, outdoor_id={j}>'.format(i=self.religion_id, j=self.outdoor_id)
+        d1 ='< interest_id={a}, book_genre_id={b},'.format(a=self.interest_id,
+                                                        b=self.book_genre_id)
+        d2 =' movie_genre_id={c}, music_genre_id={d},'.format(c=self.movie_genre_id,
+                                                        d=self.music_genre_id)
+        d3 =' food_habit_id={e}, fav_cuisine_id={f},'.format(e=self.food_habit_id,
+                                                        f=self.fav_cuisine_id)
+        d4 =' hobby_id={g}, politicial_view_id={h},'.format(g=self.hobby_id,
+                                                        h=self.political_view_id)
+        d5 =' religion_id={i}, outdoor_id={j}>'.format(i=self.religion_id,
+                                                        j=self.outdoor_id)
 
         return d1 + d2 + d3 + d4 + d5
 
@@ -270,7 +297,7 @@ def connect_to_db(app, uri='postgresql:///cb'):
     """Connect the database to our Flask app."""
 
     # Configure to use our PstgreSQL database
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///cb'
+    app.config['SQLALCHEMY_DATABASE_URI'] = uri
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.app = app
     db.init_app(app)
@@ -297,8 +324,8 @@ def example_data():
     book_genre2 = BookGenre(book_genre_name="Fiction")
     movie_genre1 = MovieGenre(movie_genre_name="Action")
     movie_genre2 = MovieGenre(movie_genre_name="Comedy")
-    music_genre1 = MusicGenre(music_genre_id=1,music_genre_name="Metal")
-    music_genre2 = MusicGenre(music_genre_id=2,music_genre_name="Jazz")
+    music_genre1 = MusicGenre(music_genre_name="Metal")
+    music_genre2 = MusicGenre(music_genre_name="Jazz")
     food_habit1 = FoodHabit(food_habit_name="Vegan")
     food_habit2 = FoodHabit(food_habit_name="Pescetarian")
     fav_cuisine1 = FavCuisine(fav_cuisine_name="Italian")

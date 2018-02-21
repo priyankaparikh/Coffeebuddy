@@ -24,6 +24,7 @@ app.jinja_env.undefined = StrictUndefined
 @app.route('/')
 def index():
     """Homepage."""
+
     return render_template('homepage.html')
 
 @app.route('/login', methods=["GET"])
@@ -39,7 +40,6 @@ def check_login():
 
     email = request.form.get('email')
     password = request.form.get('password')
-
     user = User.query.filter(User.email == email).first()
 
     if not user:
@@ -60,7 +60,7 @@ def register_form():
                      all_fav_cuisines(), all_hobbies(),
                      all_political_views(), all_religions(),
                      all_outdoors()]
-
+                     
     return render_template('register.html',
                                 all_interests=all_interests)
 
@@ -93,8 +93,6 @@ def register_process():
     file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
     profile_picture = 'static/user_profile_pictures/' + str(filename)
     outdoor_id = request.form.get('Favorite Outdoor activity')
-
-
 
     user = db.session.query(User).filter(User.email == email).first()
 
@@ -190,21 +188,28 @@ def plan_trip():
 
 @app.route('/show_matches',methods=['GET'])
 def show_potenital_matches():
-    """show a logged in user possible matches"""
-
-    userid = session.get('user_id')
-    pin = session.get('query_pincode')
-
-
-    potential_matches = query_pending_match(pin)
-    #this is a list of user_ids
-    #[189, 181, 345, 282, 353, 271, 9, 9, 501, 9]
-    match_percents = create_matches(potential_matches, userid)
-    #this is a list of tuples
-    """create_matches([30,40,50],60)
-    => [(60, 30, 57.90407177363699), (60, 40, 54.887163561076605)
-    ,(60, 50, 71.24706694271913)]
+    """ This function
+        - accesses the session for a user_id and query_pin_code
+        - accesses the mathcmaker module for making matches
+        -
     """
+    # gets the user_id from the session
+    userid = session.get('user_id')
+    # gets the pincode from the session
+    pin = session.get('query_pincode')
+    # gets a list of pending matches using the potential_matches from
+    # the matchmaker module
+    # potential_matches is  a list of user_ids
+    # => [189, 181, 345, 282, 353, 271, 9, 9, 501, 9]
+    potential_matches = query_pending_match(pin)
+    # gets a list of tuples of match percents for the userid
+    # uses the create_matches from the matchmaker
+    # create_matches takes a list of user_ids as the first param
+    # create_matches take the userid as the second param
+    # create_matches([30,40,50],60)
+    # => [(60, 30, 57.90407177363699), (60, 40, 54.887163561076605)]
+    match_percents = create_matches(potential_matches, userid)
+
     user_info = get_user_info(userid)
     # this is the logged in user's info
     user_name = get_user_name(userid)
@@ -225,19 +230,34 @@ def show_potenital_matches():
                                 user_info=user_info,
                                 match_info=match_info)
 
+@app.route('/show_matches',methods=["POST"])
+def update_potenital_matches():
+    """ This function
+        - Gets the user input for a confirm match
+        - Updates the user input for a match to the db
+    """
+
+
+
 @app.route('/show_map', methods=["GET"])
 def choose_coffee_shop():
-    """display a map with reccomended coffee shops and other information
+    """ This function
+        - Displays a map with reccomended coffee shops
+        - Displays a map with pointers for the user's chosen pincode
     """
     return render_template('map.html')
 
 @app.route("/coffee-info.json")
 def melon_info():
-    """Return info about a melon as JSON."""
+    """ This function
+        - Returns information about coffee shops as JSON.
+    """
 
+    # gets the the pincode from the session
     pin = session.get('query_pincode')
+    # calls filter response from yelper module
     reccomendations = filter_response(pin)
-
+    # passes the json to the caller
     return jsonify(reccomendations)
 
 

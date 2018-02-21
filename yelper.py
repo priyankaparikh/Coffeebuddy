@@ -1,8 +1,9 @@
 """
-Using the yelp Search API to query for businesses by a search term and location,
-and the Business API to query additional information about the top result
+Using the yelp Search API
+- To query for businesses by a search term and location
+Using the yelp Business API
+- To query additional information about the top result
 from the search query.
-
 """
 
 import argparse
@@ -16,49 +17,58 @@ from urllib import quote
 from urllib import urlencode
 import os
 
-
-# Yelp Fusion no longer uses OAuth as of December 7, 2017.
-# You no longer need to provide Client ID to fetch Data
-# It now uses private keys to authenticate requests (API Key)
-# API constants, you shouldn't have to change these.
+# Yelp uses private keys to authenticate requests (API Key)
+# API constants :
 API_HOST = 'https://api.yelp.com'
 SEARCH_PATH = '/v3/businesses/search'
-BUSINESS_PATH = '/v3/businesses/'  # Business ID will come after slash.
+BUSINESS_PATH = '/v3/businesses/'
 DEFAULT_TERM = 'coffee'
 DEFAULT_LOCATION = '95134'
 SEARCH_LIMIT = 20
 
 
 def request(host, path, api_key, url_params=None):
-    """Given your API_KEY, send a GET request to the API.
-        host (str): host of the API.
-        path (str): The path of the API
-        API_KEY (str): API Key.
-        url_params (dict): An optional set of query parameters in the request.
-    Returns:
-        dict: The JSON response from the request.
-    Raises:
-        HTTPError: An error occurs from the HTTP request.
     """
+    This function
+    - Makes a request by formatting query constants
+    - creates a url
+    - creates a header
+    - call for a response from the yelp API_KEY
+    Given:
+        your API_KEY, send a GET request to the API.
+        - host (str): host of the API.
+        - path (str): The path of the API
+        - API_KEY (str): API Key.
+        - url_parmas(dict): query params
+    Returns:
+        - dict: The JSON response from the request.
+    Raises:
+        - HTTPError: An error occurs from the HTTP request.
+    """
+
+    # url_params is a dict
+    # url_params is an optional set of query params in the request
     url_params = url_params or {}
+    # encodes the path with utf8 before sending the get request
+    # strings over the internet are usually encoded with utf8
     url = '{0}{1}'.format(host, quote(path.encode('utf8')))
-    headers = {
-        'Authorization': 'Bearer %s' % api_key,
-    }
+    # adds the api_key to the headers dictionary
+    headers = {'Authorization': 'Bearer %s' % api_key}
 
     print(u'Querying {0} ...'.format(url))
-
+    # sends a get request with : 1) url, 2) headers 3) url_params
     response = requests.request('GET', url, headers=headers, params=url_params)
-
+    # returns the response as a json
     return response.json()
 
 
-
 def search(location):
-    """Query the Search API by a search term and location.
-    Args:
-        term (str): The search term passed to the API.
-        location (str): The search location passed to the API.
+    """
+    This function
+    - Queries the Search API by a search term and location.
+    Parameters:
+        - term (str): The search term passed to the API.
+        - location (str): The search location passed to the API.
     Returns:
         a list of dictionaries with required info only
     """
@@ -101,4 +111,5 @@ def filter_response(pincode):
         lats_lngs['lng'] = lng
         to_render.append(lats_lngs)
 
+    print to_render
     return to_render
