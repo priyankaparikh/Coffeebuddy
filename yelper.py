@@ -24,7 +24,7 @@ SEARCH_PATH = '/v3/businesses/search'
 BUSINESS_PATH = '/v3/businesses/'
 DEFAULT_TERM = 'coffee'
 DEFAULT_LOCATION = '95134'
-SEARCH_LIMIT = 20
+SEARCH_LIMIT = 49 #the limit is 50 
 
 
 def request(host, path, api_key, url_params=None):

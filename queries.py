@@ -2,10 +2,29 @@
 
 from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
-from models import * 
+from models import *
+from functools import wraps
+from flask import Flask, render_template, redirect, request, flash, session, g
 
 #################################################################################################
 
+def login_req(f):
+    """ This function is
+    - is a view decorator that wraps routes where the user
+    has to be logged in to view the contents
+    - if the user is not logged in it redirects the user to
+    the Homepage
+    """
+
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if session.get("user_id") is None:
+            flash("Please log in or register.")
+            return redirect("/homepage.html")
+        return f(*args, **kwargs)
+    return decorated_function
+
+    
 def get_user_id(input_email):
     """return the only user_id of a user
 
@@ -25,20 +44,20 @@ def get_user_id(input_email):
 
 
 def get_user_name(input_id):
-    """accepts a user_id as a parameter and returns a tuple of the fname 
+    """accepts a user_id as a parameter and returns a tuple of the fname
     and lname of the user"""
 
     user = User.query.filter(User.user_id == '{}'.format(input_id)).first()
 
     return ('{}'.format(user.fname), '{}'.format(user.lname))
- 
-    
+
+
 def get_user_info(input_id):
     """return user_info as a list using the user_id
 
     >>> get_user_info('280')
     [280, u'EricaBrown@fastmail.com', u'EcBw', u'1990-01-13', u'27359', u'+47(7)9589562562']
-    
+
     """
 
     user = User.query.filter(User.user_id == input_id).all()
@@ -54,8 +73,8 @@ def get_user_info(input_id):
     profile_picture = user[0].profile_picture
 
 
-    return [user_id, email, user_name, 
-            date_of_birth, zipcode, phone, 
+    return [user_id, email, user_name,
+            date_of_birth, zipcode, phone,
             fname, lname, profile_picture]
 
 
@@ -109,7 +128,7 @@ def all_music_genres():
     music = []
 
     for music_genre in music_genres:
-        music.append((music_genre.music_genre_id, 
+        music.append((music_genre.music_genre_id,
                          music_genre.music_genre_name))
 
     return ["Preferred music genre", music]
@@ -129,7 +148,7 @@ def all_food_habits():
 
 def all_fav_cuisines():
     """ returns a list of tuples with favorite cuisine ids and habit names"""
-    
+
     fav_cuisines = FavCuisine.query.all()
     cuisines = []
 
@@ -151,45 +170,45 @@ def all_hobbies():
 
 
 def all_political_views():
-    """ 
-        returns a list of tuples with political views ids 
+    """
+        returns a list of tuples with political views ids
         and political views names
     """
     political_views = PoliticalView.query.all()
     political_view = []
 
     for curr_pol_view in political_views:
-        political_view.append((curr_pol_view.political_view_id, 
+        political_view.append((curr_pol_view.political_view_id,
                                curr_pol_view.political_view_name))
 
     return ["Political ideology", political_view]
 
 
 def all_religions():
-    """ 
-        returns a list of tuples with religion ids 
+    """
+        returns a list of tuples with religion ids
         and religion names
     """
     religions = Religion.query.all()
     rel = []
 
     for religion in religions:
-        rel.append((religion.religion_id, 
+        rel.append((religion.religion_id,
                                religion.religion_name))
 
     return ["Religious ideology", rel]
 
 
 def all_outdoors():
-    """ 
-        returns a list of tuples with outdoor_activity ids 
+    """
+        returns a list of tuples with outdoor_activity ids
         and outdoor activity names
     """
     all_outdoors = Outdoor.query.all()
     activities = []
 
     for out in all_outdoors:
-        activities.append((out.outdoor_id, 
+        activities.append((out.outdoor_id,
                                out.outdoor_activity))
 
     return ["Favorite Outdoor activity", activities]
@@ -200,9 +219,9 @@ def query_pending_match(pincode):
 
     potential_matches = []
 
-    users = PendingMatch.query.filter(PendingMatch.pending == True, 
+    users = PendingMatch.query.filter(PendingMatch.pending == True,
                                     PendingMatch.query_pin_code == pincode).all()
-    
+
     for i in users:
         user_id = i.user_id
         potential_matches.append(user_id)

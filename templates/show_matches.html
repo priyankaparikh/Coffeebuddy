@@ -8,11 +8,39 @@
           <p> Here is a list of your potential Matches</p>
         </div>
               {% for match in match_info %}
-
-                    <p> {{ match[0] }} </p>
-                    <p> percent match = {{ match[1]}} </p>
-                    <button type="button" name>Match me!</button>
-
+                    <div id="possible_match_name">
+                      <p> {{ match[0] }} </p>
+                    </div>
+                    <div id="percent_match">
+                      <p> percent match = {{ match[1]}} </p>
+                    </div>
+                    <div id="match_button">
+                      <button class="match_button" name="user_match" type="submit" value="{{ match[2] }}">
+                        Match me !</button>
+                      <!-- <button data-user_id="{{ match[2] }}">Match me!</button> -->
+                    </div>
+                    <div id="successful_match">
+                    <div>
                 {% endfor %}
+                <script>
+                // This function alerts a user when a successful Match has been made
+                function successfulMatch(){
+                  $("#successful_match").html("<p>You are now matched</p>")
+                }
+                // this function sends the data the server with an ajax calls
+                function sendUserMatch(evt) {
+                  evt.preventDefault();
+
+                  var buttonInputs = {
+                    "user_match": ($(this).attr("value"))
+                  };
+                  console.log(buttonInputs)
+
+                  $.post("/show_matches", buttonInputs, successfulMatch);
+                }
+
+                $('.match_button').click(sendUserMatch)
+
+                </script>
 
     {% endblock %}

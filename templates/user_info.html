@@ -6,12 +6,14 @@
 
             <div id="profile pic" style="height:50px;" class="span12">
 
-                <img src='{{user_info[-1]}}'>
+                <img src='{{user_info[-1]}}' style="width:400px;height:500px;">
 
             </div>
+            <div id="user_info">
 
-            {% for info in user_info[1:-1] %}
+              {% for info in user_info[1:-1] %}
                 <p> {{info}} </p>
-            {% endfor %}
+              {% endfor %}
 
+            </div>
     {% endblock %}

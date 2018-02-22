@@ -329,40 +329,63 @@ def connect_to_db(app, uri='postgresql:///cb'):
 def example_data():
     """Create example data for the test database."""
 
-    user1 = User(fname="Felix", lname="Alvarez", email="fez@hotmail.com",
-                user_name="FezAl", password="Friend", date_of_birth="2-20-1989",
-                zipcode="95134", phone="657897149", one_word="hello")
-    user2 = User(fname="Donna", lname="Pinciotti", email="donnap@hotmail.com",
-                user_name="donpin", password="seventies", date_of_birth="7-18-1989",
-                zipcode="95111", phone="5098799711", one_word="honey")
-    user3 = User(fname="Eric", lname="Forman", email="eforman@gmail.com",
-                user_name="Efor", password="Whimsical", date_of_birth="4-16-1989",
+    user1 = User(user_id=1, fname="Felix", lname="Alvarez",
+                email="fez@hotmail.com", user_name="FezAl",
+                password="Friend", date_of_birth="2-20-1989",
+                zipcode="95134", phone="657897149",
+                one_word="hello")
+    user2 = User(user_id=2,fname="Donna", lname="Pinciotti",
+                email="donnap@hotmail.com", user_name="donpin",
+                password="seventies",date_of_birth="7-18-1989",
+                zipcode="95111", phone="5098799711",
+                one_word="honey")
+    user3 = User(user_id=3, fname="Eric", lname="Forman",
+                email="eforman@gmail.com", user_name="Efor",
+                password="Whimsical", date_of_birth="4-16-1989",
                 zipcode="95122", phone="6509908999", one_word="healthy")
-    user4 = User(fname="Kelso", lname="Harry", email="kels@hotmail.com",
-                user_name="kel", password="Dudes", date_of_birth="9-9-1989",
+    user4 = User(user_id=4, fname="Kelso", lname="Harry",
+                email="kels@hotmail.com", user_name="kel",
+                password="Dudes", date_of_birth="9-9-1989",
                 zipcode="95114", phone="789891849", one_word="pretty")
+    # add all the users first and then add the rest because
+    # all_all tries to instantiate all the items at the same and it throws
+    # a referential integrity error 
+    db.session.add_all([user1, user2, user3, user4])
+    db.session.commit()
     pending_match1 = PendingMatch(user_id=3, query_pin_code=95111,
                 query_time='2018-02-15 22:20:21.313644', pending=True)
     pending_match2 = PendingMatch(user_id=4, query_pin_code=95111,
                 query_time='2018-02-15 22:20:21.313644', pending=True)
-    book_genre1 = BookGenre(book_genre_name="Horror")
-    book_genre2 = BookGenre(book_genre_name="Fiction")
-    movie_genre1 = MovieGenre(movie_genre_name="Action")
-    movie_genre2 = MovieGenre(movie_genre_name="Comedy")
-    music_genre1 = MusicGenre(music_genre_name="Metal")
-    music_genre2 = MusicGenre(music_genre_name="Jazz")
-    food_habit1 = FoodHabit(food_habit_name="Vegan")
-    food_habit2 = FoodHabit(food_habit_name="Pescetarian")
-    fav_cuisine1 = FavCuisine(fav_cuisine_name="Italian")
-    fav_cuisine2 = FavCuisine(fav_cuisine_name="Mexican")
-    hobby1 = Hobby(hobby_name="Sewing")
-    hobby2 = Hobby(hobby_name="Knitting")
-    political_view1 = PoliticalView(political_view_name="Democrat")
-    political_view2 = PoliticalView(political_view_name="Republic")
-    religion1 = Religion(religion_name="Hindu")
-    religion2 = Religion(religion_name="Christian")
-    outdoor1 = Outdoor(outdoor_activity="hiking")
-    outdoor2 = Outdoor(outdoor_activity="swimming")
+    book_genre1 = BookGenre(book_genre_id=1,
+                            book_genre_name="Horror")
+    book_genre2 = BookGenre(book_genre_id=2,
+                            book_genre_name="Fiction")
+    movie_genre1 = MovieGenre(movie_genre_id=1,
+                            movie_genre_name="Action")
+    movie_genre2 = MovieGenre(movie_genre_id=2,
+                            movie_genre_name="Comedy")
+    music_genre1 = MusicGenre(music_genre_id=1,
+                            music_genre_name="Metal")
+    music_genre2 = MusicGenre(music_genre_id=2,
+                            music_genre_name="Jazz")
+    food_habit1 = FoodHabit(food_habit_id=1,
+                            food_habit_name="Vegan")
+    food_habit2 = FoodHabit(food_habit_id=2,
+                            food_habit_name="Pescetarian")
+    fav_cuisine1 = FavCuisine(fav_cuisine_id=1,
+                            fav_cuisine_name="Italian")
+    fav_cuisine2 = FavCuisine(fav_cuisine_id=2,
+                            fav_cuisine_name="Mexican")
+    hobby1 = Hobby(hobby_id=1, hobby_name="Sewing")
+    hobby2 = Hobby(hobby_id=2, hobby_name="Knitting")
+    political_view1 = PoliticalView(political_view_id=1,
+                                    political_view_name="Democrat")
+    political_view2 = PoliticalView(political_view_id=2,
+                                    political_view_name="Republic")
+    religion1 = Religion(religion_id=1, religion_name="Hindu")
+    religion2 = Religion(religion_id=2, religion_name="Christian")
+    outdoor1 = Outdoor(outdoor_id=1, outdoor_activity="hiking")
+    outdoor2 = Outdoor(outdoor_id=2, outdoor_activity="swimming")
     user_interest1 = Interest(user_id=1, book_genre_id=2, movie_genre_id=1,
                             music_genre_id=1, food_habit_id=2,fav_cuisine_id=2,
                             hobby_id=2, political_view_id=1, religion_id=1,
@@ -380,8 +403,7 @@ def example_data():
                             hobby_id=2, political_view_id=1, religion_id=2,
                             outdoor_id=1)
 
-    db.session.add_all([user1, user2, user3, user4,
-                        user_interest1, user_interest2, user_interest3,
+    db.session.add_all([user_interest1, user_interest2, user_interest3,
                         user_interest4, pending_match1, pending_match2,
                         book_genre1, book_genre2, movie_genre1, movie_genre2,
                         music_genre1, music_genre2, food_habit1, food_habit2,

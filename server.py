@@ -1,7 +1,8 @@
-"""Coffee_buddy"""
+"""Coffee_buddy."""
+
 import os
 from jinja2 import StrictUndefined
-from flask import Flask, render_template, redirect, request, flash, session, url_for
+from flask import Flask, render_template, redirect, request, flash, session
 from flask import jsonify
 from flask_debugtoolbar import DebugToolbarExtension
 from werkzeug.utils import secure_filename
@@ -19,7 +20,7 @@ app.secret_key = "ABC"
 app.jinja_env.undefined = StrictUndefined
 
 
-###################################################################################################################
+###############################################################################
 
 @app.route('/')
 def index():
@@ -60,7 +61,7 @@ def register_form():
                      all_fav_cuisines(), all_hobbies(),
                      all_political_views(), all_religions(),
                      all_outdoors()]
-                     
+
     return render_template('register.html',
                                 all_interests=all_interests)
 
@@ -138,6 +139,7 @@ def register_process():
 
 
 @app.route('/user_info', methods=["GET"])
+@login_req
 def show_profile():
     """show the user their own profile"""
 
@@ -149,6 +151,7 @@ def show_profile():
 
 
 @app.route('/plan_trip', methods=["GET"])
+@login_req
 def show_map():
     """Show a map with coffeeshops
     Putting in time constraints for the user input via
@@ -159,6 +162,7 @@ def show_map():
 
 
 @app.route('/plan_trip', methods=["POST"])
+@login_req
 def plan_trip():
     """get trip time, pincode"""
 
@@ -187,6 +191,7 @@ def plan_trip():
 
 
 @app.route('/show_matches',methods=['GET'])
+@login_req
 def show_potenital_matches():
     """ This function
         - accesses the session for a user_id and query_pin_code
@@ -219,27 +224,33 @@ def show_potenital_matches():
 
     for user in match_percents:
         username = get_user_name(user[1])
+        matched_user_id = user[1]
         matched_username = username[0] + " " + username[1]
         match_percent = round(user[2])
 
-        match_info.append((matched_username, match_percent))
+        match_info.append((matched_username, match_percent, matched_user_id))
 
-    #match info is a list of tuples [(username, match_percent)]
+    # match info is a list of tuples [(username, match_percent, matched_user_id)]
     return render_template('show_matches.html',
                                 user_name=user_name,
                                 user_info=user_info,
                                 match_info=match_info)
 
+
 @app.route('/show_matches',methods=["POST"])
+@login_req
 def update_potenital_matches():
     """ This function
         - Gets the user input for a confirm match
         - Updates the user input for a match to the db
     """
 
-
+    matched_user_id = request.form.get("user_match")
+    print matched_user_id
+    return "Hi"
 
 @app.route('/show_map', methods=["GET"])
+@login_req
 def choose_coffee_shop():
     """ This function
         - Displays a map with reccomended coffee shops
@@ -247,7 +258,9 @@ def choose_coffee_shop():
     """
     return render_template('map.html')
 
+
 @app.route("/coffee-info.json")
+@login_req
 def melon_info():
     """ This function
         - Returns information about coffee shops as JSON.
@@ -260,8 +273,7 @@ def melon_info():
     # passes the json to the caller
     return jsonify(reccomendations)
 
-
-###################################################################################################################
+##############################################################################
 
 
 if __name__ == "__main__":
