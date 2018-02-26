@@ -20,11 +20,11 @@ def login_req(f):
     def decorated_function(*args, **kwargs):
         if session.get("user_id") is None:
             flash("Please log in or register.")
-            return redirect("/homepage.html")
+            return redirect("/")
         return f(*args, **kwargs)
     return decorated_function
 
-    
+
 def get_user_id(input_email):
     """return the only user_id of a user
 
@@ -35,8 +35,9 @@ def get_user_id(input_email):
     user = User.query.filter(User.email == '{}'.format(input_email)).all()
 
     # at this point our user looks something like this :
-    #[<user_id=489, email=LeahChavez@gmail.com, user_name=LhCv, password=bZ@KRW@k+4,
-    #date_of_birth=1983-04-29, zipcode=24568, phone=+96(5)2036281580>]
+    #[<user_id=489, email=LeahChavez@gmail.com, user_name=LhCv,
+    # password=bZ@KRW@k+4, #date_of_birth=1983-04-29,
+    #zipcode=24568, phone=+96(5)2036281580>]
 
     user_id = user[0].user_id
 

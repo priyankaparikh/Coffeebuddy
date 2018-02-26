@@ -101,11 +101,15 @@ class UserMatch(db.Model):
 
     match_id = db.Column(db.Integer, autoincrement=True,
                         primary_key=True)
-    user_id_1 = db.Column(db.Integer, nullable=False)
-    user_id_2 = db.Column(db.Integer, nullable=False)
+    user_id_1 = db.Column(db.Integer,
+                        db.ForeignKey('users.user_id'),
+                        nullable=False)
+    user_id_2 = db.Column(db.Integer,
+                        db.ForeignKey('users.user_id'),
+                        nullable=False)
     match_date = db.Column(db.DateTime, nullable=False)
-    latitude = db.Column(db.Float(Precision=64), nullable=False)
-    longitude = db.Column(db.Float(Precision=64), nullable=False)
+    user_2_status = db.Column(db.Boolean, nullable=False)
+    query_pincode = db.Column(db.String(20), nullable=False)
 
     def __repr__ (self):
         """return interest choices of the user"""
@@ -349,7 +353,7 @@ def example_data():
                 zipcode="95114", phone="789891849", one_word="pretty")
     # add all the users first and then add the rest because
     # all_all tries to instantiate all the items at the same and it throws
-    # a referential integrity error 
+    # a referential integrity error
     db.session.add_all([user1, user2, user3, user4])
     db.session.commit()
     pending_match1 = PendingMatch(user_id=3, query_pin_code=95111,

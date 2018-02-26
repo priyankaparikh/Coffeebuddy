@@ -1,12 +1,70 @@
 {% extends 'base.html' %}
     {% block content %}
-        <h1>CoffeeBuddy</h1>
-        <h2>Login</h2>
-            <p><a href = '/login'> Login</a></p>
-        <h2>Register</h2>
-            <p><a href = '/register'>Register</a></p>
-        <h2>User Info</h2>
-            <p><a href = '/user_info'>User Profile</a></p>
-        <h2>Plan trip</h2>
-            <p><a href = '/plan_trip'>Trip planner</a></p>
+      <div class="container">
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+          <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to-"0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to-"1" ></li>
+            <li data-target="#myCarousel" data-slide-to-"2" ></li>
+          </ol>
+          <div class="carousel-inner" roll="listbox">
+            <div class="item active">
+              <img src="static/landing_page_0.jpg" alt="homepage_image_0">
+              <div class="carousel-caption">
+                <h1>Meet someone today</h1>
+                <br>
+                <button type="button" class="btn btn-default">
+                  <a href="/login">Log in</a>
+                </button>
+              </div>
+            </div> <!-- end active item -->
+            <div class="item">
+              <img src="static/landing_page_1.jpg" alt="homepage_image_1">
+              <div class="carousel-caption">
+                <h1>Tell us what you like</h1>
+                <br>
+                <button type="button" class="btn btn-default">
+                  <a href="/register">Register Now</a>
+                </button>
+               </div>
+            </div> <!-- end second item  -->
+            <div class="item">
+              <img src="static/landing_page_2.jpg" alt="homepage_image_2">
+              <div class="carousel-caption">
+                <h1>Plan your cofeedate with us </h1>
+                <br>
+                <button type="button" class="btn btn-default">
+                  <a href="/register">view our coffee reccomendations</a>
+                </button>
+               </div>
+            </div> <!-- end third item  -->
+          </div>
+        </div>
+        <!-- start slider controls -->
+        <a class="left carousel-control" href="#mycarousel" role="button" data-slide="prev">
+          <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+          <span class="sr-only">Previous
+        </a>
+        <a class="right carousel-control" href="#mycarousel" role="button" data-slide="next">
+          <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+          <span class="sr-only">Next
+        </a>
+      </div> <!-- end sliders -->
+      <div class="container text-center">
+        <h4>CoffeeBuddy will make your matches </h4>
+        <div class="row">
+          <div class="col-sm-4">
+            <img src="static/icon_1.png" id="icon">
+            <h6>Meet new people</h6>
+          </div>
+          <div class="col-sm-4">
+            <img src="static/icon_2.png" id="icon">
+            <h6>Visit curated coffee shops</h6>
+          </div>
+          <div class="col-sm-4">
+            <img src="static/icon_3.png" id="icon">
+            <h6>Let us make the matches</h6>
+          </div>
+        </div>
+      </div>
     {% endblock %}

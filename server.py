@@ -10,6 +10,7 @@ from models import *
 from queries import *
 from matchmaker import *
 from yelper import filter_response
+import datetime
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'static/user_profile_pictures'
@@ -24,9 +25,20 @@ app.jinja_env.undefined = StrictUndefined
 
 @app.route('/')
 def index():
-    """Homepage."""
+    """ This route
+    - works as an index with links to every page
+    """
 
-    return render_template('homepage.html')
+    return render_template('index.html')
+
+@app.route('/homepage')
+def show_home_page():
+    """ This route
+    - shows the homepage with links for login and registration
+    """
+
+    return render_template("homepage.html")
+
 
 @app.route('/login', methods=["GET"])
 def login_input():
@@ -54,7 +66,8 @@ def check_login():
 
 @app.route('/register', methods=["GET"])
 def register_form():
-    """For user to register with email"""
+    """This route
+    - Checks theFor user to register with email"""
 
     all_interests = [all_book_genres(), all_movie_genres(),
                      all_music_genres(), all_food_habits(),
@@ -68,7 +81,9 @@ def register_form():
 
 @app.route('/register', methods=["POST"])
 def register_process():
-    """Get user registration and redirect to user_interests"""
+    """This route
+    - Gets a new user to register to the db cb
+    """
 
     fname = request.form.get('fname')
     fname = fname.capitalize()
@@ -153,10 +168,10 @@ def show_profile():
 @app.route('/plan_trip', methods=["GET"])
 @login_req
 def show_map():
-    """Show a map with coffeeshops
-    Putting in time constraints for the user input via
-    HTML so that every input is a valid input """
-
+    """This route
+    - Uses the pincode from the session to render a map
+    - Shows a map with coffeeshops
+    """
 
     return render_template("/plan_trip.html")
 
@@ -164,7 +179,10 @@ def show_map():
 @app.route('/plan_trip', methods=["POST"])
 @login_req
 def plan_trip():
-    """get trip time, pincode"""
+    """This route
+    - gets the trip time from the user who is logged in
+    - gets the trip pincode from the user
+    """
 
     query_time = request.form.get('triptime')
     query_pin_code = request.form.get('pincode')
@@ -173,12 +191,10 @@ def plan_trip():
 
     #add user query to the db
 
-    trip =  PendingMatch(
-                    user_id=user_id,
-                    query_pin_code=query_pin_code,
-                    query_time=query_time,
-                    pending=True
-                    )
+    trip =  PendingMatch(user_id=user_id,
+                        query_pin_code=query_pin_code,
+                        query_time=query_time,
+                        pending=True)
 
     db.session.add(trip)
     db.session.commit()
@@ -193,9 +209,9 @@ def plan_trip():
 @app.route('/show_matches',methods=['GET'])
 @login_req
 def show_potenital_matches():
-    """ This function
+    """ This route
         - accesses the session for a user_id and query_pin_code
-        - accesses the mathcmaker module for making matches
+        - accesses the matchmaker module for making matches
         -
     """
     # gets the user_id from the session
@@ -230,7 +246,9 @@ def show_potenital_matches():
 
         match_info.append((matched_username, match_percent, matched_user_id))
 
-    # match info is a list of tuples [(username, match_percent, matched_user_id)]
+    # match info is a list of tuples [(username,
+    #                               match_percent,
+    #                               matched_user_id)]
     return render_template('show_matches.html',
                                 user_name=user_name,
                                 user_info=user_info,
@@ -240,14 +258,40 @@ def show_potenital_matches():
 @app.route('/show_matches',methods=["POST"])
 @login_req
 def update_potenital_matches():
-    """ This function
+    """ This route
         - Gets the user input for a confirm match
         - Updates the user input for a match to the db
     """
 
-    matched_user_id = request.form.get("user_match")
-    print matched_user_id
-    return "Hi"
+    matched = request.form.get("user_match")
+    user_id_1 = session['user_id']
+    match_date = datetime.datetime.now()
+    query_pincode = session['query_pincode']
+
+    match = UserMatch(user_id_1=user_id_1,
+                    user_id_2=matched,
+                    match_date=match_date,
+                    user_2_status=bool("False"),
+                    query_pincode=query_pincode)
+
+    db.session.add(match)
+    db.session.commit()
+
+    return redirect()
+
+
+@app.route('/show_match_details', methods=["GET"])
+@login_req
+def show_match_details():
+    """ This function
+        - displays the final match of user's choice
+        - shows all the common interests to the user
+        - gives the user a chance to message the match
+        - gives the user a chance to choose a coffee shop
+    """
+
+
+    pass
 
 @app.route('/show_map', methods=["GET"])
 @login_req
@@ -273,19 +317,28 @@ def melon_info():
     # passes the json to the caller
     return jsonify(reccomendations)
 
+
+@app.route('/logout')
+def log_out_user():
+    """ This function
+        -empties the session to make sure that the user is logged out
+    """
+
+    session["user_id"] = None
+    session["query_pincode"] = None
+
+    return render_template('logout.html')
+
 ##############################################################################
 
 
 if __name__ == "__main__":
-    # We have to set debug=True here, since it has to be True at the
-    # point that we invoke the DebugToolbarExtension
+    # Sets debug=True here, since it has to be True at the
+    # point that invokes the DebugToolbarExtension
     app.debug = True
-    # make sure templates, etc. are not cached in debug mode
+    # Makes sure templates, etc. are not cached in debug mode
     app.jinja_env.auto_reload = app.debug
-
     connect_to_db(app)
-
-    # Use the DebugToolbar
+    # Uses the DebugToolbar
     DebugToolbarExtension(app)
-
     app.run(port=5000, host='0.0.0.0')
