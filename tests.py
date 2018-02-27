@@ -158,6 +158,14 @@ class CoffeebuddyTestsDatabase(unittest.TestCase):
                                     follow_redirects=True)
         self.assertIn("<h1>Trip Form</h1>", result.data)
 
+    def test_plan_trip_page(Self):
+        """ test if the plan trip page loads correctly """
+
+        result = self.client.get("/plan_trip")
+
+        self.assertIn("<p> What time would you like to get coffee? </p>")
+
+
     def test_plan_trip(self):
         """ test the input of user and check for the redirect."""
 

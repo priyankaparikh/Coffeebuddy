@@ -231,16 +231,22 @@ def query_pending_match(pincode):
 
 
 def get_user_interests(user_id):
-    """returns a user object for futher analysis"""
+    """returns a user object for futher analysis
+    get_user_info(251)
+    [251, u'JamesFuentes@fastmail.com', u'JeFns', u'1998-02-16',
+    u'08707', u'(074)590-8409x0046', u'James', u'Fuentes',
+    u'/static/user_profile_pictures/pexels-photo-354951.jpeg']
+    """
 
     user = Interest.query.filter(Interest.user_id == user_id).first()
 
     return user
 
+
 def update_user_info(info):
     """dynamically updates user_information by checking the data type of the input"""
 
-
+    pass
 
 
 

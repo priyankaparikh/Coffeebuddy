@@ -61,7 +61,7 @@ def check_login():
     elif email == user.email and password == user.password:
         session['user_id'] = user.user_id
         flash('You successfully logged in')
-        return redirect('/plan_trip')
+        return redirect('/user_info')
 
 
 @app.route('/register', methods=["GET"])
@@ -156,7 +156,12 @@ def register_process():
 @app.route('/user_info', methods=["GET"])
 @login_req
 def show_profile():
-    """show the user their own profile"""
+    """show the user their own profile
+    user_info = get_user_info(251)
+    [251, u'JamesFuentes@fastmail.com', u'JeFns', u'1998-02-16',
+    u'08707', u'(074)590-8409x0046', u'James', u'Fuentes',
+    u'/static/user_profile_pictures/pexels-photo-354951.jpeg']
+    """
 
     userid = session.get("user_id")
 
@@ -240,15 +245,18 @@ def show_potenital_matches():
 
     for user in match_percents:
         username = get_user_name(user[1])
+        user_info = get_user_info(user[1])
         matched_user_id = user[1]
         matched_username = username[0] + " " + username[1]
         match_percent = round(user[2])
 
-        match_info.append((matched_username, match_percent, matched_user_id))
+        match_info.append((matched_username, match_percent, matched_user_id, user_info))
 
     # match info is a list of tuples [(username,
     #                               match_percent,
-    #                               matched_user_id)]
+    #                               matched_user_id,
+    #                                user_info)]
+
     return render_template('show_matches.html',
                                 user_name=user_name,
                                 user_info=user_info,
@@ -305,9 +313,16 @@ def choose_coffee_shop():
 
 @app.route("/coffee-info.json")
 @login_req
-def melon_info():
+def coffee_info():
     """ This function
-        - Returns information about coffee shops as JSON.
+        - Returns information of latlong for coffee shops as JSON.
+
+        reccomendations = [
+           {lat: 52.511, lng: 13.447, info: info},
+           {lat: 52.549, lng: 13.422, info: info},
+           {lat: 52.497, lng: 13.396, info: info},
+           {lat: 52.517, lng: 13.394, info: info}
+         ];
     """
 
     # gets the the pincode from the session
@@ -315,8 +330,8 @@ def melon_info():
     # calls filter response from yelper module
     reccomendations = filter_response(pin)
     # passes the json to the caller
-    return jsonify(reccomendations)
 
+    return jsonify(reccomendations)
 
 @app.route('/logout')
 def log_out_user():

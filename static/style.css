@@ -32,13 +32,25 @@
   padding: 12px 18px;
   background: #f4b4c0;
 }
+
 .container {
   margin: 4% auto;
 }
-.button_divider{
+
+.button_divider {
     width: 20px;
     height: 20px;
     display: auto;
+}
+
+.profile_picture {
+
+}
+
+.btn-group {
+    border-radius: 0 4px 4px 0;
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
 #icon{

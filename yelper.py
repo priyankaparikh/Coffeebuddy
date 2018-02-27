@@ -4,6 +4,7 @@ Using the yelp Search API
 Using the yelp Business API
 - To query additional information about the top result
 from the search query.
+
 """
 
 import argparse
@@ -24,7 +25,7 @@ SEARCH_PATH = '/v3/businesses/search'
 BUSINESS_PATH = '/v3/businesses/'
 DEFAULT_TERM = 'coffee'
 DEFAULT_LOCATION = '95134'
-SEARCH_LIMIT = 49 #the limit is 50 
+SEARCH_LIMIT = 49 #the limit is 50
 
 
 def request(host, path, api_key, url_params=None):
@@ -85,18 +86,18 @@ def search(location):
 
     return coffee_shop_info
 
-
 def filter_response(pincode):
-    """parses through the json response from yelp
-    we want the yelp json to return a structure that looks like this
+    """ Parses through the json response from the yelp json
+    and returns a structure that looks like this:
 
      var neighborhoods = [
-        {lat: 52.511, lng: 13.447},
-        {lat: 52.549, lng: 13.422},
-        {lat: 52.497, lng: 13.396},
-        {lat: 52.517, lng: 13.394}
+        {lat: 52.511, lng: 13.447, info:},
+        {lat: 52.549, lng: 13.422, info:},
+        {lat: 52.497, lng: 13.396}, info:},
+        {lat: 52.517, lng: 13.394}, info:}
       ];
     """
+
     to_render = []
 
     pin = str(pincode)
@@ -104,12 +105,35 @@ def filter_response(pincode):
     all_businesses = response['businesses']
 
     for business in all_businesses:
-        lats_lngs = {}
-        lat = business['coordinates']['latitude']
-        lats_lngs['lat'] = lat
-        lng = business['coordinates']['longitude']
-        lats_lngs['lng'] = lng
-        to_render.append(lats_lngs)
+        lat_lng = {}
+        info = {}
+        lat_lng['lat'] = business['coordinates']['latitude']
+        lat_lng['lng'] = business['coordinates']['longitude']
+        info['lat_long'] = lat_lng
+        info['business_name'] = business['name']
+        info['image_url'] = business['image_url']
+        info['address'] = business['location']['display_address']
+        info['rating'] = business['rating']
+        info['review_count'] = business['review_count']
+        info['url'] = business['url']
+        to_render.append(info)
 
     print to_render
     return to_render
+
+
+
+def create_window_html(data):
+    """ Accepts the data as a parameter and creates the html for the
+        info window
+    data must be in this order:
+    1) business name ('business_name')
+    2) business image url ('image_url')
+    3) business address ('address')
+    4) business rating ('rating')
+    5) business review_count ('review_count')
+    6) business website ('url')
+
+    """
+
+    pass

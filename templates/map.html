@@ -36,7 +36,8 @@
       function initMap() {
         $.get("/coffee-info.json", function(result) {
           // all the data is stored in result
-          let center1 = result[1]
+          var first_biz = result[0]
+          let center1 = first_biz['lat_long']
           // changing the global map variable
           map = new google.maps.Map(document.getElementById('map'), {
             zoom: 12,
@@ -44,16 +45,28 @@
           })
           // looping though the result and calling the createMarkers func
           for (var i = 0; i < result.length; i ++) {
-            createMarkers(result[i])
+            var business = result[i]
+            var latlong = business['lat_long']
+            var bizName = '<h1>' + business['business_name'] + '</h1>'
+            var website = '<a href=' + business['url'] + '>Yelp it</a>'
+            var photo = '<img src=' + business['image_url'] +
+            ' class="img-responsive img-rounded" width="150" height="150">'
+            var rating = business['rating']
+            var reviewCount = business['review_count']
+            var ratingSentence = '<h2>rated ' + rating + ' stars by ' + reviewCount + 'users</h2>'
+            var add = business['address']
+            var address = '<h3>address: ' + add[0] + '</h3>'
+
+            var html_s = bizName + photo + ratingSentence + website + address
+            createMarkers(latlong, html_s)
           }  //end for loop
         }); //end AJAX
       } //end initMap
 
-
       // This function only creates markers. Takes val(an object) as param
-      function createMarkers(val) {
-        var myLatLng = new google.maps.LatLng(val['lat'], val['lng'])
-  
+      function createMarkers(latlng, infoWindowHtml) {
+        var myLatLng = new google.maps.LatLng(latlng['lat'], latlng['lng'])
+
         var marker = new google.maps.Marker({
           map: map,
           draggable: true,
@@ -61,7 +74,13 @@
           position: myLatLng,
           icon:'/static/coffee_icon.png'
         });
-        marker.addListener('click', toggleBounce);
+        var infowindow = new google.maps.InfoWindow({
+          content: infoWindowHtml
+        })
+        // marker.addListener('click', showInfoWindow );
+        marker.addListener('click', function() {
+          infowindow.open(map, marker);
+        });
       }
 
       // This function only manages the animation for the markers
