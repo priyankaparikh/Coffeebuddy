@@ -1,5 +1,6 @@
 """test the models for database querys"""
 
+from sqlalchemy import func
 from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 from models import *
@@ -10,10 +11,10 @@ from flask import Flask, render_template, redirect, request, flash, session, g
 
 def login_req(f):
     """ This function is
-    - is a view decorator that wraps routes where the user
-    has to be logged in to view the contents
+    - Is a view decorator that wraps routes where the user
+        has to be logged in to view the contents
     - if the user is not logged in it redirects the user to
-    the Homepage
+        the Homepage
     """
 
     @wraps(f)
@@ -26,7 +27,8 @@ def login_req(f):
 
 
 def get_user_id(input_email):
-    """return the only user_id of a user
+    """This function
+    - Returns the the only user_id of a user
 
     >>> get_user_id('LeahChavez@gmail.com')
     489
@@ -80,7 +82,10 @@ def get_user_info(input_id):
 
 
 def validate_password(input_email, input_password):
-    """check if an email and password are valid
+    """ This function
+    - Checks if an email and password are valid by:
+    - Querying the db for the input email id
+    - Querying for the password of the same user
 
     >>> validate_password('CarolMason@aol.com ','6LUZzfiN(Z')
     True
@@ -96,6 +101,12 @@ def validate_password(input_email, input_password):
 
     return password == input_password and email == input_email
 
+def get_max_id(input_table_id):
+    """ This function checks the table for the max value of the input
+    table id
+    """
+    max_id = db.session.query(func.max(input_table_id)).one()
+    return int(max_id[0])
 
 def all_book_genres():
     """returns a list of tuples with book genre ids and book genres
@@ -216,8 +227,11 @@ def all_outdoors():
 
 
 def query_pending_match(pincode):
-    """a list of user_id that need to be matched"""
-
+    """This function
+    - Queries the PendingMatch tablce
+    - Returns a list of user_ids that have pending queries and
+    need to be matched
+    """
     potential_matches = []
 
     users = PendingMatch.query.filter(PendingMatch.pending == True,
@@ -231,16 +245,59 @@ def query_pending_match(pincode):
 
 
 def get_user_interests(user_id):
-    """returns a user object for futher analysis
-    get_user_info(251)
-    [251, u'JamesFuentes@fastmail.com', u'JeFns', u'1998-02-16',
-    u'08707', u'(074)590-8409x0046', u'James', u'Fuentes',
-    u'/static/user_profile_pictures/pexels-photo-354951.jpeg']
+    """ This function
+    - Queries the user_interests table
+    - Returns an interest object with all the interest ids
     """
-
     user = Interest.query.filter(Interest.user_id == user_id).first()
 
     return user
+
+def get_interest_name(interest_id, table_name):
+    """ This function
+    - Queries the table for an a specific id
+    - Returns the value
+    """
+
+    Interest = table_name.query.filter(Interest.user_id == user_id).first()
+
+
+def get_interest_info(interest_info):
+    """ This function
+    - Accepts the following tuple
+        [(6, 5), (5, 8)]
+        - The first element of the tuple is the common value
+        - The second element is the table id
+    - Assigning the queries to a small dictionary
+        that holds key value pairs
+        - user.interest_id          |(0)
+        - user.book_genre_id        |(1)
+        - user.movie_genre_id       |(2)
+        - user.music_genre_id       |(3)
+        - user.food_habit_id        |(4)
+        - user.fav_cuisine_id       |(5)
+        - user.hobby_id             |(6)
+        - user.political_view_id    |(7)
+        - user.religion_id          |(8)
+        - user.outdoor_id           |(9)
+    """
+
+    common_value = interest_info[0]
+    table_id = interest_info[1]
+
+    id_info = { 1 : BookGenre.query.filter(BookGenre.book_genre_id == common_value),
+                2 : MovieGenre.query.filter(MovieGenre.movie_genre_id == common_value),
+                3 : MusicGenre.query.filter(MusicGenre.music_genre_id == common_value),
+                4 : FoodHabit.query.filter(FoodHabit.food_habit_id == common_value),
+                5 : FavCuisine.query.filter(FavCuisine.fav_cuisine_id == common_value),
+                6 : Hobby.query.filter(Hobby.hobby_id == common_value),
+                7 : PoliticalView.query.filter(PoliticalView.political_view_id == common_value),
+                8 : Religion.query.filter(Religion.religion_id == common_value),
+                9 : Outdoor.query.filter(Outdoor.outdoor_id == common_value) }
+
+    interest_details = id_info[table_id].first()
+
+    return interest_details
 
 
 def update_user_info(info):

@@ -53,11 +53,12 @@
             ' class="img-responsive img-rounded" width="150" height="150">'
             var rating = business['rating']
             var reviewCount = business['review_count']
-            var ratingSentence = '<h2>rated ' + rating + ' stars by ' + reviewCount + 'users</h2>'
+            var ratingSentence = '<h2>rated ' + rating + ' stars by ' + reviewCount + ' users</h2>'
             var add = business['address']
             var address = '<h3>address: ' + add[0] + '</h3>'
 
             var html_s = bizName + photo + ratingSentence + website + address
+            // marker windows require a string of html as input
             createMarkers(latlong, html_s)
           }  //end for loop
         }); //end AJAX
