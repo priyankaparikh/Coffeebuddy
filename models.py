@@ -114,7 +114,7 @@ class UserMatch(db.Model):
     def __repr__ (self):
         """return interest choices of the user"""
 
-        d1 = '< match_id={a}, user_id_1={b},'.fomat(a=self.match_id,
+        d1 = '< match_id={a}, user_id_1={b},'.format(a=self.match_id,
                                                     b=self.user_id_1)
         d2 =' user_id_2={c}, match_date={d}>'.format(c=self.user_id_2,
                                                     d=self.match_date)

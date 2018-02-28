@@ -1,7 +1,3 @@
-from models import *
-from queries import get_user_interests, query_pending_match
-from queries import get_max_id, get_interest_info
-
 """ This is a utility file that uses the following functions:
     1) returns a match percentage for two specific users when
     their user_interests are passed through the function
@@ -47,6 +43,11 @@ from queries import get_max_id, get_interest_info
         outdoor = 15pts             |    3
 
     """
+
+from models import *
+from queries import get_user_interests, query_pending_match
+from queries import get_max_id, get_interest_info
+
 #######################################################################################################
 
 def extract_vals(user):

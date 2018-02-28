@@ -299,6 +299,16 @@ def get_interest_info(interest_info):
 
     return interest_details
 
+def get_user_match(user_id):
+    """ This function
+        - Checks the db for a specific user if the user is a potential match already
+        - Returns a
+    """
+    
+    q1 = UserMatch.query
+    fil = q1.filter(UserMatch.user_id_2 == 339, UserMatch.user_2_status == False).all()
+
+
 
 def update_user_info(info):
     """dynamically updates user_information by checking the data type of the input"""

@@ -1,10 +1,22 @@
 """
-Using the yelp Search API
+This Module utilises the Yelp Search Api
 - To query for businesses by a search term and location
 Using the yelp Business API
 - To query additional information about the top result
 from the search query.
 
+Functions:
+1) request:
+    - Creates a url for the server to send yelp.
+    - sends a request to the yelp Api.
+2) search:
+    - Accepts a location as a parameter.
+    - Calls the request function.
+    - Gets a response JSON from the request function.
+3) filter_response:
+    - Accepts a location as a parameter.
+    - Calls the search function.
+    - Parses the return data for relevant CoffeeBuddy information.
 """
 
 import argparse
@@ -87,15 +99,19 @@ def search(location):
     return coffee_shop_info
 
 def filter_response(pincode):
-    """ Parses through the json response from the yelp json
-    and returns a structure that looks like this:
-
-     var neighborhoods = [
-        {lat: 52.511, lng: 13.447, info:},
-        {lat: 52.549, lng: 13.422, info:},
-        {lat: 52.497, lng: 13.396}, info:},
-        {lat: 52.517, lng: 13.394}, info:}
-      ];
+    """ This function
+    - calls the search function for a JSON
+    - Parses through the JSON response from the yelp API
+        and returns a structure that looks like this:
+        var neighborhoods = [
+            lat_lng : {lat: 52.511, lng: 13.447},
+            business_name : "Peet's Coffee",
+            image_url : "image",
+            address : "address",
+            rating : 4,
+            review_count : 144,
+            url : business(yelp)URL
+        ];
     """
 
     to_render = []
@@ -120,20 +136,3 @@ def filter_response(pincode):
 
     print to_render
     return to_render
-
-
-
-def create_window_html(data):
-    """ Accepts the data as a parameter and creates the html for the
-        info window
-    data must be in this order:
-    1) business name ('business_name')
-    2) business image url ('image_url')
-    3) business address ('address')
-    4) business rating ('rating')
-    5) business review_count ('review_count')
-    6) business website ('url')
-
-    """
-
-    pass

@@ -32,3 +32,4 @@ function showMatchDetails(evt) {
 }
 
 $('.match_button').click(sendUserMatch)
+$.('.show_profile_button').click()

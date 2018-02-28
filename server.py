@@ -249,13 +249,15 @@ def show_potenital_matches():
         matched_user_id = user[1]
         matched_username = username[0] + " " + username[1]
         match_percent = round(user[2])
+        match_details = get_commons(user[1], userid)
 
-        match_info.append((matched_username, match_percent, matched_user_id, user_info))
+        match_info.append((matched_username, match_percent,
+                        matched_user_id, user_info, match_details))
 
     # match info is a list of tuples [(username,
     #                               match_percent,
     #                               matched_user_id,
-    #                                user_info)]
+    #                                user_info, match_details)]
 
     return render_template('show_matches.html',
                                 user_name=user_name,
@@ -279,7 +281,7 @@ def update_potenital_matches():
     match = UserMatch(user_id_1=user_id_1,
                     user_id_2=matched,
                     match_date=match_date,
-                    user_2_status=bool("False"),
+                    user_2_status=False,
                     query_pincode=query_pincode)
 
     db.session.add(match)
