@@ -1,4 +1,4 @@
-"""Models and database functions for CoffeeBuddy"""
+""" Models and database functions for CoffeeBuddy."""
 
 from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()

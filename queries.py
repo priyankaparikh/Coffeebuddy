@@ -1,4 +1,4 @@
-"""test the models for database querys"""
+""" Utility file that queries the Database. """
 
 from sqlalchemy import func
 from flask_sqlalchemy import SQLAlchemy
@@ -6,6 +6,7 @@ db = SQLAlchemy()
 from models import *
 from functools import wraps
 from flask import Flask, render_template, redirect, request, flash, session, g
+import datetime
 
 #################################################################################################
 
@@ -22,6 +23,23 @@ def login_req(f):
         if session.get("user_id") is None:
             flash("Please log in or register.")
             return redirect("/")
+        return f(*args, **kwargs)
+    return decorated_function
+
+
+def plan_trip_req(f):
+    """ This function is
+    - Is a view decorator that wraps routes where the user
+        has to have a planned trip to view the profiles
+    - if the user does not have a trip planned it redirects
+        the plan_trip page
+    """
+
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if session.get("'query_time'") is None:
+            flash("Please plan a trip.")
+            return redirect("/plan_trip")
         return f(*args, **kwargs)
     return decorated_function
 
@@ -101,12 +119,14 @@ def validate_password(input_email, input_password):
 
     return password == input_password and email == input_email
 
+
 def get_max_id(input_table_id):
     """ This function checks the table for the max value of the input
     table id
     """
     max_id = db.session.query(func.max(input_table_id)).one()
     return int(max_id[0])
+
 
 def all_book_genres():
     """returns a list of tuples with book genre ids and book genres
@@ -226,24 +246,6 @@ def all_outdoors():
     return ["Favorite Outdoor activity", activities]
 
 
-def query_pending_match(pincode):
-    """This function
-    - Queries the PendingMatch tablce
-    - Returns a list of user_ids that have pending queries and
-    need to be matched
-    """
-    potential_matches = []
-
-    users = PendingMatch.query.filter(PendingMatch.pending == True,
-                                    PendingMatch.query_pin_code == pincode).all()
-
-    for i in users:
-        user_id = i.user_id
-        potential_matches.append(user_id)
-
-    return potential_matches
-
-
 def get_user_interests(user_id):
     """ This function
     - Queries the user_interests table
@@ -304,18 +306,67 @@ def get_user_match(user_id):
         - Checks the db for a specific user if the user is a potential match already
         - Returns a
     """
-    
+
     q1 = UserMatch.query
     fil = q1.filter(UserMatch.user_id_2 == 339, UserMatch.user_2_status == False).all()
 
 
+def update_matched(user_id1, user_id2):
+    """ Accepts 2 user ids as an input.
+        - user_id1 is the logged in user.
+        - user_id2 is the user choice.
+        Checks UserMatch table for a pending match.
+        Returns True if a match is made
+    """
 
-def update_user_info(info):
-    """dynamically updates user_information by checking the data type of the input"""
+    time = datetime.datetime.now()
+    match = UserMatch.query.filter(UserMatch.user_id_2 == user_id1,
+                                    UserMatch.user_id_1 == user_id2,
+                                    UserMatch.user_2_status == False)
+    pending_match = match.first()
 
-    pass
+    if pending_match:
+        pending_match.user_2_status = True
+        db.session.commit()
+        return True
+
+    return False
 
 
+def find_valid_matches(user_id_1, pincode, query_time):
+    """ Accepts user_id, pincode, query_time as inputs
+    user_id = integer
+    pincode = integer
+    query_time = string
+    eg => validate_trip(399, 95134,"2018-02-28 20:30:00")
+    - queries the pending_match for an already updated query
+    - returns if a trip query of a user is valid
+    - The query time is a string for now
+    """
+    potential_matches = []
+    # creates an object from the input date string
+
+    query_time_obj = datetime.datetime.strptime(query_time, "%Y-%m-%d %H:%M:%S")
+
+    #check for all pending_matches
+    trip_q = PendingMatch.query.filter(PendingMatch.query_pin_code == pincode,
+                                        func.date(PendingMatch.query_time) == query_time_obj.date(),
+                                        PendingMatch.pending == True)
+
+    users = trip_q.all()
+
+    for i in users:
+        user_id = i.user_id
+        potential_matches.append(user_id)
+
+    return potential_matches
+
+def clean_time(str_tme):
+    """ Helper function to clean a string that comes from the html date input """
+
+    chars = str_tme.split('T')
+    tm = (" ").join(chars)
+    return tm + ":00"
 
 #######################################################################################
 if __name__ == "__main__":

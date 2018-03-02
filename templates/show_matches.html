@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 
     {% block content %}
+    <div id="successful_match"></div>
+
 
     <div class="welcome_message" id="show_matches_welcome">
       <h1> Welcome {{ user_name[0]+ " " + user_name[1] }}</h1>
@@ -20,20 +22,25 @@
                             <img src="{{match[3][-1]}}" class="img-responsive img-rounded">
                           </div>
                           <p> percent match = {{ match[1]}} </p>
-                          <button class="show_profile_button" name="user_match" type="submit" value="{{ match[2] }}">
-                            View Profile
-                          </button>
-                          <button class="match_button" name="user_match" type="submit" value="{{ match[2] }}">
-                            Confirm Match
-                          </button>
-                          <button class="view_details_button" name="user_match" type="submit" value="{{ match[2] }}">
-                            Match details
-                          </button>
+                          <form action="/user_profile/{{ match[2]}}" method="POST">
+                            <button class="show_profile_button" name="match_profile" type="submit" value="{{match[2]}}">
+                              View Profile
+                            </button>
+                          <form action="/show_matches" method="POST">
+                            <button class="match_button" name="user_match" type="submit" value="{{match[2]}}">
+                              Confirm Match
+                            </button>
+                          </form>
+                          <form action="show_match_details" method="POST">
+                            <button class="view_details_button" name="match_details" type="submit" value="{{ match[2] }}">
+                              Match details
+                            </button>
+                          </form>
                         </div>
                       </div>
                     </div>
                 {% endfor %}
           </div>
-                <script src="/static/show_matches.js"></script>
+        <!-- <script src="/static/show_matches.js"></script> -->
 
     {% endblock %}

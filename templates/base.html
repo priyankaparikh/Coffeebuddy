@@ -39,7 +39,9 @@
           </ul>
       </div>
     </nav>
-    <hr>
+    <hr> {% for flash in get_flashed_messages() %}
+      {{ flash }}
+      {% endfor %}
       {% block content %}
 
           put your content here

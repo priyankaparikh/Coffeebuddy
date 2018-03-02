@@ -8,9 +8,5 @@
                 <input type='text', name='pincode'><br>
                 <input type='submit' value='submit'>
             </form>
-    <script>
-        var now = new Date(),
-            minDate = now.toISOString().substring(0,10);
-        $('#tripdate').prop('min', minDate);
-    </script>
+    <script src="/static/plan_trip.js"></script>
     {% endblock %}

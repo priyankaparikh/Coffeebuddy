@@ -156,7 +156,8 @@ def register_process():
 @app.route('/user_info', methods=["GET"])
 @login_req
 def show_profile():
-    """show the user their own profile
+    """show the user their own profile.
+
     user_info = get_user_info(251)
     [251, u'JamesFuentes@fastmail.com', u'JeFns', u'1998-02-16',
     u'08707', u'(074)590-8409x0046', u'James', u'Fuentes',
@@ -170,10 +171,23 @@ def show_profile():
     return render_template('/user_info.html',user_info=user_info)
 
 
+@app.route("/user_profile/<user_id>", methods=["POST"])
+@login_req
+def show_match_profile(user_id):
+    """Return page showing the details of a given user_profile.
+    """
+
+    userid = request.form.get("match_profile")
+    user_info = get_user_info(userid)
+
+    return render_template('/match_profile.html',user_info=user_info)
+
+
 @app.route('/plan_trip', methods=["GET"])
 @login_req
 def show_map():
-    """This route
+    """Route for users to plan a trip.
+
     - Uses the pincode from the session to render a map
     - Shows a map with coffeeshops
     """
@@ -189,31 +203,36 @@ def plan_trip():
     - gets the trip pincode from the user
     """
 
-    query_time = request.form.get('triptime')
-    query_pin_code = request.form.get('pincode')
-    user_id = session['user_id']
-    session['query_pincode'] = query_pin_code
+    if session['query_time']:
+        query_time = request.form.get('triptime')
+        query_pin_code = request.form.get('pincode')
+        user_id = session['user_id']
+        session['query_pincode'] = query_pin_code
+        session_time = clean_time(query_time)
+        session['query_time'] = session_time
 
-    #add user query to the db
+        trip =  PendingMatch(user_id=user_id,
+                            query_pin_code=query_pin_code,
+                            query_time=query_time,
+                            pending=True)
 
-    trip =  PendingMatch(user_id=user_id,
-                        query_pin_code=query_pin_code,
-                        query_time=query_time,
-                        pending=True)
+        db.session.add(trip)
+        db.session.commit()
 
-    db.session.add(trip)
-    db.session.commit()
+        #at this point we will pass the information the yelper
+        #yelper will end information to google and google will render
+        # a map with relevant information
 
-    #at this point we will pass the information the yelper
-    #yelper will end information to google and google will render
-    # a map with relevant information
+        return redirect("/show_matches")
 
-    return redirect("/show_matches")
+    else:
+
+        return redirect("show_map")
 
 
 @app.route('/show_matches',methods=['GET'])
 @login_req
-def show_potenital_matches():
+def show_potential_matches():
     """ This route
         - accesses the session for a user_id and query_pin_code
         - accesses the matchmaker module for making matches
@@ -223,11 +242,13 @@ def show_potenital_matches():
     userid = session.get('user_id')
     # gets the pincode from the session
     pin = session.get('query_pincode')
+    # gets the query_time from the session
+    query_time = session.get('query_time')
     # gets a list of pending matches using the potential_matches from
     # the matchmaker module
     # potential_matches is  a list of user_ids
     # => [189, 181, 345, 282, 353, 271, 9, 9, 501, 9]
-    potential_matches = query_pending_match(pin)
+    potential_matches = find_valid_matches(userid, pin, query_time)
     # gets a list of tuples of match percents for the userid
     # uses the create_matches from the matchmaker
     # create_matches takes a list of user_ids as the first param
@@ -267,7 +288,7 @@ def show_potenital_matches():
 
 @app.route('/show_matches',methods=["POST"])
 @login_req
-def update_potenital_matches():
+def update_potential_matches():
     """ This route
         - Gets the user input for a confirm match
         - Updates the user input for a match to the db
@@ -277,6 +298,7 @@ def update_potenital_matches():
     user_id_1 = session['user_id']
     match_date = datetime.datetime.now()
     query_pincode = session['query_pincode']
+    session['matched_user'] = matched
 
     match = UserMatch(user_id_1=user_id_1,
                     user_id_2=matched,
@@ -286,27 +308,49 @@ def update_potenital_matches():
 
     db.session.add(match)
     db.session.commit()
+    return redirect('/chat_console')
 
-    return redirect()
-
-
-@app.route('/show_match_details', methods=["GET"])
+@app.route('/show_match_details', methods=["POST"])
 @login_req
 def show_match_details():
-    """ This function
+    """ This route
         - displays the final match of user's choice
         - shows all the common interests to the user
         - gives the user a chance to message the match
         - gives the user a chance to choose a coffee shop
     """
 
+    userid1 = session["user_id"]
+    userid2 = request.form.get("match_details")
 
-    pass
+    user_info1 = get_user_info(userid1)
+    username_1 = get_user_name(userid1)
+    username1 = username_1[0] + " " + username_1[1]
+    user_info2 = get_user_info(userid2)
+    username_2 = get_user_name(userid2)
+    username2 = username_2[0] + " " + username_2[1]
+    match_info = get_commons(userid1, userid2)
+
+    return render_template("match_console.html", user_info1=user_info1,
+                                                    username1=username1,
+                                                    username2=username2,
+                                                    user_info2=user_info2,
+                                                    match_info=match_info)
+
+@app.route('/chat_console', methods=["POST"])
+@login_req
+def show_match_console():
+    """ This Route
+    - takes the user to the chat ui
+    """
+
+    return render_template('chat_console.html')
+
 
 @app.route('/show_map', methods=["GET"])
 @login_req
 def choose_coffee_shop():
-    """ This function
+    """ This route
         - Displays a map with reccomended coffee shops
         - Displays a map with pointers for the user's chosen pincode
     """
@@ -335,14 +379,17 @@ def coffee_info():
 
     return jsonify(reccomendations)
 
+
 @app.route('/logout')
 def log_out_user():
     """ This function
         -empties the session to make sure that the user is logged out
     """
 
-    session["user_id"] = None
-    session["query_pincode"] = None
+    session['matched_user'] = None
+    session['user_id'] = None
+    session['query_time'] = None
+    session['query_pincode'] = None
 
     return render_template('logout.html')
 
