@@ -24,14 +24,6 @@ app.jinja_env.undefined = StrictUndefined
 ###############################################################################
 
 @app.route('/')
-def index():
-    """ This route
-    - works as an index with links to every page
-    """
-
-    return render_template('index.html')
-
-@app.route('/homepage')
 def show_home_page():
     """ This route
     - shows the homepage with links for login and registration
@@ -62,6 +54,9 @@ def check_login():
         session['user_id'] = user.user_id
         flash('You successfully logged in')
         return redirect('/user_info')
+    else:
+        flash('Oops looks like you have entered the wrong password.Please re-enter your login information')
+        return redirect('login')
 
 
 @app.route('/register', methods=["GET"])
@@ -167,8 +162,10 @@ def show_profile():
     userid = session.get("user_id")
 
     user_info = get_user_info(userid)
+    user_interest_info = user_interest_display(userid)
 
-    return render_template('/user_info.html',user_info=user_info)
+    return render_template('/user_info.html',user_info=user_info,
+                            user_interest_info=user_interest_info)
 
 
 @app.route("/user_profile/<user_id>", methods=["POST"])
@@ -178,6 +175,7 @@ def show_match_profile(user_id):
     """
 
     userid = request.form.get("match_profile")
+    print request.form
     user_info = get_user_info(userid)
 
     return render_template('/match_profile.html',user_info=user_info)
@@ -321,8 +319,7 @@ def show_match_details():
     """
 
     userid1 = session["user_id"]
-    userid2 = request.form.get("match_details")
-
+    userid2 = request.form.get("match_profile")
     user_info1 = get_user_info(userid1)
     username_1 = get_user_name(userid1)
     username1 = username_1[0] + " " + username_1[1]
@@ -330,12 +327,14 @@ def show_match_details():
     username_2 = get_user_name(userid2)
     username2 = username_2[0] + " " + username_2[1]
     match_info = get_commons(userid1, userid2)
+    match_percent = make_match(userid1, userid2)
 
     return render_template("match_console.html", user_info1=user_info1,
                                                     username1=username1,
                                                     username2=username2,
                                                     user_info2=user_info2,
-                                                    match_info=match_info)
+                                                    match_info=match_info,
+                                                    match_percent=match_percent)
 
 @app.route('/chat_console', methods=["POST"])
 @login_req

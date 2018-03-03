@@ -265,13 +265,10 @@ def get_interest_name(interest_id, table_name):
 
 
 def get_interest_info(interest_info):
-    """ This function
-    - Accepts the following tuple
-        [(6, 5), (5, 8)]
+    """  Accepts a list of tuples [(6, 5), (5, 8)].
         - The first element of the tuple is the common value
         - The second element is the table id
-    - Assigning the queries to a small dictionary
-        that holds key value pairs
+        - Assigns the queries to a small dictionary in this order:
         - user.interest_id          |(0)
         - user.book_genre_id        |(1)
         - user.movie_genre_id       |(2)
@@ -311,10 +308,11 @@ def get_user_match(user_id):
     fil = q1.filter(UserMatch.user_id_2 == 339, UserMatch.user_2_status == False).all()
 
 
-def update_matched(user_id1, user_id2):
+def update_matched(user_id1, user_id2, query_time):
     """ Accepts 2 user ids as an input.
         - user_id1 is the logged in user.
         - user_id2 is the user choice.
+        - query time of the users
         Checks UserMatch table for a pending match.
         Returns True if a match is made
     """
@@ -323,6 +321,10 @@ def update_matched(user_id1, user_id2):
     match = UserMatch.query.filter(UserMatch.user_id_2 == user_id1,
                                     UserMatch.user_id_1 == user_id2,
                                     UserMatch.user_2_status == False)
+
+    # check pending_matches table for both user user_ids
+    # if both have clicked on each other update the db to change
+    # the user status to false
     pending_match = match.first()
 
     if pending_match:
@@ -346,9 +348,10 @@ def find_valid_matches(user_id_1, pincode, query_time):
     potential_matches = []
     # creates an object from the input date string
 
+    # finding matches for the same query time
     query_time_obj = datetime.datetime.strptime(query_time, "%Y-%m-%d %H:%M:%S")
 
-    #check for all pending_matches
+    # check for all pending_matches
     trip_q = PendingMatch.query.filter(PendingMatch.query_pin_code == pincode,
                                         func.date(PendingMatch.query_time) == query_time_obj.date(),
                                         PendingMatch.pending == True)
@@ -367,6 +370,7 @@ def clean_time(str_tme):
     chars = str_tme.split('T')
     tm = (" ").join(chars)
     return tm + ":00"
+
 
 #######################################################################################
 if __name__ == "__main__":

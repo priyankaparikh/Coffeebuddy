@@ -26,7 +26,8 @@
                             <button class="show_profile_button" name="match_profile" type="submit" value="{{match[2]}}">
                               View Profile
                             </button>
-                          <form action="/show_matches" method="POST">
+                          </form>
+                          <form id="match_confirm" action="/show_matches" method="POST">
                             <button class="match_button" name="user_match" type="submit" value="{{match[2]}}">
                               Confirm Match
                             </button>
@@ -41,6 +42,8 @@
                     </div>
                 {% endfor %}
           </div>
-        <!-- <script src="/static/show_matches.js"></script> -->
-
+          <script>
+          $('#match_confirm').one('submit', function() {
+            $(this).find('input[name="user_match"]').attr('disabled','disabled');
+            });
     {% endblock %}

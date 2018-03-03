@@ -16,4 +16,17 @@
               {% endfor %}
 
             </div>
+            <div>
+              {% for interest in user_interest_info %}
+              <p> {{interest}} </p>
+              {% endfor %}
+            </div>
+            <button type="button" class="btn btn-default" id="trip_plan">
+              <li><a href="/plan_trip">Plan a trip</a></li>
+            </button>
+            <script>
+              $("#login").hide();
+              $("#logout").show();
+              $("#register").hide();
+            </script>
     {% endblock %}

@@ -6,23 +6,24 @@
           <h1>CoffeeBuddy new user registeration part 1</h1>
               <form action="register" method="POST" enctype="multipart/form-data">
                   <p>First name</p>
-                      <input type="text", name="fname" required>
+                      <input type="text" name="fname" required>
                   <p>Last name</p>
-                      <input type="text", name="lname" required>
+                      <input type="text" name="lname" required>
                   <p>E-mail</p>
-                      <input type="email", name="email" required>
+                      <input type="email" name="email" required>
                   <p>User name</p>
-                      <input type="text", name="user_name" required>
+                      <input type="text" name="user_name" required>
                   <p>Password</p>
-                      <input type="password", name="password" required>
+                      <input type="password" name="password" required>
                   <p>Birth date</p>
-                      <input type="date", name="date_of_birth" required>
+                      <input type="date" name="date_of_birth" required>
                   <p>Zipcode</p>
-                      <input type="text", name="zipcode" required>
+                      <input type="text" name="zipcode" pattern="[0-9]{5}" required>
                   <p>Phone Number</p>
-                      <input type="text", name="phone" required>
+                      <input type="text" name="phone" required>
                   <p>Please upload a profile picture</p>
-                      <input type="file" name="profile_picture" accept=".png, .jpg, .jpeg"required>
+                      <input type="file" name="profile_picture" accept=".png, .jpg, .jpeg" onchange="displayImage(this);"required>
+                  <img id="ppicture" src="" alt="your image" />
                   <p>One word to describe yourself</p>
                       <input type="text" name="one_word" required><br>
         </div>
@@ -59,5 +60,20 @@
         </label>
       </div>
             </form>
+            <script>
+              $("#logout").hide();
+
+              function diplayImage(input) {
+                if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#ppicture').attr('src', e.target.result);
+                };
+
+              reader.readAsDataURL(input.files[0]);
+                }
+              }
+            </script>
     </div>
     {% endblock %}
