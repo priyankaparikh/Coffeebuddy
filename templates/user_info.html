@@ -1,29 +1,96 @@
 {% extends 'base.html' %}
 
     {% block content %}
-
-        <h1> User Profile</h1>
-
-            <div id="profile pic" style="height:50px;" class="span12">
-
-                <img src='{{user_info[-1]}}' style="width:400px;height:500px;">
-
+        <div class="container">
+          <div class="row user-menu-container square">
+            <div class="col-md-12 user-details">
+              <div class="row bluebg white">
+                <div class="col-md-6 no-pad">
+                  <div class="user-pad">
+                    <h3>Welcome back, {{user_info[6]}}</h3>
+                      <h4 class="white"><i class="fa fa-check-circle-o"></i>{{user_info[2]}}</h4>
+                        <h4 class="white"><i class="fa fa-twitter"></i>{{user_info[4]}}</h4>
+                          <button type="button" class="btn btn-labeled btn-info" href="/plan_trip">
+                            <span class="btn-label"><i class="fa fa-pencil"></i></span>Plan a trip</button>
+                    </div>
+                </div>
+                <div class="col-md-6 no-pad">
+                  <div class="user-image">
+                      <img src="{{user_info[-1]}}" class="img-responsive thumbnail">
+                  </div>
+                </div>
+              </div>
+              <div class="row overview">
+                <div class="col-md-4 user-pad text-center">
+                    <h3>TRIP COUNT</h3>
+                    <h4>121</h4>
+                </div>
+                <div class="col-md-4 user-pad text-center">
+                    <h3>SUCCESSFUL MATCHES</h3>
+                    <h4>100</h4>
+                </div>
+                <div class="col-md-4 user-pad text-center">
+                    <h3>FRIENDS</h3>
+                    <h4>56</h4>
+                </div>
             </div>
-            <div id="user_info">
-
-              {% for info in user_info[1:-1] %}
-                <p> {{info}} </p>
-              {% endfor %}
-
+        </div>
+        <div class="col-md- user-menu-btns">
+            <div class="btn-group-horizontal square" id="responsive">
+                <a href="#" class="btn btn-block btn-default active">
+                  <i class="fa fa-bell-o fa-3x"></i>
+                </a>
+                <a href="#" class="btn btn-default">
+                  <i class="fa fa-envelope-o fa-3x"></i>
+                </a>
+                <a href="#" class="btn btn-default">
+                  <i class="fa fa-laptop fa-3x"></i>
+                </a>
+                <a href="#" class="btn btn-default">
+                  <i class="fa fa-cloud-upload fa-3x"></i>
+                </a>
             </div>
-            <div>
-              {% for interest in user_interest_info %}
-              <p> {{interest}} </p>
-              {% endfor %}
+        </div>
+        <div class="col-md-4 user-menu user-pad">
+            <div class="user-menu-content active">
+                <h3>
+                    Recent matches
+                </h3>
+                <ul class="user-menu-list">
+                  {% for match in all_matches %}
+                    <li>
+                        <h4><i class="fa fa-user coral"></i> You matched with {{match}}.</h4>
+                    </li>
+                  {% endfor %}
+                </ul>
             </div>
-            <button type="button" class="btn btn-default" id="trip_plan">
-              <li><a href="/plan_trip">Plan a trip</a></li>
-            </button>
+            <div class="user-menu-content">
+                <h3>
+                    Interests
+                </h3>
+                <ul class="user-menu-list">
+                  {% for info in user_info[1:-1] %}
+                    <li>
+                        <h4><i class="fa fa-user coral"></i>{{info}}</h4>
+                    </li>
+                  {% endfor %}
+                </ul>
+            </div>
+            <div class="user-menu-content">
+                <h3>
+                    Interests
+                </h3>
+                <ul class="user-menu-list">
+                  {% for interest in user_interest_info %}
+                    <li>
+                        <h4><i class="fa fa-user coral"></i>{{interest}}</h4>
+                    </li>
+                  {% endfor %}
+                </ul>
+            </div>
+        </div>
+      </div>
+    </div>
             <script>
               $("#login").hide();
               $("#logout").show();

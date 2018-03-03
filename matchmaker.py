@@ -293,7 +293,7 @@ def get_commons(user_id_1, user_id_2):
                         d1 = "You both love to eat Meat."
                         common_items.append(d1)
                     else:
-                        d1 = "You are both " + com_fh_name
+                        d1 = "You are both " + com_fh_name + "."
                         common_items.append(d1)
                 if item[1] == 5:
                     com_fc_name = common_interest.fav_cuisine_name
@@ -302,7 +302,6 @@ def get_commons(user_id_1, user_id_2):
                     if com_fc_name == "I love them all":
                         common_items.append("You both love all types of foods.")
                     else:
-                        common_items.append("You both love all types of foods")
                         d1 = "You both enjoy " + com_fc_name + " food."
                         common_items.append(d1)
                 if item[1] == 6:
@@ -318,116 +317,114 @@ def get_commons(user_id_1, user_id_2):
                 if item[1] == 9:
                     com_out = common_interest.outdoor_activity
                     if com_out == "I am pretty adventurous":
-                        common_items.append("You both love outdoors")
+                        common_items.append("You both love outdoors.")
                     if com_out == "I hate outdoors":
-                        common_items.append("You both hate outdoors")
+                        common_items.append("You both hate outdoors.")
                     else:
                         common_items.append("You both enjoy" + com_out + ".")
 
     return common_items
 
-# def get_interest_info(user_id):
-#     """ Call the check_interests function which returns a list of tuples
-#         - The first element of the tuple is the common value
-#         - The second element is the table id
-#     - Queries the tables for the interest names and returns a
-#         string of values
-#     - Follows this table to query common info and returns an appropriate
-#         string
-#         - user.book_genre_id        |(1)
-#         - user.movie_genre_id       |(2)
-#         - user.music_genre_id       |(3)
-#         - user.food_habit_id        |(4)
-#         - user.fav_cuisine_id       |(5)
-#         - user.hobby_id             |(6)
-#         - user.political_view_id    |(7)
-#         - user.religion_id          |(8)
-#         - user.outdoor_id           |(9)
-#     - Returns a list of strings that HTML can directly render
-#     """
-#
-#     interest = check_interests(user_id)
-#     interest_info = []
-#
-#         for item in commons:
-#             # this is an object
-#             if item:
-#                 common_interest = get_interest_info(item)
-#                 if item[1] == 1:
-#                     com_book_gen = common_interest.book_genre_name
-#                     if com_book_gen == "I will read anything":
-#                         d1 = "You both love to read."
-#                         common_items.append(d1)
-#                     if com_book_gen == "Don't read at all":
-#                         d1 = "You both dislike reading."
-#                         common_items.append(d1)
-#                     else:
-#                         d1 = "You both like to read " + com_book_gen
-#                         d2 = " books."
-#                         common_items.append(d1 + d2)
-#                 if item[1] == 2:
-#                     com_movie_gen = common_interest.movie_genre_name
-#                     if com_movie_gen == "Will watch anything.":
-#                         d1 = "You both love to watch movies."
-#                         common_items.append(d1)
-#                     if com_movie_gen == "Not that into movies":
-#                         d1 = "You both dislike movies."
-#                         common_items.append(d1)
-#                     else:
-#                         d1 = "You both like to watch " + com_movie_gen
-#                         d2 = " movies."
-#                         common_items.append(d1 + d2)
-#                 if item[1] == 3:
-#                     com_music_gen = common_interest.music_genre_name
-#                     if com_music_gen == "Will listen to anything":
-#                         d1 = "You both love Music."
-#                         common_items.append(d1)
-#                     if com_music_gen == "No Music":
-#                         d1 = "You both dislike music."
-#                         common_items.append(d1)
-#                     else:
-#                         d1 = "You both like to listen to " + com_music_gen
-#                         d2 = " music."
-#                         common_items.append(d1 + d2)
-#                 if item[1] == 4:
-#                     com_fh_name = common_interest.food_habit_name
-#                     if com_fh_name == "I will eat anything that moves":
-#                         d1 = "You both love to eat Meat."
-#                         common_items.append(d1)
-#                     else:
-#                         d1 = "You are both " + com_fh_name
-#                         common_items.append(d1)
-#                 if item[1] == 5:
-#                     com_fc_name = common_interest.fav_cuisine_name
-#                     if com_fc_name == "I am not very experimental":
-#                         common_items.append("You both are not very experimental with foods.")
-#                     if com_fc_name == "I love them all":
-#                         common_items.append("You both love all types of foods.")
-#                     else:
-#                         common_items.append("You both love all types of foods")
-#                         d1 = "You both enjoy " + com_fc_name + " food."
-#                         common_items.append(d1)
-#                 if item[1] == 6:
-#                     com_hb_name = common_interest.hobby_name
-#                     d1 = "You both share the same interest of " + com_hb_name + "."
-#                     common_items.append(d1)
-#                 if item[1] == 7:
-#                     com_pol_vw = common_interest.political_view_name
-#                     common_items.append("You are both " + com_pol_vw + ".")
-#                 if item[1] == 8:
-#                     com_rel = common_interest.religion_name
-#                     common_items.append("You are both " + com_rel + ".")
-#                 if item[1] == 9:
-#                     com_out = common_interest.outdoor_activity
-#                     if com_out == "I am pretty adventurous":
-#                         common_items.append("You both love outdoors")
-#                     if com_out == "I hate outdoors":
-#                         common_items.append("You both hate outdoors")
-#                     else:
-#                         common_items.append("You both enjoy" + com_out + ".")
-#
-#     return common_items
+def get_interest_display(user_id):
+    """ Call the check_interests function which returns a list of tuples
+        - The first element of the tuple is the common value
+        - The second element is the table id
+    - Queries the tables for the interest names and returns a
+        string of values
+    - Follows this table to query common info and returns an appropriate
+        string
+        - user.book_genre_id        |(1)
+        - user.movie_genre_id       |(2)
+        - user.music_genre_id       |(3)
+        - user.food_habit_id        |(4)
+        - user.fav_cuisine_id       |(5)
+        - user.hobby_id             |(6)
+        - user.political_view_id    |(7)
+        - user.religion_id          |(8)
+        - user.outdoor_id           |(9)
+    - Returns a list of strings that HTML can directly render
+    """
+    interests = check_interests(user_id)
+    common_items = []
 
+
+    for item in interests:
+        # this is an object
+        if item:
+            interest = get_interest_info(item)
+            if item[1] == 1:
+                book_gen = interest.book_genre_name
+                if book_gen == "I will read anything":
+                    d1 = "Loves to read."
+                    common_items.append(d1)
+                if book_gen == "Don't read at all":
+                    d1 = "Dislikes reading."
+                    common_items.append(d1)
+                else:
+                    d1 = "Likes to read " + book_gen
+                    d2 = " books."
+                    common_items.append(d1 + d2)
+            if item[1] == 2:
+                movie_gen = interest.movie_genre_name
+                if movie_gen == "Will watch anything.":
+                    d1 = "Loves to watch movies."
+                    common_items.append(d1)
+                if movie_gen == "Not that into movies":
+                    d1 = "Dislikes movies."
+                    common_items.append(d1)
+                else:
+                    d1 = "Likes to watch " + movie_gen
+                    d2 = " movies."
+                    common_items.append(d1 + d2)
+            if item[1] == 3:
+                music_gen = interest.music_genre_name
+                if music_gen == "Will listen to anything":
+                    d1 = "Loves Music."
+                    common_items.append(d1)
+                if music_gen == "No Music":
+                    d1 = "Dislikes listening to music."
+                    common_items.append(d1)
+                else:
+                    d1 = "Likes listening to " + music_gen
+                    d2 = " music."
+                    common_items.append(d1 + d2)
+            if item[1] == 4:
+                fh_name = interest.food_habit_name
+                if fh_name == "I will eat anything that moves":
+                    d1 = "Loves to eat Meat."
+                    common_items.append(d1)
+                else:
+                    d1 = "Is " + fh_name + "."
+                    common_items.append(d1)
+            if item[1] == 5:
+                fc_name = interest.fav_cuisine_name
+                if fc_name == "I am not very experimental":
+                    common_items.append("Not very experimental with foods.")
+                if fc_name == "I love them all":
+                    common_items.append("Loves all types of foods.")
+                else:
+                    d1 = "Enjoys " + fc_name + " food."
+                    common_items.append(d1)
+            if item[1] == 6:
+                hb_name = interest.hobby_name
+                d1 = "Likes " + hb_name + "."
+                common_items.append(d1)
+            if item[1] == 7:
+                pol_vw = interest.political_view_name
+                common_items.append(pol_vw)
+            if item[1] == 8:
+                rel = interest.religion_name
+                common_items.append(rel + ".")
+            if item[1] == 9:
+                out = interest.outdoor_activity
+                if out == "I am pretty adventurous":
+                    common_items.append("Very outdoorsy")
+                if out == "I hate outdoors":
+                    common_items.append("Dislikes outdoors")
+                else:
+                    common_items.append("Enjoys " + out + ".")
+
+    return common_items
 
 def create_matches(potential_matches, user1):
     """accepts a list of user_id's with similar queries and
@@ -442,73 +439,6 @@ def create_matches(potential_matches, user1):
 
     return matched
 
-# def get_all_interests(user_id):
-#     """ Gets all the interest information for display of a specific user
-#         - Calls made :
-#         - get_user_interests, extract_vals, get_interest_info
-#         - reference table
-#             - user.interest_id          |(0)
-#             - user.book_genre_id        |(1)
-#             - user.movie_genre_id       |(2)
-#             - user.music_genre_id       |(3)
-#             - user.food_habit_id        |(4)
-#             - user.fav_cuisine_id       |(5)
-#             - user.hobby_id             |(6)
-#             - user.political_view_id    |(7)
-#             - user.religion_id          |(8)
-#             - user.outdoor_id           |(9)
-#     """
-#
-#     user_i = get_user_interests(user_id)
-#
-#     user_ints = extract_vals(user_i)
-#     interest_info = []
-#
-#     for i in range(1, 10):
-#         interest_info.append(get_interest_info((user_ints[i], i)))
-#
-#     return interest_info
-
-# def extract_interest_names(user_id):
-#     """ Accepts a usr_id as input and combs through the information
-#         returned by the get_all_interests function.
-#
-#         [<book_genre_id=25, book_genre_name=Journals>,              |1
-#         <move_genre_id=3, movie_genre_name=Comedy>,                 |2
-#         <music_genre_id=11, music_genre_name=K Pop>,                |3
-#         <food_habit_id=1, habit_name=Vegan>,                        |4
-#         <fav_cuisine_id=3, fav_cuisine_name=Turkish>,               |5
-#         <hobby_id=16, hobby_name=Scrapbooking>,                     |6
-#         <politicial_view_id=1, political_view_name=Conservative>,   |7
-#         <religion_id=1, religion_name=Atheist>,                     |8
-#         <outdoor_id=11, outdoor_activity=Cricket>]                  |9
-#
-#         - interest.book_genre_name          |(1)
-#         - interest.movie_genre_name         |(2)
-#         - interest.music_genre_name         |(3)
-#         - interest.food_habit_name          |(4)
-#         - interest.fav_cuisine_name         |(5)
-#         - interest.hobby_name               |(6)
-#         - interest.political_view_id        |(7)
-#         - interest.religion_id              |(8)
-#         - interest.outdoor_id               |(9)
-#     """
-#
-#     user_interests = get_all_interests(user_id)
-#
-#     user_int_info = []
-#
-#     user_int_info.append(user_interests[0].book_genre_name)
-#     user_int_info.append(user_interests[1].movie_genre_name)
-#     user_int_info.append(user_interests[2].music_genre_name)
-#     user_int_info.append(user_interests[3].food_habit_name)
-#     user_int_info.append(user_interests[4].fav_cuisine_name)
-#     user_int_info.append(user_interests[5].hobby_name)
-#     user_int_info.append(user_interests[6].political_view_name)
-#     user_int_info.append(user_interests[7].religion_name)
-#     user_int_info.append(user_interests[8].outdoor_activity)
-#
-#     return user_int_info
 
 
 

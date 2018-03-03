@@ -265,8 +265,8 @@ def get_interest_name(interest_id, table_name):
 
 
 def get_interest_info(interest_info):
-    """  Accepts a list of tuples [(6, 5), (5, 8)].
-        - The first element of the tuple is the common value
+    """  Accepts a SINGLE tuple format: (int, int)
+        - The first element of the tuple is the value of the interest
         - The second element is the table id
         - Assigns the queries to a small dictionary in this order:
         - user.interest_id          |(0)

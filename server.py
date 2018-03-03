@@ -162,10 +162,12 @@ def show_profile():
     userid = session.get("user_id")
 
     user_info = get_user_info(userid)
-    user_interest_info = user_interest_display(userid)
+    user_interest_info = get_interest_display(userid)
+    all_matches = ["Jessica walter", "Ken Adams"]
 
     return render_template('/user_info.html',user_info=user_info,
-                            user_interest_info=user_interest_info)
+                            user_interest_info=user_interest_info,
+                            all_matches=all_matches)
 
 
 @app.route("/user_profile/<user_id>", methods=["POST"])
