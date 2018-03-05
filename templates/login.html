@@ -1,14 +1,67 @@
 {% extends 'base.html' %}
     {% block content %}
-    <h1> Login Form</h1>
-        <form action='login' method='POST'>
-            <p> Please enter you email </p>
-                <input type = 'text', name = 'email'><br>
-            <p> Please enter the password </p>
-                <input type = 'password', name = 'password'><br>
-                <input type = 'submit' value='submit'>
-            </form>
-          <script>
-            $("#logout").hide();
-          </script>
+    <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: url("../static/login_bkg.jpg");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      font-family: sans-serif;
+    }
+    .panel{
+      border: 0px;
+      background: rgba(0,0,0,0.5);
+      color: #ffff;
+      text-align: center;
+      padding-top: 25px;
+      position: relative;
+    }
+
+    h4 {
+      margin: 0px;
+      padding: 0px;
+      color:
+    }
+    .user {
+      position: absolute;
+      top: -50px;
+      width: 100px;
+      height: 100px;
+      line-height: 100px;
+      text-align: center;
+      color:inherit;
+    }
+    </style>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+          <div class="panel panel-default">
+            <div>
+              <img src="static/usericon.png" class="user">
+            </div>
+            <div class="panel-body">
+              <h4>Log in</h4><br>
+                <form action='login' method='POST'>
+                  <div class="form-group">
+                    <input type = 'text', name = 'email' class="form-control" placeholder="Email">
+                  </div> <!-- end form-group -->
+                  <div class="form-group">
+                  <input type = 'password', name = 'password' class="form-control" placeholder="password">
+                  </div> <!-- end form-group -->
+                  <div class="form-group">
+                    <input type = 'submit' value='submit' class="btn btn-success btn-lg btn-block">
+                  </div> <!-- end form-group -->
+                </form>
+              </div><!-- end form-group -->
+            </div><!-- end panel-body -->
+          </div><!-- end panel-default -->
+        </div><!-- end col -->
+      </div> <!-- end row -->
+    </div> <!-- end containter -->
+    <script>
+      $("#logout").hide();
+      $("#home").hide();
+    </script>
     {% endblock %}

@@ -25,23 +25,20 @@ app.jinja_env.undefined = StrictUndefined
 
 @app.route('/')
 def show_home_page():
-    """ This route
-    - shows the homepage with links for login and registration
+    """ Shows the homepage with links for login and registration.
     """
-
     return render_template("homepage.html")
 
 
 @app.route('/login', methods=["GET"])
 def login_input():
     """For user to login with email"""
-
     return render_template('login.html')
 
 
 @app.route('/login', methods=["POST"])
 def check_login():
-    """Check user login info"""
+    """Check user login info."""
 
     email = request.form.get('email')
     password = request.form.get('password')
@@ -61,8 +58,7 @@ def check_login():
 
 @app.route('/register', methods=["GET"])
 def register_form():
-    """This route
-    - Checks theFor user to register with email"""
+    """ Displays the registeration form to the User."""
 
     all_interests = [all_book_genres(), all_movie_genres(),
                      all_music_genres(), all_food_habits(),
@@ -70,14 +66,13 @@ def register_form():
                      all_political_views(), all_religions(),
                      all_outdoors()]
 
-    return render_template('register.html',
+    return render_template('register2.html',
                                 all_interests=all_interests)
 
 
 @app.route('/register', methods=["POST"])
 def register_process():
-    """This route
-    - Gets a new user to register to the db cb
+    """ Gets user data from the front end and validates a registration.
     """
 
     fname = request.form.get('fname')
@@ -105,10 +100,11 @@ def register_process():
     profile_picture = 'static/user_profile_pictures/' + str(filename)
     outdoor_id = request.form.get('Favorite Outdoor activity')
 
-    user = db.session.query(User).filter(User.email == email).first()
+    user = db.session.query(User).filter(User.email == email,
+                            User.date_of_birth == date_of_birth).first()
 
     if not user:
-        # if the user does not exist then we instantiate a user and the info
+        # if the user does not exist then instantiate a user and the info
         #to the db
         user = User(fname=fname,
                     lname=lname,
@@ -143,9 +139,13 @@ def register_process():
         db.session.add(interest)
         db.session.commit()
 
-    session['user_id'] = user.user_id
-    flash('You are successfully registerd and logged in')
-    return redirect('/plan_trip')
+        session['user_id'] = user.user_id
+        flash('You are successfully registerd and logged in')
+        return redirect('/user_info')
+
+    elif user:
+        flash('Looks like you are already a registered user. Please log in to plan a trip.')
+        return redirect('')
 
 
 @app.route('/user_info', methods=["GET"])
@@ -163,7 +163,7 @@ def show_profile():
 
     user_info = get_user_info(userid)
     user_interest_info = get_interest_display(userid)
-    all_matches = ["Jessica walter", "Ken Adams"]
+    all_matches = get_all_made_matches(userid)
 
     return render_template('/user_info.html',user_info=user_info,
                             user_interest_info=user_interest_info,
@@ -308,7 +308,7 @@ def update_potential_matches():
 
     db.session.add(match)
     db.session.commit()
-    return redirect('/chat_console')
+    return redirect('/show_map')
 
 @app.route('/show_match_details', methods=["POST"])
 @login_req
@@ -338,25 +338,25 @@ def show_match_details():
                                                     match_info=match_info,
                                                     match_percent=match_percent)
 
-@app.route('/chat_console', methods=["POST"])
-@login_req
-def show_match_console():
-    """ This Route
-    - takes the user to the chat ui
-    """
-
-    return render_template('chat_console.html')
-
-
 @app.route('/show_map', methods=["GET"])
 @login_req
-def choose_coffee_shop():
+def show_coffee_shop():
     """ This route
         - Displays a map with reccomended coffee shops
         - Displays a map with pointers for the user's chosen pincode
     """
     return render_template('map.html')
 
+
+@app.route('/show_map', methods=["POST"])
+@login_req
+def invite_user():
+    """This route
+        - accepts input from a map
+        - sends a text message to a matched user
+    """
+
+    return render_template('send_message.html')
 
 @app.route("/coffee-info.json")
 @login_req

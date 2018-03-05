@@ -11,11 +11,9 @@ import datetime
 #################################################################################################
 
 def login_req(f):
-    """ This function is
-    - Is a view decorator that wraps routes where the user
-        has to be logged in to view the contents
-    - if the user is not logged in it redirects the user to
-        the Homepage
+    """ A view decorator that wraps routes where the user
+        has to be logged in to view the contents. If the user is not
+        logged in it redirects the user to the Homepage.
     """
 
     @wraps(f)
@@ -28,11 +26,10 @@ def login_req(f):
 
 
 def plan_trip_req(f):
-    """ This function is
-    - Is a view decorator that wraps routes where the user
-        has to have a planned trip to view the profiles
-    - if the user does not have a trip planned it redirects
-        the plan_trip page
+    """ A view decorator that wraps routes where the user
+        has to have a planned trip to view the profiles of other users.
+        If the user does not have a trip planned it redirects to the
+        plan_trip page.
     """
 
     @wraps(f)
@@ -45,27 +42,19 @@ def plan_trip_req(f):
 
 
 def get_user_id(input_email):
-    """This function
-    - Returns the the only user_id of a user
-
-    >>> get_user_id('LeahChavez@gmail.com')
-    489
+    """ Queries the users table and accepts an email as input
+        INPUT FORMAT = string
+        Returns the the only user_id of a user
+        OUTPUT FORMAT = integer
     """
 
     user = User.query.filter(User.email == '{}'.format(input_email)).all()
-
-    # at this point our user looks something like this :
-    #[<user_id=489, email=LeahChavez@gmail.com, user_name=LhCv,
-    # password=bZ@KRW@k+4, #date_of_birth=1983-04-29,
-    #zipcode=24568, phone=+96(5)2036281580>]
-
     user_id = user[0].user_id
-
     return user_id
 
 
 def get_user_name(input_id):
-    """accepts a user_id as a parameter and returns a tuple of the fname
+    """ Accepts a user_id as a parameter and returns a tuple of the fname
     and lname of the user"""
 
     user = User.query.filter(User.user_id == '{}'.format(input_id)).first()
@@ -97,6 +86,36 @@ def get_user_info(input_id):
     return [user_id, email, user_name,
             date_of_birth, zipcode, phone,
             fname, lname, profile_picture]
+
+def get_all_made_matches(user_id):
+    """ Accepts a user_id as a parameter and returns a list of
+    user names and images that the user made succesful matches with
+    - Calls the get_user_info function which returns :
+        [2, u'PatriciaTorres@hotmail.com', u'PriTr',
+        u'1999-01-15', u'25076', u'00543301160',
+        u'Patricia', u'Torres',
+        u'/static/user_profile_pictures/pexels-photo-634030.jpeg']
+    - Returns a list of tuples with the user_name as the first element
+     and profile picture as the second element
+    """
+    # query the user_matches table
+    check_matches = UserMatch.query.filter(UserMatch.user_id_1 == user_id,
+                                         UserMatch.user_2_status == True)
+
+    matches = check_matches.all()
+    all_match_info = []
+
+    if matches == []:
+        all_match_info.append(("You Do not have any succesful matches yet",
+                            "Please review more matches with higher match percents"))
+    else :
+        for match in matches:
+            user_id2 = match.user_id_2
+            user_info = get_user_info(user_id2)
+            user_name = user_info[6] + " " + user_info[7]
+            all_match_info.append(user_name, user_info[-1])
+
+    return all_match_info
 
 
 def validate_password(input_email, input_password):

@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+    {% block content %}
+    <style>
+    .btn-reg {
+      font-size: 12px;
+      color: #FFF;
+      padding: 12px 18px;
+      background: #f4b4c0;
+    }
+    </style>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="panel panel-default">
+            <div>
+              <h2>New User Registeration<h2>
+            </div>
+            <form action="register" method="POST" enctype="multipart/form-data">
+              <div class="form-group">
+                <h4>First Name</h4>
+                <input type="text" name="fname" class="form-control" placeholder="First name:"required>
+              </div> <!-- end form-group -->
+              <div class="form-group">
+                <h4>Last Name</h4>
+                <input type="text" name="lname" class="form-control" placeholder="Last name:"required>
+              </div> <!-- end form-group -->
+              <div class="form-group">
+                <h4>E-mail</h4>
+                <input type="text" name="email" class="form-control" placeholder="E-mail:"required>
+              </div> <!-- end form-group -->
+              <div class="form-group">
+                <h4>User name</h4>
+                <input type="text" name="user_name" class="form-control" placeholder="User name:"required>
+              </div> <!-- end form-group -->
+              <div class="form-group">
+                <h4>Password</h4>
+                <input type="password" name="password" class="form-control" placeholder="Password:"required>
+              </div> <!-- end form-group -->
+              <div class="form-group">
+                <h4>Date of birth</h4>
+                <input type="Date" name="date_of_birth" class="form-control" placeholder="Birth date:"required>
+              </div> <!-- end form-group -->
+              <div class="form-group">
+                <h4>Zipcode</h4>
+                <input type="text" name="zipcode" class="form-control" placeholder="zipcode:"required>
+              </div> <!-- end form-group -->
+              <div class="form-group">
+                <h4>Phone</h4>
+                <input type="tel" size=11 name="phone" class="form-control" placeholder="Phone:"required>
+              </div> <!-- end form-group -->
+              <div class="form-group">
+                <h4>One word</h4>
+                <input type="text" name="one_word" class="form-control" placeholder="One word to describe yourself:"required>
+              </div> <!-- end form-group -->
+              <div class="form-group">
+                  <h4>Profile picture</h4>
+                  <input type="file" name="profile_picture" accept=".png, .jpg, .jpeg" onchange="displayImage(this);"required>
+              </div> <!-- end form-group -->
+          </div> <!-- end panel -->
+        </div> <!-- end col -->
+      </div> <!-- end row -->
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="panel panel-default">
+            <div>
+              <h2>New User interest Registeration<h2>
+            </div>
+              {% for sub_interest in all_interests %}
+                <h4>{{sub_interest[0]}}</h4>
+                <div class="btn-group"  data-toggle="buttons">
+                  {% for interest in sub_interest[1] %}
+                    <label class="btn btn-reg btn-sm">
+                      <input type="radio" name="{{sub_interest[0]}}" id="{{interest[1]}}" value="{{interest[0]}}" required>
+                      <lable for="{{interest[1]}}">{{ interest[1] }}</label>
+                    </label>
+                  {% endfor %}
+                </div><!-- end button-grp -->
+              {% endfor %}
+          </div> <!-- end panel -->
+        </div> <!-- end col -->
+        <input class="btn btn-primary" type = "submit" value="submit">
+      </form>
+      </div> <!-- end row -->
+    </div> <!-- end container -->
+    <script>
+      $("#logout").hide();
+      $("#register").hide();
+    </script>
+  {% endblock %}

@@ -1,3 +1,19 @@
+
+.loginBox{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 350px;
+  height: 420px;
+  box-sizing: border-box;;
+  background: rgba(0,0,0,.5);
+}
+
+.user {
+  width:100px
+}
+
 .navbar {
   margin-bottom: 0;
   margin-radius: 0;
@@ -35,12 +51,6 @@
 
 .container {
   margin: 4% auto;
-}
-
-.button_divider {
-    width: 20px;
-    height: 20px;
-    display: auto;
 }
 
 .profile_picture {
@@ -113,6 +123,7 @@ ul.user-menu-list {
     padding: 10px;
     border: 1px solid #eee;
 }
+
 ul.user-menu-list>li {
     padding-bottom: 8px;
     text-align: center;
@@ -121,6 +132,7 @@ ul.user-menu-list>li {
 div.user-menu div.user-menu-content:not(.active){
   display: none;
 }
+
 .user-pad {
     padding: 20px 25px;
 }
@@ -163,11 +175,11 @@ div.user-menu div.user-menu-content:not(.active){
     margin-top: 20px;
     margin-bottom: 0;
 }
- 
+
 
 /* base style */
 .btn-group {
-    border-radius: 0 4px 4px 0;
+    border-radius: 4px 4px 4px 4px;
     margin-left: 5px;
     margin-right: 5px;
 }

@@ -10,8 +10,9 @@
                     <h3>Welcome back, {{user_info[6]}}</h3>
                       <h4 class="white"><i class="fa fa-check-circle-o"></i>{{user_info[2]}}</h4>
                         <h4 class="white"><i class="fa fa-twitter"></i>{{user_info[4]}}</h4>
-                          <button type="button" class="btn btn-labeled btn-info" href="/plan_trip">
-                            <span class="btn-label"><i class="fa fa-pencil"></i></span>Plan a trip</button>
+                          <button type="button" class="btn btn-labeled btn-info">
+                            <a href="/plan_trip">
+                              Plan a trip</a></button>
                     </div>
                 </div>
                 <div class="col-md-6 no-pad">
@@ -51,7 +52,7 @@
                 </a>
             </div>
         </div>
-        <div class="col-md-4 user-menu user-pad">
+        <div class="col-md-12 user-menu user-pad">
             <div class="user-menu-content active">
                 <h3>
                     Recent matches
@@ -96,4 +97,7 @@
               $("#logout").show();
               $("#register").hide();
             </script>
+            <script src="static/user_profile.js">
+            </script>
+            <!-- this script is obtained from https://bootsnipp.com/snippets/featured/flat-user-profile-interface-ui#comments -->
     {% endblock %}
