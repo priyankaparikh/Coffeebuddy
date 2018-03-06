@@ -164,10 +164,11 @@ def show_profile():
     user_info = get_user_info(userid)
     user_interest_info = get_interest_display(userid)
     all_matches = get_all_made_matches(userid)
+    all_trips = find_trip_count(userid)
 
     return render_template('/user_info.html',user_info=user_info,
                             user_interest_info=user_interest_info,
-                            all_matches=all_matches)
+                            all_matches=all_matches, all_trips=all_trips)
 
 
 @app.route("/user_profile/<user_id>", methods=["POST"])
@@ -177,10 +178,11 @@ def show_match_profile(user_id):
     """
 
     userid = request.form.get("match_profile")
-    print request.form
+    user_interests = get_interest_display(userid)
     user_info = get_user_info(userid)
 
-    return render_template('/match_profile.html',user_info=user_info)
+    return render_template('/match_profile2.html',user_info=user_info,
+                                                user_interests=user_interests)
 
 
 @app.route('/plan_trip', methods=["GET"])
@@ -192,7 +194,7 @@ def show_map():
     - Shows a map with coffeeshops
     """
 
-    return render_template("/plan_trip.html")
+    return render_template("/plan_trip2.html")
 
 
 @app.route('/plan_trip', methods=["POST"])
@@ -203,31 +205,26 @@ def plan_trip():
     - gets the trip pincode from the user
     """
 
-    if session['query_time']:
-        query_time = request.form.get('triptime')
-        query_pin_code = request.form.get('pincode')
-        user_id = session['user_id']
-        session['query_pincode'] = query_pin_code
-        session_time = clean_time(query_time)
-        session['query_time'] = session_time
+    query_time = request.form.get('triptime')
+    query_pin_code = request.form.get('pincode')
+    user_id = session['user_id']
+    session['query_pincode'] = query_pin_code
+    session_time = clean_time(query_time)
+    session['query_time'] = session_time
 
-        trip =  PendingMatch(user_id=user_id,
-                            query_pin_code=query_pin_code,
-                            query_time=query_time,
-                            pending=True)
+    trip =  PendingMatch(user_id=user_id,
+                        query_pin_code=query_pin_code,
+                        query_time=query_time,
+                        pending=True)
 
-        db.session.add(trip)
-        db.session.commit()
+    db.session.add(trip)
+    db.session.commit()
 
-        #at this point we will pass the information the yelper
-        #yelper will end information to google and google will render
-        # a map with relevant information
+    #at this point we will pass the information the yelper
+    #yelper will end information to google and google will render
+    # a map with relevant information
 
-        return redirect("/show_matches")
-
-    else:
-
-        return redirect("show_map")
+    return redirect("/show_matches")
 
 
 @app.route('/show_matches',methods=['GET'])

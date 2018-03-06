@@ -135,6 +135,7 @@ div.user-menu div.user-menu-content:not(.active){
 
 .user-pad {
     padding: 20px 25px;
+    text-align: center;
 }
 
 .no-pad {
@@ -178,11 +179,6 @@ div.user-menu div.user-menu-content:not(.active){
 
 
 /* base style */
-.btn-group {
-    border-radius: 4px 4px 4px 4px;
-    margin-left: 5px;
-    margin-right: 5px;
-}
 
 .bluebg {
     background-color: #1a293c;

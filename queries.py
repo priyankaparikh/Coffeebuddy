@@ -383,6 +383,19 @@ def find_valid_matches(user_id_1, pincode, query_time):
 
     return potential_matches
 
+def find_trip_count(user_id):
+    """ Queries the PendingMatch table for a specific user's trip requests
+        Queries the UserMatch table for a user's matches
+    """
+
+    all_pm = PendingMatch.query.filter(PendingMatch.user_id == user_id).all()
+    all_sm = UserMatch.query.filter(UserMatch.user_id_1 == user_id).all()
+
+    return [len(all_pm), len(all_sm)]
+
+
+
+
 def clean_time(str_tme):
     """ Helper function to clean a string that comes from the html date input """
 

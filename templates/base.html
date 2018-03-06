@@ -39,7 +39,7 @@
           </ul>
       </div>
     </nav>
-    <hr> {% for flash in get_flashed_messages() %}
+     {% for flash in get_flashed_messages() %}
       {{ flash }}
       {% endfor %}
       {% block content %}

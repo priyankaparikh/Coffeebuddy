@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
     {% block content %}
       <div class="container">
-        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <div id="mycarousel" class="carousel slide" data-ride="carousel">
           <ol class="carousel-indicators">
-            <li data-target="#homepage" data-slide-to-"0" class="active"></li>
-            <li data-target="#homepage" data-slide-to-"1" ></li>
-            <li data-target="#homepage" data-slide-to-"2" ></li>
+            <li data-target="#mycarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#mycarousel" data-slide-to="1" ></li>
+            <li data-target="#mycarousel" data-slide-to="2" ></li>
           </ol>
           <div class="carousel-inner" roll="listbox">
             <div class="item active">
@@ -39,16 +39,18 @@
                </div>
             </div> <!-- end third item  -->
           </div>
-        </div>
+          <a class="left carousel-control" href="#mycarousel" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Next
+          </a>
+          <a class="right carousel-control" href="#mycarousel" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next
+          </a>
+        </div> <!--end carosel-->
         <!-- start slider controls -->
-        <a class="left carousel-control" href="#mycarousel" role="button" data-slide="prev">
-          <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-          <span class="sr-only">Previous
-        </a>
-        <a class="right carousel-control" href="#mycarousel" role="button" data-slide="next">
-          <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-          <span class="sr-only">Next
-        </a>
+
+
       </div> <!-- end sliders -->
       <div class="container text-center">
         <h4>CoffeeBuddy will make your matches </h4>
