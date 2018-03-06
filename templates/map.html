@@ -1,32 +1,42 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>reccomended coffee shops</title>
-    <script async defer
+{% extends 'base.html' %}
+    {% block content %}
+    <!-- <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAFPPyCmVFLC4JC_66sLpi2RxFB01soZ3o&callback=initMap">
-    </script>
+    </script> -->
     <script src="https://code.jquery.com/jquery.js">
     </script>
-
     <style>
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
       #map {
-        height: 100%;
+        height: 80%;
       }
       /* Optional: Makes the sample page fill the window. */
       html, body {
         height: 100%;
-        margin: 2%;
-        padding: 4%;
+      }
+
+      .panel-mp {
+        /* height: 94%;
+        margin: 3%; */
       }
     </style>
-  </head>
-  <body>
-      <h1>Here is a list of suggested coffee shops in vicinity of the
-        pincode {{session['query_pincode']}}</h1>
-
+    <div class="row">
+      <div class="col-xs-9">
+        <div class="panel panel-mp">
+          <h1>Congratulations {{session['matched_user']}} wants to meet you too!</h1>
+          <h3> send text message to {{session['matched_user']}}</h3>
+          <div class="form-group">
+            <input type = 'text', name = 'message' class="form-control" placeholder="message">
+            <input type = 'submit' value='submit' class="btn btn-success">
+          </div> <!-- end form-group -->
+          <h3>Here is a list of suggested coffee shops in vicinity of the
+          pincode {{session['query_pincode']}}</h3>
+          <!-- <div id="map"></div> -->
+        </div><!-- end panel-default -->
+        <!-- <div id="map"></div> -->
+      </div><!-- end col -->
+    </div><!-- end row -->
     <div id="map"></div>
     <script>
     // we must make the map a global variable so that is accesible to
@@ -40,9 +50,10 @@
           let center1 = first_biz['lat_long']
           // changing the global map variable
           map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 12,
+            zoom: 13,
             center : center1
           })
+          //map.setCenter(center1);
           // looping though the result and calling the createMarkers func
           for (var i = 0; i < result.length; i ++) {
             var business = result[i]
@@ -64,6 +75,11 @@
           }  //end for loop
         }); //end AJAX
       } //end initMap
+      // var tempCenter = new google.maps.LatLng(37.77,-122.77)
+      // map = new google.maps.Map(document.getElementById('map'), {
+      //   zoom: 12,
+      //   center : center1
+      // })
 
       // This function only creates markers. Takes val(an object) as param
       function createMarkers(latlng, infoWindowHtml) {
@@ -93,7 +109,13 @@
           marker.setAnimation(google.maps.Animation.BOUNCE);
         }
       }
-
     </script>
-  </body>
-</html>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAFPPyCmVFLC4JC_66sLpi2RxFB01soZ3o&callback=initMap">
+    </script>
+    <script>
+    $("#login").hide()
+    $("#register").hide()
+    $("#logout").show()
+    </script>
+{% endblock %}

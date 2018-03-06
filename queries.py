@@ -87,6 +87,7 @@ def get_user_info(input_id):
             date_of_birth, zipcode, phone,
             fname, lname, profile_picture]
 
+
 def get_all_made_matches(user_id):
     """ Accepts a user_id as a parameter and returns a list of
     user names and images that the user made succesful matches with
@@ -117,6 +118,8 @@ def get_all_made_matches(user_id):
 
     return all_match_info
 
+def get_user_phone(user_id):
+    """ Gets the userphone number """
 
 def validate_password(input_email, input_password):
     """ This function

@@ -24,3 +24,6 @@ $( document ).ready(function() {
         }
     );
 });
+
+//script credits "circle progress bar"
+//Bootstrap 3.3.0 Snippet by ALIMUL AL RAZY
