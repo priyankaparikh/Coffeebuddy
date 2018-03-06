@@ -316,9 +316,9 @@ def show_match_details():
         - gives the user a chance to message the match
         - gives the user a chance to choose a coffee shop
     """
-
+    
     userid1 = session["user_id"]
-    userid2 = request.form.get("match_profile")
+    userid2 = request.form.get("match_details")
     user_info1 = get_user_info(userid1)
     username_1 = get_user_name(userid1)
     username1 = username_1[0] + " " + username_1[1]

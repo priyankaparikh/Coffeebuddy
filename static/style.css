@@ -17,7 +17,8 @@
 .navbar {
   margin-bottom: 0;
   margin-radius: 0;
-  background-color: #1a293c;
+  background: transparent;
+  /* background-color: #1a293c; */
   padding: 1% 0;
   font-size: 1.2em;
   border: 0;
@@ -33,8 +34,10 @@
 .navbar-inverse .navbar-nav .active a:focus,
 .navbar-inverse .navbar-nav .active a:hover {
   color: #FFF;
-  background-color: #1a293c;
+  background: transparent;
+  /* background-color: #1a293c; */
 }
+
 
 .carousel-caption {
   top: 50%;

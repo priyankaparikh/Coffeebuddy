@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+    {% block content %}
+    <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: url("../static/trip_plan_bkg.jpeg");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      font-family: sans-serif;
+    }
+    .panel{
+      border: 0px;
+      background: rgba(0,0,0,0.5);
+      color: #ffff;
+      text-align: center;
+      padding-top: 25px;
+      position: relative;
+    }
+
+    h4 {
+      margin: 0px;
+      padding: 0px;
+      color:
+    }
+
+    </style>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <h4>Plan your trip</h4><br>
+                <form action='plan_trip' method='POST'>
+                  <div class="form-group">
+                    <p>Time for coffee</p>
+                    <input type="datetime-local" id='tripdate' class="form-control" name='triptime'>
+                  </div> <!-- end form-group -->
+                  <div class="form-group">
+                    <p>Zipcode</p>
+                    <input type='text' class="form-control" name='pincode'>
+                  </div> <!-- end form-group -->
+                  <div class="form-group">
+                    <input type = 'submit' value='submit' class="btn btn-success btn-lg btn-block">
+                  </div> <!-- end form-group -->
+                </form>
+              </div><!-- end form-group -->
+            </div><!-- end panel-body -->
+          </div><!-- end panel-default -->
+        </div><!-- end col -->
+      </div> <!-- end row -->
+    </div> <!-- end containter -->
+    <script>
+      $("#login").hide();
+    </script>
+    <script src="/static/plan_trip.js"></script>
+    {% endblock %}

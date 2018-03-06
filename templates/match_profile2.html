@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+  {% block content %}
+  <div class="container">
+    <div class="row user-menu-container square">
+      <div class="col-md-12 user-details">
+        <div class="row bluebg white">
+          <div class="col-md-6 no-pad">
+            <div class="user-pad">
+              <h3>{{user_info[6]}} {{user_info[7]}}</h3>
+                <h4 class="white"><i class="fa fa-check-circle-o"></i>Coffee id : {{user_info[2]}}</h4>
+                <h4 class="white"><i class="fa fa-twitter"></i>Current zipcode : {{user_info[4]}}</h4>
+                <h4  class="white"><i class="fa fa-twitter"></i>Interests</h4>
+                  {% for interest in user_interests %}
+                    <h4><i class="fa fa-twitter"></i>{{interest}}</h4>
+                  {% endfor %}
+                  <button type="button" class="btn btn-labeled btn-info">
+                    <a href="/show_matches">
+                      Back to matches</a></button>
+                    </div><!-- end user-pad -->
+                  </div><!-- end no-pad -->
+                  <div class="col-md-6 no-pad">
+                    <div class="user-image">
+                      <img src="{{user_info[-1]}}" class="img-responsive thumbnail">
+                    </div><!-- end image-div -->
+          </div><!-- end col -->
+        </div><!-- end row -->
+      {% endblock %}
