@@ -106,15 +106,11 @@ def get_all_made_matches(user_id):
     matches = check_matches.all()
     all_match_info = []
 
-    if matches == []:
-        all_match_info.append(("You Do not have any succesful matches yet",
-                            "Please review more matches with higher match percents"))
-    else :
-        for match in matches:
-            user_id2 = match.user_id_2
-            user_info = get_user_info(user_id2)
-            user_name = user_info[6] + " " + user_info[7]
-            all_match_info.append(user_name, user_info[-1])
+    for match in matches:
+        user_id2 = match.user_id_2
+        user_info = get_user_info(user_id2)
+        user_name = user_info[6] + " " + user_info[7]
+        all_match_info.append(user_name, user_info[-1])
 
     return all_match_info
 

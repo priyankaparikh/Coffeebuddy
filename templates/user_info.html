@@ -4,8 +4,14 @@
     <style>
     .btn-group {
         border-radius: 4px 4px 4px 4px;
-        margin-left: 5px;
-        margin-right: 5px;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .user-pad-info{
+      padding: 20px 25px;
+      text-align: center;
+      margin-top: 150px;
     }
     </style>
         <div class="container">
@@ -13,10 +19,11 @@
             <div class="col-md-12 user-details">
               <div class="row bluebg white">
                 <div class="col-md-6 no-pad">
-                  <div class="user-pad">
+                  <div class="user-pad-info">
                     <h3>Welcome {{user_info[6]}}</h3>
-                      <h4 class="white"><i class="fa fa-check-circle-o"></i>{{user_info[2]}}</h4>
-                        <h4 class="white"><i class="fa fa-twitter"></i>{{user_info[4]}}</h4>
+                      <h4 class="white"><i class="fa fa-check-circle-o"></i>Coffee-id : {{user_info[2]}}</h4>
+                      <h4 class="white"><i class="fa fa-twitter"></i>Current pincode : {{user_info[4]}}</h4>
+                      <h4 class="white"><i class="fa fa-twitter"></i>City : San Jose</h4>
                           <button type="button" class="btn btn-labeled btn-info">
                             <a href="/plan_trip">
                               Plan a trip</a></button>
@@ -34,8 +41,8 @@
                     <h4>{{all_trips[0]}}</h4>
                 </div>
                 <div class="col-md-4 user-pad text-center">
-                    <h3>{{all_trips[1]}}</h3>
-                    <h4>100</h4>
+                    <h3>SUCCESSFUL MATCHES</h3>
+                    <h4>{{all_trips[1]}}</h4>
                 </div>
                 <div class="col-md-4 user-pad text-center">
                     <h3>FRIENDS</h3>
@@ -65,17 +72,15 @@
                     Recent matches
                 </h3>
                 <ul class="user-menu-list">
-                  {% if all_matches[0] == 'You Do not have any succesful matches yet' %}
-                    {% for match in all_matches %}
+                  {% if all_matches == [] %}
                       <li>
-                        <h4><i class="fa fa-user coral"></i>{{match}}.</h4>
+                        <h4><i class="fa fa-user coral"></i>You Do not have any succesful matches yet</h4>
                       </li>
-                    {% endfor %}
                   {% endif %}
-                  {% if all_matches[0] != 'You Do not have any succesful matches yet'  %}
+                  {% if all_matches %}
                     {% for match in all_matches %}
                       <li>
-                        <h4><i class="fa fa-user coral"></i> You matched with{{match}}.</h4>
+                        <h4><i class="fa fa-user coral"></i> You matched with {{match[0]}} {{match[1]}}.</h4>
                       </li>
                     {% endfor %}
                   {% endif %}

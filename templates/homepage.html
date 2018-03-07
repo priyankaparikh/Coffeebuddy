@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
     {% block content %}
-      <div class="container">
+      <div class="container"> <!-- start slider controls -->
         <div id="mycarousel" class="carousel slide" data-ride="carousel">
           <ol class="carousel-indicators">
             <li data-target="#mycarousel" data-slide-to="0" class="active"></li>
@@ -13,7 +13,7 @@
               <div class="carousel-caption">
                 <h1>Meet someone today</h1>
                 <br>
-                <button type="button" class="btn btn-default">
+                <button type="button" class="btn btn-default" style="height:51px;">
                   <a href="/login">Log in</a>
                 </button>
               </div>
@@ -23,7 +23,7 @@
               <div class="carousel-caption">
                 <h1>Tell us what you like</h1>
                 <br>
-                <button type="button" class="btn btn-default">
+                <button type="button" class="btn btn-default" style="height:51px;">
                   <a href="/register">Register Now</a>
                 </button>
                </div>
@@ -33,8 +33,8 @@
               <div class="carousel-caption">
                 <h1>Plan your cofeedate with us </h1>
                 <br>
-                <button type="button" class="btn btn-default">
-                  <a href="/register">view our coffee reccomendations</a>
+                <button type="button" class="btn btn-default" style="height:51px;">
+                  <a href="/show_map">view our coffee reccomendations</a>
                 </button>
                </div>
             </div> <!-- end third item  -->
@@ -48,9 +48,6 @@
             <span class="sr-only">Next
           </a>
         </div> <!--end carosel-->
-        <!-- start slider controls -->
-
-
       </div> <!-- end sliders -->
       <div class="container text-center">
         <h4>CoffeeBuddy will make your matches </h4>

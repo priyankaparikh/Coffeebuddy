@@ -15,24 +15,18 @@
       html, body {
         height: 100%;
       }
-
-      .panel-mp {
-        /* height: 94%;
-        margin: 3%; */
-      }
     </style>
     <div class="row">
-      <div class="col-xs-9">
+      <div class="col-xs-6 col-md-offset-3">
         <div class="panel panel-mp">
-          <h1>Congratulations {{session['matched_user']}} wants to meet you too!</h1>
-          <h3> send text message to {{session['matched_user']}}</h3>
+          <h1>Congratulations {{matched_username[0]}} wants to meet you too!</h1>
+          <h3> send text message to {{matched_username[0]}}</h3>
           <div class="form-group">
             <input type = 'text', name = 'message' class="form-control" placeholder="message">
-            <input type = 'submit' value='submit' class="btn btn-success">
+            <input type = 'submit' value='submit' class="btn btn-success" style="margin-top: 20px; text-align: center;">
           </div> <!-- end form-group -->
           <h3>Here is a list of suggested coffee shops in vicinity of the
           pincode {{session['query_pincode']}}</h3>
-          <!-- <div id="map"></div> -->
         </div><!-- end panel-default -->
         <!-- <div id="map"></div> -->
       </div><!-- end col -->

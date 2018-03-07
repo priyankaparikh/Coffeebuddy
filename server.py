@@ -316,7 +316,7 @@ def show_match_details():
         - gives the user a chance to message the match
         - gives the user a chance to choose a coffee shop
     """
-    
+
     userid1 = session["user_id"]
     userid2 = request.form.get("match_details")
     user_info1 = get_user_info(userid1)
@@ -326,7 +326,7 @@ def show_match_details():
     username_2 = get_user_name(userid2)
     username2 = username_2[0] + " " + username_2[1]
     match_info = get_commons(userid1, userid2)
-    match_percent = make_match(userid1, userid2)
+    match_percent = round(make_match(userid1, userid2))
 
     return render_template("match_console.html", user_info1=user_info1,
                                                     username1=username1,
@@ -342,7 +342,9 @@ def show_coffee_shop():
         - Displays a map with reccomended coffee shops
         - Displays a map with pointers for the user's chosen pincode
     """
-    return render_template('map.html')
+    matched_username = get_user_name(session['matched_user'])
+
+    return render_template('map.html', matched_username=matched_username)
 
 
 @app.route('/show_map', methods=["POST"])

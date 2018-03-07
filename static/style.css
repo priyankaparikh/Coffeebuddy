@@ -26,8 +26,13 @@
 
 .navbar-brand {
   float: left;
-  min-height: 55px;
-  padding: 0 15px 5px;
+  /* height: 100%; */
+  padding: 2px 8px 3px;
+}
+
+.navbar-brand img {
+  height:200%;
+  margin-top: -30px;
 }
 
 .navbar-inverse .navbar-nav .active a,
@@ -45,11 +50,22 @@
   text-transform: uppercase;
 }
 
-.btn{
+.btn {
   font-size: 18px;
   color: #FFF;
-  padding: 12px 18px;
+  /* padding: 12px 18px; */
   background: #f4b4c0;
+  border-radius: 22.5px;
+}
+
+.nav .btn {
+  padding: 12px 18px;
+}
+
+.match-button {
+  margin-left: -10px;
+  font-size: 14px;
+  margin-bottom: 4px;
 }
 
 .container {
@@ -73,11 +89,11 @@ div.user-menu-container {
 }
 
 div.user-menu-container .btn-lg {
-    padding: 0px 12px;
+    padding: 0px 1px;
 }
 
 div.user-menu-container h4 {
-    font-weight: 300;
+    font-weight: 500;
     color: #8b8b8b;
 }
 
@@ -208,6 +224,7 @@ div.user-menu div.user-menu-content:not(.active){
   .carousel-caption {
     display: none;
   }
+
   #icon {
     max-width: 140px;
   }

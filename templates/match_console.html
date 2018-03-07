@@ -4,45 +4,51 @@
     user_info2 = [339, u'AngelaRamirez@gmail.com', u'AeRiz', u'1998-12-05', u'30586', u'309-293-8397', u'Angela', u'Ramirez', u'/static/user_profile_pictures/pexels-photo-237593.jpeg']
     match_info  =[u'You both like to listen to Jazz music.', 'You both love to eat Meat.']
     match_percent= 78%-->
-    <link rel="stylesheet" href="/static/match_console.css">
+  <link rel="stylesheet" href="/static/match_console.css">
     <div class="container">
       <div class="row user-match-container">
-        <div class="panel panel-default">
-          <div id="heading">
-            <h1>Match and compatabilty information about you and {{username2}}</h1>
-          </div>
-          <div class="col-md-4 user1">
+        <div class="panel panel-default" style="height: 600px;">
+          <div class="panel-body">
+            <div id="heading">
+              <h3>Match and compatabilty information about you and {{username2}}</h3>
+            </div>
+            <div id="commons">
+            {% for sentence in match_info %}
+              <p>{{sentence}}</p>
+            {% endfor %}
+            </div>
+            <div class="col-md-4">
+              <div class="user-image">
+                <div id="user1picture">
+                  <img src="{{user_info1[-1]}}" class="img-responsive img-circle">
+                </div>
+              </div>
+              <div id="user1name">
+                <h2>{{user_info1[5]}} {{user_info1[6]}}</h2>
+              </div>
+            </div><!-- end column -->
+            <div class="col-md-4 match_percent">
+              <div class="progress blue">
+                  <span class="progress-left">
+                      <span class="progress-bar"></span>
+                  </span>
+                  <span class="progress-right">
+                      <span class="progress-bar"></span>
+                  </span>
+                  <div class="progress-value">{{match_percent}}</div>
+              </div>
+            </div><!-- end column -->
+            <div class="col-md-4">
             <div class="user-image">
-              <img src="{{user_info1[-1]}}" class="img-responsive">
-            </div>
-            <div id="user1name">
-              <h2>{{user_info1[5]}} {{user_info1[6]}}</h2>
-            </div>
-          </div><!-- end column -->
-          <div class="col-md-4 match_percent">
-            <div class="progress blue">
-                <span class="progress-left">
-                    <span class="progress-bar"></span>
-                </span>
-                <span class="progress-right">
-                    <span class="progress-bar"></span>
-                </span>
-                <div class="progress-value">{{match_percent}}</div>
-            </div>
-          </div><!-- end column -->
-          <div class="user-image">
-            <div id="user2picture">
-              <img src="{{user_info2[-1]}}" class="img-responsive">
-            </div>
-            <div id="user2name">
-              <h2>{{user_info2[5]}} {{user_info2[6]}}</h2>
-            </div>
-          </div><!-- end column -->
-          <div id="commons">
-          {% for sentence in match_info %}
-            <p>{{sentence}}</p>
-          {% endfor %}
-          </div>
+              <div id="user2picture">
+                <img src="{{user_info2[-1]}}" class="img-responsive img-circle">
+              </div>
+              <div id="user2name">
+                <h2>{{user_info2[5]}} {{user_info2[6]}}</h2>
+              </div>
+            </div> <!-- end user-image -->
+            </div><!-- end column -->
+        </div> <!-- end panel-body -->
         </div><!-- end panel -->
       </div> <!--end row -->
     </div> <!--end container -->
