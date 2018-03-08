@@ -18,7 +18,7 @@ app.config['UPLOAD_FOLDER'] = 'static/user_profile_pictures'
 app.secret_key = "ABC"
 
 # this will throw an error if a jinja variable is undefined
-app.jinja_env.undefined = StrictUndefined
+# app.jinja_env.undefined = StrictUndefined
 
 
 ###############################################################################
@@ -399,7 +399,7 @@ def log_out_user():
 if __name__ == "__main__":
     # Sets debug=True here, since it has to be True at the
     # point that invokes the DebugToolbarExtension
-    app.debug = True
+    app.debug = False
     # Makes sure templates, etc. are not cached in debug mode
     app.jinja_env.auto_reload = app.debug
     connect_to_db(app)

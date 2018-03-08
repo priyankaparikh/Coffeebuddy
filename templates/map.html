@@ -5,6 +5,11 @@
     </script> -->
     <script src="https://code.jquery.com/jquery.js">
     </script>
+    <script>
+    // $("#login").hide()
+    // $("#register").hide()
+    // $("#logout").show()
+    </script>
     <style>
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
@@ -22,9 +27,11 @@
           <h1>Congratulations {{matched_username[0]}} wants to meet you too!</h1>
           <h3> send text message to {{matched_username[0]}}</h3>
           <div class="form-group">
-            <input type = 'text', name = 'message' class="form-control" placeholder="message">
-            <input type = 'submit' value='submit' class="btn btn-success" style="margin-top: 20px; text-align: center;">
+            <input type = 'text' name = 'message' class="form-control" placeholder="message">
+            <input type = 'submit' id="sent-message" value='submit' class="btn btn-success" style="margin-top: 20px; text-align: center;">
           </div> <!-- end form-group -->
+          <div id="message-sent" style="height: 15px">
+          </div>
           <h3>Here is a list of suggested coffee shops in vicinity of the
           pincode {{session['query_pincode']}}</h3>
         </div><!-- end panel-default -->
@@ -106,10 +113,5 @@
     </script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAFPPyCmVFLC4JC_66sLpi2RxFB01soZ3o&callback=initMap">
-    </script>
-    <script>
-    $("#login").hide()
-    $("#register").hide()
-    $("#logout").show()
     </script>
 {% endblock %}

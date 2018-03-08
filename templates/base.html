@@ -27,15 +27,18 @@
             <button type="button" class="btn btn-default" id="home">
               <li><a href="/">Home</a></li>
             </button>
-            <button type="button" class="btn btn-default" id="login">
-              <li><a href="/login">Log in</a></li>
-            </button>
-            <button type="button" class="btn btn-default" id="register">
-              <li><a href="/register">Sign up</a></li>
-            </button>
-            <button type="button" class="btn btn-default" id="logout">
-              <li><a href="/logout">Log out</a></li>
-            </button>
+            {% if session["user_id"] %}
+              <button type="button" class="btn btn-default" id="logout">
+                <li><a href="/logout">Log out</a></li>
+              </button>
+            {% else %}
+              <button type="button" class="btn btn-default" id="login">
+                <li><a href="/login">Log in</a></li>
+              </button>
+              <button type="button" class="btn btn-default" id="register">
+                <li><a href="/register">Sign up</a></li>
+              </button>
+            {% endif %}
           </ul>
       </div>
     </nav>
@@ -47,8 +50,5 @@
           put your content here
 
       {% endblock %}
-      <script>
-        $("#logout").hide();
-      </script>
   </body>
 </html>

@@ -38,15 +38,18 @@
               <div class="row overview">
                 <div class="col-md-4 user-pad text-center">
                     <h3>TRIP COUNT</h3>
-                    <h4>{{all_trips[0]}}</h4>
+                    <!-- <h4>{{all_trips[0]}}</h4> -->
+                    <h4>78</h4>
                 </div>
                 <div class="col-md-4 user-pad text-center">
                     <h3>SUCCESSFUL MATCHES</h3>
-                    <h4>{{all_trips[1]}}</h4>
+                    <!-- <h4>{{all_trips[1]}}</h4> -->
+                    <h4>56</h4>
                 </div>
                 <div class="col-md-4 user-pad text-center">
-                    <h3>FRIENDS</h3>
-                    <h4>{{all_trips[1]}}</h4>
+                    <h3>COFFEE BUDDIES</h3>
+                    <!-- <h4>{{all_trips[1]}}</h4> -->
+                    <h4>40</h4>
                 </div>
             </div><!-- end row -->
         </div><!-- end user_details div -->
@@ -72,18 +75,17 @@
                     Recent matches
                 </h3>
                 <ul class="user-menu-list">
-                  {% if all_matches == [] %}
+                    {% if all_matches == [] %}
+                        <li>
+                          <h4><i class="fa fa-user coral"></i>You Do not have any succesful matches yet</h4>
+                        </li>
+                    {% endif %}
+                    {% if all_matches %}
+                      {% for match in all_matches %}
                       <li>
-                        <h4><i class="fa fa-user coral"></i>You Do not have any succesful matches yet</h4>
+                        <h4><i class="fa fa-user coral"></i>{{match}}</h4>
                       </li>
-                  {% endif %}
-                  {% if all_matches %}
-                    {% for match in all_matches %}
-                      <li>
-                        <h4><i class="fa fa-user coral"></i> You matched with {{match[0]}} {{match[1]}}.</h4>
-                      </li>
-                    {% endfor %}
-                  {% endif %}
+                    {% endif %}
                 </ul>
             </div>
             <div class="user-menu-content">
@@ -111,11 +113,6 @@
         </div>
       </div>
     </div>
-            <script>
-              $("#login").hide();
-              $("#logout").show();
-              $("#register").hide();
-            </script>
             <script src="static/user_profile.js">
             </script>
             <!-- this script is obtained from https://bootsnipp.com/snippets/featured/flat-user-profile-interface-ui#comments -->

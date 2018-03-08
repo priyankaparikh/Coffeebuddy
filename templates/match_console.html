@@ -9,10 +9,10 @@
       <div class="row user-match-container">
         <div class="panel panel-default" style="height: 600px;">
           <div class="panel-body">
-            <div id="heading">
+            <div id="heading" style="text-align: center;">
               <h3>Match and compatabilty information about you and {{username2}}</h3>
             </div>
-            <div id="commons">
+            <div id="commons" style="text-align: center">
             {% for sentence in match_info %}
               <p>{{sentence}}</p>
             {% endfor %}
@@ -20,11 +20,12 @@
             <div class="col-md-4">
               <div class="user-image">
                 <div id="user1picture">
-                  <img src="{{user_info1[-1]}}" class="img-responsive img-circle">
+                  <img src="{{user_info1[-1]}}" class="img-responsive img-circle" style="max-height: 350px;">
                 </div>
               </div>
+              <!-- user_info = [20, u'AntonioWallace@aol.com', u'AooWle', u'1993-08-01', u'17826', u'02946029632', u'Antonio', u'Wallace', u'/static/user_profile_pictures/pexels-photo-355164.jpeg'] -->
               <div id="user1name">
-                <h2>{{user_info1[5]}} {{user_info1[6]}}</h2>
+                <h2>{{username1}}</h2>
               </div>
             </div><!-- end column -->
             <div class="col-md-4 match_percent">
@@ -41,15 +42,25 @@
             <div class="col-md-4">
             <div class="user-image">
               <div id="user2picture">
-                <img src="{{user_info2[-1]}}" class="img-responsive img-circle">
+                <img src="{{user_info2[-1]}}" class="img-responsive img-circle" style="max-height: 350px;">
               </div>
               <div id="user2name">
-                <h2>{{user_info2[5]}} {{user_info2[6]}}</h2>
+                <h2>{{username2}}</h2>
               </div>
             </div> <!-- end user-image -->
             </div><!-- end column -->
+            <div class="row">
+              <button class="btn btn-default match-button" style="margin-left: 500px">
+                <a href="/show_matches">Back to All Matches </a>
+              </button>
+            </div>
         </div> <!-- end panel-body -->
         </div><!-- end panel -->
       </div> <!--end row -->
     </div> <!--end container -->
+    <script>
+      // $("#login").hide()
+      // $("#logout").show()
+      // $("#register").hide()
+    </script>
     {% endblock %}
