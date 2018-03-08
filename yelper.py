@@ -1,11 +1,10 @@
-"""
-This Module utilises the Yelp Search Api
-- To query for businesses by a search term and location
+""" Module that utilises the Yelp Search Api.
+- Queries for businesses by a search term and location
 Using the yelp Business API
-- To query additional information about the top result
+- Queries additional information about the top result
 from the search query.
 
-Functions:
+Methods:
 1) request:
     - Creates a url for the server to send yelp.
     - sends a request to the yelp Api.
@@ -42,11 +41,7 @@ SEARCH_LIMIT = 49 #the limit is 50
 
 def request(host, path, api_key, url_params=None):
     """
-    This function
     - Makes a request by formatting query constants
-    - creates a url
-    - creates a header
-    - call for a response from the yelp API_KEY
     Given:
         your API_KEY, send a GET request to the API.
         - host (str): host of the API.
@@ -77,13 +72,13 @@ def request(host, path, api_key, url_params=None):
 
 def search(location):
     """
-    This function
-    - Queries the Search API by a search term and location.
-    Parameters:
+    Given :
         - term (str): The search term passed to the API.
         - location (str): The search location passed to the API.
-    Returns:
-        a list of dictionaries with required info only
+    Returns :
+        a JSON list of dictionaries with required info only.
+    Calls to other functions :
+        - request (YELPER)
     """
 
     API_KEY= os.environ["YELP_API_KEY"]
@@ -98,19 +93,17 @@ def search(location):
 
     return coffee_shop_info
 
+
 def filter_response(pincode):
     """ This function
-    - calls the search function for a JSON
-    - Parses through the JSON response from the yelp API
-        and returns a structure that looks like this:
+    Calls to other functions :
+        - search (YELPER)
+    Returns :
+        - A list of dictionaries
         var neighborhoods = [
-            lat_lng : {lat: 52.511, lng: 13.447},
-            business_name : "Peet's Coffee",
-            image_url : "image",
-            address : "address",
-            rating : 4,
-            review_count : 144,
-            url : business(yelp)URL
+            {lat: 52.511, lng: 13.447},
+            "Peet's Coffee", "image",
+            "address", 4, 144, business(yelp)URL
         ];
     """
 
