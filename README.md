@@ -1,36 +1,41 @@
 # CoffeeBuddy
 
-A web application that matches users based on a geographical pincode.
+A speed meeting application that allows users to find matches while grabbing a cup of coffee. 
+This is the first version with the MVP including the following features :
+
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+A step by step series of examples that tell you have to get a development env running
+
+```
+$ virtualenv env
+$ source env/bin/activate
+```
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+This project is powered with postgresql. It needs to be installed before beginning the application.
 
 ```
-Give examples
+$ createdb cb
+$ createdb testdb
 ```
 
 ### Installing
 
-A step by step series of examples that tell you have to get a development env running
-
-Say what the step will be
+Install all the requirements from the requirements file
 
 ```
-Give the example
+$ pip install -r requirements.txt
 ```
 
-And repeat
+Create the models in the database.
 
 ```
-until finished
+$ python models.py
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
 
 ## Running the tests
 
@@ -60,6 +65,8 @@ Add additional notes about how to deploy this on a live system
 
 * Python
 * Postgresql
+* SQL alchemy ORM
+* flask, JINJA
 * HTML, CSS, Javascript
 
 
@@ -74,5 +81,5 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 ## Acknowledgments
 
 * credits : https://bootsnipp.com/snippets/featured/zigzag-timeline-layout
-* Inspiration
-* etc
+* https://bootsnipp.com/snippets/featured/flat-user-profile-interface-ui
+
