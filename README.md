@@ -2,6 +2,9 @@
 
 A speed meeting application that allows users to find matches while grabbing a cup of coffee. 
 This is the first version with the MVP including the following features :
+1) login 
+
+!
 
 
 ## Getting Started
