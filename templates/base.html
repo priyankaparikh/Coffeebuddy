@@ -2,13 +2,13 @@
   <html>
   <head>
       <title>CoffeeBuddy</title>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device=width, initial-scale=1">
-        <script src="https://code.jquery.com/jquery.js"></script>
-      <link rel="stylesheet"
-        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css">
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-      <link rel="stylesheet" href="/static/style.css">
+        <meta charset="utf-8">
+          <meta name="viewport" content="width=device=width, initial-scale=1">
+            <script src="https://code.jquery.com/jquery.js"></script>
+              <link rel="stylesheet"
+              href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css">
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+                  <link rel="stylesheet" href="/static/style.css">
   </head>
   <body>
     <nav class="navbar navbar-inverse">
@@ -19,9 +19,9 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <!-- this is a tag for putting a logo in the nabar -->
+          <!-- this is a tag for putting a logo in the navbar -->
           <a class="navbar-brand"><img src="../static/coffeebuddylogo.png"></a>
-        </div>
+        </div><<!-- end navbar header -->
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav navbar-right">
             <button type="button" class="btn btn-default" id="home">
@@ -41,14 +41,12 @@
             {% endif %}
           </ul>
       </div>
-    </nav>
-     {% for flash in get_flashed_messages() %}
-      {{ flash }}
-      {% endfor %}
-      {% block content %}
-
+    </nav> <!-- end nav -->
+        {% for flash in get_flashed_messages() %}
+          {{ flash }}
+        {% endfor %}
+        {% block content %}
           put your content here
-
-      {% endblock %}
+        {% endblock %}
   </body>
 </html>
