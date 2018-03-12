@@ -1,37 +1,37 @@
 {% extends 'base.html' %}
     {% block content %}
     <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background: url("../static/login_bkg.jpg");
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      font-family: sans-serif;
-    }
-    .panel{
-      border: 0px;
-      background: rgba(0,0,0,0.5);
-      color: #ffff;
-      text-align: center;
-      padding-top: 25px;
-      position: relative;
-    }
+      body {
+        margin: 0;
+        padding: 0;
+        background: url("../static/login_bkg.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        font-family: sans-serif;
+      }
+      .panel{
+        border: 0px;
+        background: rgba(0,0,0,0.5);
+        color: #ffff;
+        text-align: center;
+        padding-top: 25px;
+        position: relative;
+      }
 
-    h4 {
-      margin: 0px;
-      padding: 0px;
-      color:
-    }
-    .user {
-      top: -50px;
-      width: 100px;
-      height: 100px;
-      line-height: 100px;
-      text-align: center;
-      color:inherit;
-    }
+      h4 {
+        margin: 0px;
+        padding: 0px;
+      }
+
+      .user {
+        top: -50px;
+        width: 100px;
+        height: 100px;
+        line-height: 100px;
+        text-align: center;
+        color:inherit;
+      }
     </style>
     <div class="container">
       <div class="row">
@@ -59,9 +59,4 @@
         </div><!-- end col -->
       </div> <!-- end row -->
     </div> <!-- end containter -->
-    <script>
-      // $("#logout").hide();
-      // $("#login").hide();
-      // $("#home").hide();
-    </script>
     {% endblock %}
