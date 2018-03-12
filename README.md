@@ -72,6 +72,11 @@ Add additional notes about how to deploy this on a live system
 * flask, JINJA
 * HTML, CSS, Javascript
 
+## Apis used
+
+* Google Maps API
+* Yelp API
+* Twilio text API
 
 ## Authors
 
