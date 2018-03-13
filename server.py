@@ -286,8 +286,7 @@ def show_potential_matches():
 @app.route('/show_matches',methods=["POST"])
 @login_req
 def update_potential_matches():
-    """ This route
-        - Gets the user input for a confirm match
+    """ - Gets the user input for a confirm match
         - Updates the user input for a match to the db
     """
 

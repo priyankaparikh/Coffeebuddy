@@ -4,8 +4,32 @@ import unittest
 from server import app
 from models import db, example_data, connect_to_db
 from yelper import *
+from queries import *
 
 #####################################################################
+class UsersTest(unittest.TestCase):
+    """ Tests the queries.py """
+
+    def setUp(self):
+        """Stuff to do before every test."""
+
+        self.client = app.test_client()
+        app.config['TESTING'] = True
+        # Connect to test database
+        connect_to_db(app, uri="postgresql:///testdb")
+        # Create tables and add sample data
+        db.create_all()
+        example_data()
+
+    def tearDown(self):
+        """drop the db at the end of every test."""
+        # close the session
+        db.session.close()
+        # drop the db
+        db.drop_all()
+
+    def mock_get_user_id(input_email):
+
 
 class CoffeshopTests(unittest.TestCase):
     """Tests the Yelp API for correct responses."""

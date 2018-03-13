@@ -67,8 +67,8 @@
                 <a href="#" class="btn btn-default">
                   <i class="fa fa-cloud-upload fa-3x"></i>
                 </a>
-            </div>
-        </div>
+            </div><!-- end btn group -->
+        </div><!-- end col user_menu_buttons -->
         <div class="col-md-12 user-menu user-pad">
             <div class="user-menu-content active">
                 <h3>
@@ -76,9 +76,9 @@
                 </h3>
                 <ul class="user-menu-list">
                     {% if all_matches == [] %}
-                        <li>
-                          <h4><i class="fa fa-user coral"></i>You Do not have any succesful matches yet</h4>
-                        </li>
+                      <li>
+                        <h4><i class="fa fa-user coral"></i>You Do not have any succesful matches yet</h4>
+                      </li>
                     {% endif %}
                     {% if all_matches %}
                       {% for match in all_matches %}
@@ -88,7 +88,7 @@
                       {% endfor %}
                     {% endif %}
                 </ul>
-            </div>
+            </div><!-- end user_menu_content-->
             <div class="user-menu-content">
                 <ul class="user-menu-list">
                   <h3>
@@ -100,7 +100,7 @@
                         <h4><i class="fa fa-user coral"></i>Zipcode: {{user_info[4]}}</h4>
                     </li>
                 </ul>
-            </div>
+            </div><!-- end user_menu_content-->
             <div class="user-menu-content">
                 <ul class="user-menu-list">
                   <h3>Welcome {{user_info[6]}}</h3>
@@ -110,10 +110,10 @@
                     </li>
                   {% endfor %}
                 </ul>
-            </div>
-        </div>
-      </div>
-    </div>
+            </div><!-- end user_menu_content-->
+        </div><!-- end col user_menu_pad -->
+      </div><!-- end user_menu_container_square-->
+    </div><!-- end amin container-->
             <script src="static/user_profile.js">
             </script>
             <!-- this script is obtained from https://bootsnipp.com/snippets/featured/flat-user-profile-interface-ui#comments -->

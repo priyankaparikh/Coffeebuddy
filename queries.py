@@ -8,7 +8,7 @@ from functools import wraps
 from flask import Flask, render_template, redirect, request, flash, session, g
 import datetime
 
-#################################################################################################
+##################################################################################
 
 def login_req(f):
     """ A view decorator that wraps routes where the user
@@ -42,10 +42,10 @@ def plan_trip_req(f):
 
 
 def get_user_id(input_email):
-    """ Queries the users table and accepts an email as input
-        INPUT FORMAT = string
-        Returns the the only user_id of a user
-        OUTPUT FORMAT = integer
+    """ Queries the users table and accepts an email as input.
+        INPUT FORMAT = String.
+        Returns the the only user_id of a user.
+        OUTPUT FORMAT = Integer.
     """
 
     user = User.query.filter(User.email == '{}'.format(input_email)).all()
@@ -54,8 +54,11 @@ def get_user_id(input_email):
 
 
 def get_user_name(input_id):
-    """ Accepts a user_id as a parameter and returns a tuple of the fname
-    and lname of the user"""
+    """ Queries the users table and accepts a userid as input.
+        INPUT FORMAT = digit.
+        Returns the fname and lname of the said user.
+        OUTPUT FORMAT = list of strings.
+    """
 
     user = User.query.filter(User.user_id == '{}'.format(input_id)).first()
 
@@ -63,11 +66,10 @@ def get_user_name(input_id):
 
 
 def get_user_info(input_id):
-    """return user_info as a list using the user_id
-
-    >>> get_user_info('280')
-    [280, u'EricaBrown@fastmail.com', u'EcBw', u'1990-01-13', u'27359', u'+47(7)9589562562']
-
+    """ Queries the users table and accepts a userid as input.
+        INPUT FORMAT = Integer.
+        Returns user_info as a list using the user_id.
+        OUTPUT FORMAT = string.
     """
 
     user = User.query.filter(User.user_id == input_id).all()
@@ -89,15 +91,11 @@ def get_user_info(input_id):
 
 
 def get_all_made_matches(user_id):
-    """ Accepts a user_id as a parameter and returns a list of
-    user names and images that the user made succesful matches with
-    - Calls the get_user_info function which returns :
-        [2, u'PatriciaTorres@hotmail.com', u'PriTr',
-        u'1999-01-15', u'25076', u'00543301160',
-        u'Patricia', u'Torres',
-        u'/static/user_profile_pictures/pexels-photo-634030.jpeg']
-    - Returns a list of tuples with the user_name as the first element
-     and profile picture as the second element
+    """ Queries the user_matches table and accepts a userid as input.
+        INPUT FORMAT = Integer.
+        Returns a list of tuples with the first element as the user name
+        and the second element as the url to the profile picture.
+        OUTPUT FORMAT = list of tuples of strings.
     """
     # query the user_matches table
     check_matches = UserMatch.query.filter(UserMatch.user_id_1 == user_id,
@@ -114,21 +112,12 @@ def get_all_made_matches(user_id):
 
     return all_match_info
 
-def get_user_phone(user_id):
-    """ Gets the userphone number """
 
 def validate_password(input_email, input_password):
-    """ This function
-    - Checks if an email and password are valid by:
-    - Querying the db for the input email id
-    - Querying for the password of the same user
-
-    >>> validate_password('CarolMason@aol.com ','6LUZzfiN(Z')
-    True
-
-    >>> validate_password('CynthiaGibson@gmail.com','T^^+5BQvS3')
-    True
-
+    """ Queries the users table and accepts email and password as inputs.
+        INPUT FORMAT = string, string.
+        Returns a Boolean.
+        OUTPUT FORMAT = Boolean.
     """
 
     user = User.query.filter(User.email == '{}'.format(input_email)).first()
@@ -139,15 +128,21 @@ def validate_password(input_email, input_password):
 
 
 def get_max_id(input_table_id):
-    """ This function checks the table for the max value of the input
-    table id
+    """ Queries a given table.
+        INPUT FORMAT = Integer.
+        Returns a max count for the primary key of the given table.
+        OUTPUT FORMAT = Integer.
     """
+
     max_id = db.session.query(func.max(input_table_id)).one()
     return int(max_id[0])
 
 
 def all_book_genres():
-    """returns a list of tuples with book genre ids and book genres
+    """ Queries the book_genres table.
+        Returns a list of tuples, first element is the genre id and second
+        element is the name.
+        OUTPUT FORMAT = List of tuples(integer, string).
     """
 
     book_genres = BookGenre.query.all()
@@ -160,7 +155,11 @@ def all_book_genres():
 
 
 def all_movie_genres():
-    """returns a list of tuples with book genre ids and book genres"""
+    """ Queries the movie_genres table.
+        Returns a list of tuples, first element is the genre id and second
+        element is the name.
+        OUTPUT FORMAT = List of tuples(integer, string).
+    """
 
     movie_genres = MovieGenre.query.all()
     movies = []
@@ -172,7 +171,11 @@ def all_movie_genres():
 
 
 def all_music_genres():
-    """returns a list of tuples with book genre ids and book genres"""
+    """ Queries the music_genres table.
+        Returns a list of tuples, first element is the genre id and second
+        element is the name.
+        OUTPUT FORMAT = List of tuples(integer, string).
+    """
 
     music_genres = MusicGenre.query.all()
     music = []
@@ -185,7 +188,11 @@ def all_music_genres():
 
 
 def all_food_habits():
-    """ returns a list of tuples with food habit ids and habit names"""
+    """ Queries the food_habits table.
+        Returns a list of tuples, first element is the genre id and second
+        element is the name.
+        OUTPUT FORMAT = List of tuples(integer, string).
+    """
 
     food_habits = FoodHabit.query.all()
     food = []
@@ -197,7 +204,11 @@ def all_food_habits():
 
 
 def all_fav_cuisines():
-    """ returns a list of tuples with favorite cuisine ids and habit names"""
+    """ Queries the fav_cuisines table.
+        Returns a list of tuples, first element is the genre id and second
+        element is the name.
+        OUTPUT FORMAT = List of tuples(integer, string).
+    """
 
     fav_cuisines = FavCuisine.query.all()
     cuisines = []
@@ -209,7 +220,12 @@ def all_fav_cuisines():
 
 
 def all_hobbies():
-    """ returns a list of tuples with hobby ids and hobby names"""
+    """ Queries the hobbies table.
+        Returns a list of tuples, first element is the genre id and second
+        element is the name.
+        OUTPUT FORMAT = List of tuples(integer, string).
+    """
+
     hobbies = Hobby.query.all()
     hobby = []
 
@@ -220,10 +236,12 @@ def all_hobbies():
 
 
 def all_political_views():
+    """ Queries the political_views table.
+        Returns a list of tuples, first element is the genre id and second
+        element is the name.
+        OUTPUT FORMAT = List of tuples(integer, string).
     """
-        returns a list of tuples with political views ids
-        and political views names
-    """
+
     political_views = PoliticalView.query.all()
     political_view = []
 
@@ -235,10 +253,12 @@ def all_political_views():
 
 
 def all_religions():
+    """ Queries the religions table.
+        Returns a list of tuples, first element is the genre id and second
+        element is the name.
+        OUTPUT FORMAT = List of tuples(integer, string).
     """
-        returns a list of tuples with religion ids
-        and religion names
-    """
+
     religions = Religion.query.all()
     rel = []
 
@@ -250,10 +270,12 @@ def all_religions():
 
 
 def all_outdoors():
+    """ Queries the outdoors table.
+        Returns a list of tuples, first element is the genre id and second
+        element is the name.
+        OUTPUT FORMAT = List of tuples(integer, string).
     """
-        returns a list of tuples with outdoor_activity ids
-        and outdoor activity names
-    """
+
     all_outdoors = Outdoor.query.all()
     activities = []
 
@@ -265,38 +287,42 @@ def all_outdoors():
 
 
 def get_user_interests(user_id):
-    """ This function
-    - Queries the user_interests table
-    - Returns an interest object with all the interest ids
+    """ Queries the user_interests table and accepts a userid as input.
+        INPUT FORMAT = Integer.
+        Returns an object of the type user interest.
+        OUTPUT FORMAT = object.
     """
-    user = Interest.query.filter(Interest.user_id == user_id).first()
 
+    user = Interest.query.filter(Interest.user_id == user_id).first()
     return user
 
+
 def get_interest_name(interest_id, table_name):
-    """ This function
-    - Queries the table for an a specific id
-    - Returns the value
+    """ Queries the given table, accepts interest_id and name of table as
+        a parameter.
+        INPUT FORMAT = (Integer, string)
+        Returns an object of the type interest.
+        OUTPUT FORMAT = object.
     """
 
     Interest = table_name.query.filter(Interest.user_id == user_id).first()
 
 
 def get_interest_info(interest_info):
-    """  Accepts a SINGLE tuple format: (int, int)
-        - The first element of the tuple is the value of the interest
-        - The second element is the table id
-        - Assigns the queries to a small dictionary in this order:
-        - user.interest_id          |(0)
-        - user.book_genre_id        |(1)
-        - user.movie_genre_id       |(2)
-        - user.music_genre_id       |(3)
-        - user.food_habit_id        |(4)
-        - user.fav_cuisine_id       |(5)
-        - user.hobby_id             |(6)
-        - user.political_view_id    |(7)
-        - user.religion_id          |(8)
-        - user.outdoor_id           |(9)
+    """ Accepts a SINGLE tuple of INPUT FORMAT: (int, int)
+        The first element of the tuple is the value of the interest.
+        The second element is the table id.
+        Assigns the queries to a small dictionary in this order:
+            user.interest_id          |(0)
+            user.book_genre_id        |(1)
+            user.movie_genre_id       |(2)
+            user.music_genre_id       |(3)
+            user.food_habit_id        |(4)
+            user.fav_cuisine_id       |(5)
+            user.hobby_id             |(6)
+            user.political_view_id    |(7)
+            user.religion_id          |(8)
+            user.outdoor_id           |(9)
     """
 
     common_value = interest_info[0]
@@ -316,10 +342,12 @@ def get_interest_info(interest_info):
 
     return interest_details
 
+
 def get_user_match(user_id):
-    """ This function
-        - Checks the db for a specific user if the user is a potential match already
-        - Returns a
+    """ Queries the user_matches table and accepts a user id as input.
+        INPUT FORMAT = Integer.
+        Returns a list of confirm matches for the specific user.
+        OUTPUT FORMAT = List of match objects.
     """
 
     q1 = UserMatch.query
@@ -328,11 +356,11 @@ def get_user_match(user_id):
 
 def update_matched(user_id1, user_id2, query_time):
     """ Accepts 2 user ids as an input.
-        - user_id1 is the logged in user.
-        - user_id2 is the user choice.
-        - query time of the users
+        user_id1 is the logged in user.
+        user_id2 is the user choice.
+        INPUT FORMAT = (Integer, Integer, string(Y-m-d H:M:S).
         Checks UserMatch table for a pending match.
-        Returns True if a match is made
+        Returns True if a match is made.
     """
 
     time = datetime.datetime.now()
@@ -354,14 +382,13 @@ def update_matched(user_id1, user_id2, query_time):
 
 
 def find_valid_matches(user_id_1, pincode, query_time):
-    """ Accepts user_id, pincode, query_time as inputs
-    user_id = integer
-    pincode = integer
-    query_time = string
-    eg => validate_trip(399, 95134,"2018-02-28 20:30:00")
-    - queries the pending_match for an already updated query
-    - returns if a trip query of a user is valid
-    - The query time is a string for now
+    """ Queries the pending_match for pending matches.
+        user_id = Integer.
+        pincode = Integer.
+        query_time = String.
+        INPUT FORMAT : 399, 95134,"2018-02-28 20:30:00").
+        returns a list of pending match user user_ids.
+        OUTPUT FORMAT : List of intergers.
     """
     potential_matches = []
     # creates an object from the input date string
@@ -382,6 +409,7 @@ def find_valid_matches(user_id_1, pincode, query_time):
 
     return potential_matches
 
+
 def find_trip_count(user_id):
     """ Queries the PendingMatch table for a specific user's trip requests
         Queries the UserMatch table for a user's matches
@@ -391,8 +419,6 @@ def find_trip_count(user_id):
     all_sm = UserMatch.query.filter(UserMatch.user_id_1 == user_id).all()
 
     return [len(all_pm), len(all_sm)]
-
-
 
 
 def clean_time(str_tme):
