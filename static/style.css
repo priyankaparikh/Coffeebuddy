@@ -6,7 +6,7 @@
   transform: translate(-50%, -50%);
   width: 350px;
   height: 420px;
-  box-sizing: border-box;;
+  box-sizing: border-box;
   background: rgba(0,0,0,.5);
 }
 
@@ -16,7 +16,6 @@
 
 .navbar {
   margin-bottom: 0;
-  margin-radius: 0;
   background: transparent;
   /* background-color: #1a293c; */
   padding: 1% 0;
@@ -104,7 +103,6 @@ div.user-menu-container a, div.user-menu-container .btn  {
 div.user-menu-container .thumbnail {
    width:100%;
    min-height:200px;
-   border: 0px!important;
    padding: 0px;
    border-radius: 0;
    border: 0px!important;
@@ -124,7 +122,6 @@ div.user-menu-btns div.btn-group-horizontal>a.active:after{
   left: 100%;
   top: 50%;
   margin-top: -13px;
-  border-left: 0;
   border-bottom: 13px solid transparent;
   border-top: 13px solid transparent;
   border-left: 10px solid #46D8D2;
@@ -175,8 +172,8 @@ div.user-menu div.user-menu-content:not(.active){
 
 .overview h3 {
     font-weight: 300;
-    margin-top: 15px;
     margin: 10px 0 0 0;
+    margin-top: 15px;
 }
 
 .overview h4 {
