@@ -12,7 +12,7 @@ decorator==4.1.2
 entrypoints==0.2.3
 enum34==1.1.6
 Faker==0.8.10
-Flask==0.12
+Flask==1.0
 Flask-DebugToolbar==0.10.1
 Flask-SQLAlchemy==2.2
 functools32==3.2.3.post2
