@@ -18,7 +18,7 @@ Flask-SQLAlchemy==2.2
 functools32==3.2.3.post2
 future==0.16.0
 html5lib==1.0.1
-httplib2==0.10.3
+httplib2==0.18.0
 idna==2.6
 ipaddress==1.0.19
 ipykernel==4.7.0
