@@ -1,0 +1,21 @@
+
+# Path to sources
+sonar.sources=.
+#sonar.exclusions=
+#sonar.inclusions=
+
+ # Path to tests
+#sonar.tests=
+#sonar.test.exclusions=
+#sonar.test.inclusions=
+
+ # Source encoding
+#sonar.sourceEncoding=UTF-8
+
+ # Exclusions for copy-paste detection
+#sonar.cpd.exclusions=
+
+ # Disable C, C++ and Objective-C file analysis
+sonar.c.file.suffixes=-
+sonar.cpp.file.suffixes=-
+sonar.objc.file.suffixes=-
