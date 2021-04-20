@@ -71,5 +71,5 @@ urllib3==1.22
 virtualenv==15.0.1
 wcwidth==0.1.7
 webencodings==0.5.1
-Werkzeug==0.10.4
+Werkzeug==0.15.3
 yelp==1.0.2
